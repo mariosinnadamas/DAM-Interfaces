@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="cc" green="cc" red="cc" type="rgb"/>
-    </Property>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -21,290 +23,293 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="Domicilio" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="Apellidos" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="textoCodigo" min="-2" max="-2" attributes="0"/>
-                          <Component id="Codigo" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="NIF" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="textoNIF" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textoNIF2" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="domicilio" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="nombre" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoNombre" min="-2" pref="116" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="textoApellidos" alignment="0" max="32767" attributes="0"/>
-                  <Component id="textoDomicilio" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="CP" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoCP" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Localidad" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoLocalidad" min="-2" pref="169" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Telefonol" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textoTelefono" min="-2" pref="106" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Movil" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textoMovil" min="-2" pref="106" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="Email" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Fax" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoFax" alignment="0" min="-2" pref="106" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              <Component id="Total" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="botonAceptar" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoEmail" min="-2" pref="248" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="textoTotal" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="codigo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textoCodigo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="nif" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                              <Component id="nombre" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="textoNif" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="textoNif2" min="-2" pref="38" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="textoNombre" min="-2" pref="163" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                      <Component id="textoLocalidad" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="textoDomicilio" alignment="0" max="32767" attributes="0"/>
+                  <Component id="textoCp" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="mail" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="total" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="telefono" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoTelefono" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="movil" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoMovil" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="fax" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFax" min="-2" pref="86" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="cp" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="localidad" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="apellidos" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoApellidos" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="botonAceptar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="botonRechazar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="textoMail" min="-2" pref="246" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                          <Component id="textoTotal" min="-2" pref="86" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="codigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nif" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="NIF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Codigo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="textoCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="textoNIF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="textoNIF2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoNif" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoNif2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="textoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="Apellidos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textoApellidos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="Domicilio" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textoDomicilio" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="CP" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textoCP" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="Localidad" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textoLocalidad" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                              <Component id="textoTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoMovil" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Movil" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Telefonol" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Component id="textoFax" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="Fax" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Component id="apellidos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="textoApellidos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Component id="domicilio" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="textoDomicilio" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cp" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="localidad" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="textoCp" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoLocalidad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="textoEmail" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="textoTotal" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Email" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Total" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="telefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="movil" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fax" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="textoTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoMovil" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoFax" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="mail" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="total" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="textoMail" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonRechazar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JLabel" name="codigo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="nif">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="N.I.F"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="nombre">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="apellidos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apellidos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="domicilio">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Domicilio"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="cp">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="C.P"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="localidad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Localidad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="telefono">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefono"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="movil">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Movil"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="fax">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fax"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="mail">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="e-mail"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="total">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JTextField" name="textoCodigo">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoCodigoActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoNIF">
+    <Component class="javax.swing.JTextField" name="textoNif">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoNifActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoNIF2">
+    <Component class="javax.swing.JTextField" name="textoNif2">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoNif2ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoNombre">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoNombreActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoApellidos">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoApellidosActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoDomicilio">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoDomicilioActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoCP">
+    <Component class="javax.swing.JTextField" name="textoCp">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoCpActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoLocalidad">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoLocalidadActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoTelefono">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoTelefonoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoMovil">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoMovilActionPerformed"/>
@@ -312,163 +317,37 @@
     </Component>
     <Component class="javax.swing.JTextField" name="textoFax">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoFaxActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoEmail">
+    <Component class="javax.swing.JTextField" name="textoMail">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoMailActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoTotal">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="nombre">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Nombre"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="NIF">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="NIF"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Codigo">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Apellidos">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Apellidos"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Domicilio">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Domicilio"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="CP">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="CP"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Localidad">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Localidad"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Telefonol">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Movil">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="M&#xf3;vil"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Fax">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Fax"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Email">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="E-mail"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Total">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Total"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoTotalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botonAceptar">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Aceptar"/>
+        <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAceptarActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="botonCancelar">
+    <Component class="javax.swing.JButton" name="botonRechazar">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

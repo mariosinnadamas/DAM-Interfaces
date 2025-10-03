@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package formulario;
 
@@ -8,7 +8,9 @@ package formulario;
  *
  * @author mario
  */
-public class Formulario extends javax.swing.JPanel {
+public class Formulario extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Formulario.class.getName());
 
     /**
      * Creates new form Formulario
@@ -26,306 +28,384 @@ public class Formulario extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        codigo = new javax.swing.JLabel();
+        nif = new javax.swing.JLabel();
+        nombre = new javax.swing.JLabel();
+        apellidos = new javax.swing.JLabel();
+        domicilio = new javax.swing.JLabel();
+        cp = new javax.swing.JLabel();
+        localidad = new javax.swing.JLabel();
+        telefono = new javax.swing.JLabel();
+        movil = new javax.swing.JLabel();
+        fax = new javax.swing.JLabel();
+        mail = new javax.swing.JLabel();
+        total = new javax.swing.JLabel();
         textoCodigo = new javax.swing.JTextField();
-        textoNIF = new javax.swing.JTextField();
-        textoNIF2 = new javax.swing.JTextField();
+        textoNif = new javax.swing.JTextField();
+        textoNif2 = new javax.swing.JTextField();
         textoNombre = new javax.swing.JTextField();
         textoApellidos = new javax.swing.JTextField();
         textoDomicilio = new javax.swing.JTextField();
-        textoCP = new javax.swing.JTextField();
+        textoCp = new javax.swing.JTextField();
         textoLocalidad = new javax.swing.JTextField();
         textoTelefono = new javax.swing.JTextField();
         textoMovil = new javax.swing.JTextField();
         textoFax = new javax.swing.JTextField();
-        textoEmail = new javax.swing.JTextField();
+        textoMail = new javax.swing.JTextField();
         textoTotal = new javax.swing.JTextField();
-        nombre = new javax.swing.JLabel();
-        NIF = new javax.swing.JLabel();
-        Codigo = new javax.swing.JLabel();
-        Apellidos = new javax.swing.JLabel();
-        Domicilio = new javax.swing.JLabel();
-        CP = new javax.swing.JLabel();
-        Localidad = new javax.swing.JLabel();
-        Telefonol = new javax.swing.JLabel();
-        Movil = new javax.swing.JLabel();
-        Fax = new javax.swing.JLabel();
-        Email = new javax.swing.JLabel();
-        Total = new javax.swing.JLabel();
         botonAceptar = new javax.swing.JButton();
-        botonCancelar = new javax.swing.JButton();
+        botonRechazar = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 204));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        textoCodigo.setBackground(new java.awt.Color(255, 255, 255));
-        textoCodigo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        codigo.setText("Código");
 
-        textoNIF.setBackground(new java.awt.Color(255, 255, 255));
-        textoNIF.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        nif.setText("N.I.F");
 
-        textoNIF2.setBackground(new java.awt.Color(255, 255, 255));
-        textoNIF2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        nombre.setText("Nombre");
 
-        textoNombre.setBackground(new java.awt.Color(255, 255, 255));
-        textoNombre.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        apellidos.setText("Apellidos");
 
-        textoApellidos.setBackground(new java.awt.Color(255, 255, 255));
-        textoApellidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        domicilio.setText("Domicilio");
 
-        textoDomicilio.setBackground(new java.awt.Color(255, 255, 255));
-        textoDomicilio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cp.setText("C.P");
 
-        textoCP.setBackground(new java.awt.Color(255, 255, 255));
-        textoCP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        localidad.setText("Localidad");
 
-        textoLocalidad.setBackground(new java.awt.Color(255, 255, 255));
-        textoLocalidad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        telefono.setText("Telefono");
 
-        textoTelefono.setBackground(new java.awt.Color(255, 255, 255));
-        textoTelefono.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        movil.setText("Movil");
 
-        textoMovil.setBackground(new java.awt.Color(255, 255, 255));
-        textoMovil.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fax.setText("Fax");
+
+        mail.setText("e-mail");
+
+        total.setText("Total");
+
+        textoCodigo.setText("jTextField1");
+        textoCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoCodigoActionPerformed(evt);
+            }
+        });
+
+        textoNif.setText("jTextField1");
+        textoNif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoNifActionPerformed(evt);
+            }
+        });
+
+        textoNif2.setText("jTextField1");
+        textoNif2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoNif2ActionPerformed(evt);
+            }
+        });
+
+        textoNombre.setText("jTextField1");
+        textoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoNombreActionPerformed(evt);
+            }
+        });
+
+        textoApellidos.setText("jTextField1");
+        textoApellidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoApellidosActionPerformed(evt);
+            }
+        });
+
+        textoDomicilio.setText("jTextField1");
+        textoDomicilio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoDomicilioActionPerformed(evt);
+            }
+        });
+
+        textoCp.setText("jTextField1");
+        textoCp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoCpActionPerformed(evt);
+            }
+        });
+
+        textoLocalidad.setText("jTextField1");
+        textoLocalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoLocalidadActionPerformed(evt);
+            }
+        });
+
+        textoTelefono.setText("jTextField1");
+        textoTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoTelefonoActionPerformed(evt);
+            }
+        });
+
+        textoMovil.setText("jTextField1");
         textoMovil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoMovilActionPerformed(evt);
             }
         });
 
-        textoFax.setBackground(new java.awt.Color(255, 255, 255));
-        textoFax.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        textoEmail.setBackground(new java.awt.Color(255, 255, 255));
-        textoEmail.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        textoTotal.setBackground(new java.awt.Color(255, 255, 255));
-        textoTotal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        nombre.setForeground(new java.awt.Color(0, 0, 0));
-        nombre.setText("Nombre");
-
-        NIF.setForeground(new java.awt.Color(0, 0, 0));
-        NIF.setText("NIF");
-
-        Codigo.setForeground(new java.awt.Color(0, 0, 0));
-        Codigo.setText("Código");
-
-        Apellidos.setForeground(new java.awt.Color(0, 0, 0));
-        Apellidos.setText("Apellidos");
-
-        Domicilio.setForeground(new java.awt.Color(0, 0, 0));
-        Domicilio.setText("Domicilio");
-
-        CP.setForeground(new java.awt.Color(0, 0, 0));
-        CP.setText("CP");
-
-        Localidad.setForeground(new java.awt.Color(0, 0, 0));
-        Localidad.setText("Localidad");
-
-        Telefonol.setForeground(new java.awt.Color(0, 0, 0));
-        Telefonol.setText("Teléfono");
-
-        Movil.setForeground(new java.awt.Color(0, 0, 0));
-        Movil.setText("Móvil");
-
-        Fax.setForeground(new java.awt.Color(0, 0, 0));
-        Fax.setText("Fax");
-
-        Email.setForeground(new java.awt.Color(0, 0, 0));
-        Email.setText("E-mail");
-
-        Total.setForeground(new java.awt.Color(0, 0, 0));
-        Total.setText("Total");
-
-        botonAceptar.setBackground(new java.awt.Color(255, 255, 255));
-        botonAceptar.setForeground(new java.awt.Color(0, 0, 0));
-        botonAceptar.setText("Aceptar");
-        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+        textoFax.setText("jTextField1");
+        textoFax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAceptarActionPerformed(evt);
+                textoFaxActionPerformed(evt);
             }
         });
 
-        botonCancelar.setBackground(new java.awt.Color(255, 255, 255));
-        botonCancelar.setForeground(new java.awt.Color(0, 0, 0));
-        botonCancelar.setText("Cancelar");
-        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+        textoMail.setText("jTextField1");
+        textoMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCancelarActionPerformed(evt);
+                textoMailActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        textoTotal.setText("jTextField1");
+        textoTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoTotalActionPerformed(evt);
+            }
+        });
+
+        botonAceptar.setText("jButton1");
+
+        botonRechazar.setText("jButton1");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Domicilio)
-                        .addComponent(Apellidos)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Codigo))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(NIF)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(textoNIF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(textoNIF2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(47, 47, 47)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(nombre)
-                                .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(textoApellidos)
-                        .addComponent(textoDomicilio))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CP)
-                            .addComponent(textoCP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Localidad)
-                            .addComponent(textoLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(domicilio)
+                                .addGap(48, 48, 48))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Telefonol)
-                                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(codigo)
+                                    .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(23, 23, 23)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(nif)
+                                .addGap(119, 119, 119)
+                                .addComponent(nombre))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(textoNif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textoNif2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Movil)
-                                    .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(Email))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Fax)
-                            .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(Total))))
+                                .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(textoLocalidad))
+                    .addComponent(textoDomicilio)
+                    .addComponent(textoCp, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(mail)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(total))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(telefono)
+                                .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(42, 42, 42)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(movil)
+                                .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(35, 35, 35)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(fax)
+                                .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(cp)
+                        .addGap(119, 119, 119)
+                        .addComponent(localidad))
+                    .addComponent(apellidos)
+                    .addComponent(textoApellidos)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(botonAceptar)
-                            .addComponent(textoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoTotal)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(botonCancelar)))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                            .addGap(23, 23, 23)
+                            .addComponent(botonRechazar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(61, 61, 61)
+                            .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombre)
-                    .addComponent(NIF)
-                    .addComponent(Codigo))
+                    .addComponent(codigo)
+                    .addComponent(nif)
+                    .addComponent(nombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoNIF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoNIF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoNif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoNif2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(apellidos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(domicilio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cp)
+                    .addComponent(localidad))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoCp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Apellidos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Domicilio)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textoDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(CP)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textoCP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Localidad)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textoLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Movil)
-                                    .addComponent(Telefonol))
-                                .addGap(27, 27, 27))))
-                    .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Fax)
-                        .addGap(27, 27, 27)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(telefono)
+                    .addComponent(movil)
+                    .addComponent(fax))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(textoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Email)
-                            .addComponent(Total))
-                        .addGap(27, 27, 27)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mail)
+                    .addComponent(total))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
-                    .addComponent(botonCancelar))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(botonRechazar))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoCodigoActionPerformed
+
+    private void textoNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNifActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoNifActionPerformed
+
+    private void textoNif2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNif2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoNif2ActionPerformed
+
+    private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoNombreActionPerformed
+
+    private void textoApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoApellidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoApellidosActionPerformed
+
+    private void textoDomicilioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDomicilioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoDomicilioActionPerformed
+
+    private void textoCpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoCpActionPerformed
+
+    private void textoLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoLocalidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoLocalidadActionPerformed
+
+    private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoTelefonoActionPerformed
 
     private void textoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMovilActionPerformed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_textoMovilActionPerformed
 
-    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+    private void textoFaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFaxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonAceptarActionPerformed
+    }//GEN-LAST:event_textoFaxActionPerformed
 
-    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+    private void textoMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonCancelarActionPerformed
+    }//GEN-LAST:event_textoMailActionPerformed
 
+    private void textoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoTotalActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new Formulario().setVisible(true));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Apellidos;
-    private javax.swing.JLabel CP;
-    private javax.swing.JLabel Codigo;
-    private javax.swing.JLabel Domicilio;
-    private javax.swing.JLabel Email;
-    private javax.swing.JLabel Fax;
-    private javax.swing.JLabel Localidad;
-    private javax.swing.JLabel Movil;
-    private javax.swing.JLabel NIF;
-    private javax.swing.JLabel Telefonol;
-    private javax.swing.JLabel Total;
+    private javax.swing.JLabel apellidos;
     private javax.swing.JButton botonAceptar;
-    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonRechazar;
+    private javax.swing.JLabel codigo;
+    private javax.swing.JLabel cp;
+    private javax.swing.JLabel domicilio;
+    private javax.swing.JLabel fax;
+    private javax.swing.JLabel localidad;
+    private javax.swing.JLabel mail;
+    private javax.swing.JLabel movil;
+    private javax.swing.JLabel nif;
     private javax.swing.JLabel nombre;
+    private javax.swing.JLabel telefono;
     private javax.swing.JTextField textoApellidos;
-    private javax.swing.JTextField textoCP;
     private javax.swing.JTextField textoCodigo;
+    private javax.swing.JTextField textoCp;
     private javax.swing.JTextField textoDomicilio;
-    private javax.swing.JTextField textoEmail;
     private javax.swing.JTextField textoFax;
     private javax.swing.JTextField textoLocalidad;
+    private javax.swing.JTextField textoMail;
     private javax.swing.JTextField textoMovil;
-    private javax.swing.JTextField textoNIF;
-    private javax.swing.JTextField textoNIF2;
+    private javax.swing.JTextField textoNif;
+    private javax.swing.JTextField textoNif2;
     private javax.swing.JTextField textoNombre;
     private javax.swing.JTextField textoTelefono;
     private javax.swing.JTextField textoTotal;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

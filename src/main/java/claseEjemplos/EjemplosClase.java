@@ -67,7 +67,7 @@ public class EjemplosClase extends javax.swing.JFrame {
     }//GEN-LAST:event_Texto1ActionPerformed
 
     
-    
+   
     /**
      * @param args the command line arguments
      */
