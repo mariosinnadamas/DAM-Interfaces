@@ -4,6 +4,9 @@
  */
 package formulario;
 
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mario
@@ -11,7 +14,9 @@ package formulario;
 public class Formulario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Formulario.class.getName());
-
+    
+//Variables booleanas para comprobar todo
+    boolean codigoComprobado = false;
     /**
      * Creates new form Formulario
      */
@@ -82,100 +87,97 @@ public class Formulario extends javax.swing.JFrame {
 
         total.setText("Total");
 
-        textoCodigo.setText("jTextField1");
         textoCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoCodigoActionPerformed(evt);
             }
         });
 
-        textoNif.setText("jTextField1");
         textoNif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoNifActionPerformed(evt);
             }
         });
 
-        textoNif2.setText("jTextField1");
         textoNif2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoNif2ActionPerformed(evt);
             }
         });
 
-        textoNombre.setText("jTextField1");
         textoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoNombreActionPerformed(evt);
             }
         });
 
-        textoApellidos.setText("jTextField1");
         textoApellidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoApellidosActionPerformed(evt);
             }
         });
 
-        textoDomicilio.setText("jTextField1");
         textoDomicilio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoDomicilioActionPerformed(evt);
             }
         });
 
-        textoCp.setText("jTextField1");
         textoCp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoCpActionPerformed(evt);
             }
         });
 
-        textoLocalidad.setText("jTextField1");
         textoLocalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoLocalidadActionPerformed(evt);
             }
         });
 
-        textoTelefono.setText("jTextField1");
         textoTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoTelefonoActionPerformed(evt);
             }
         });
 
-        textoMovil.setText("jTextField1");
         textoMovil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoMovilActionPerformed(evt);
             }
         });
 
-        textoFax.setText("jTextField1");
         textoFax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoFaxActionPerformed(evt);
             }
         });
 
-        textoMail.setText("jTextField1");
         textoMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoMailActionPerformed(evt);
             }
         });
 
-        textoTotal.setText("jTextField1");
         textoTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoTotalActionPerformed(evt);
             }
         });
 
-        botonAceptar.setText("jButton1");
+        botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptarActionPerformed(evt);
+            }
+        });
 
-        botonRechazar.setText("jButton1");
+        botonRechazar.setText("Cancelar");
+        botonRechazar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRechazarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,7 +185,7 @@ public class Formulario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -192,57 +194,59 @@ public class Formulario extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(codigo)
-                                    .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(23, 23, 23)))
+                                    .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nif)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(nif)
-                                .addGap(119, 119, 119)
-                                .addComponent(nombre))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(textoNif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textoNif2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(textoLocalidad))
-                    .addComponent(textoDomicilio)
+                                .addComponent(textoNif, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textoNif2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombre)))
                     .addComponent(textoCp, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(mail)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(total))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(telefono)
-                                .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(42, 42, 42)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(movil)
-                                .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(35, 35, 35)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(fax)
-                                .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(telefono)
+                            .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(movil)
+                            .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fax)
+                            .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cp)
                         .addGap(119, 119, 119)
                         .addComponent(localidad))
                     .addComponent(apellidos)
-                    .addComponent(textoApellidos)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(botonAceptar)
                             .addGap(23, 23, 23)
                             .addComponent(botonRechazar))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(61, 61, 61)
-                            .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(19, 19, 19))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(61, 61, 61))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(mail)
+                                    .addGap(271, 271, 271)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(total)
+                                .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(140, 140, 140)
+                            .addComponent(textoLocalidad, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                        .addComponent(textoDomicilio)
+                        .addComponent(textoApellidos)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,59 +304,230 @@ public class Formulario extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCodigoActionPerformed
         // TODO add your handling code here:
+        //5 numeros
+        
+        String texto = textoCodigo.getText();
+        if (!texto.matches("[0-9]{5}")){
+            textoCodigo.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            textoCodigo.setText("");
+            textoCodigo.setBackground(Color.white);
+            textoCodigo.requestFocus();
+        } else {
+            textoCodigo.addActionListener(e -> textoNif.requestFocus());
+        }
+                
     }//GEN-LAST:event_textoCodigoActionPerformed
 
     private void textoNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNifActionPerformed
         // TODO add your handling code here:
+        String texto = textoNif.getText();
+        if (!texto.matches("[0-9]{8}")) {
+            textoNif.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 8 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            textoNif.setText("");
+            textoNif.setBackground(Color.white);
+            textoNif.requestFocus();
+        } else {
+            textoNif.addActionListener(e -> textoNif2.requestFocus());
+        }
     }//GEN-LAST:event_textoNifActionPerformed
 
     private void textoNif2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNif2ActionPerformed
         // TODO add your handling code here:
+        String texto = textoNif2.getText();
+        if (!texto.matches("[A-Z]")) {
+            textoNif2.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una letra mayúscula","Error",JOptionPane.ERROR_MESSAGE);
+            textoNif2.setText("");
+            textoNif2.setBackground(Color.white);
+            textoNif2.requestFocus();
+        } else{
+            textoNif2.addActionListener(e -> textoNombre.requestFocus());
+        }
+        
     }//GEN-LAST:event_textoNif2ActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
         // TODO add your handling code here:
+        String texto = textoNombre.getText();
+        if (texto.isEmpty()) {
+            textoNombre.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            textoNombre.setText("");
+            textoNombre.setBackground(Color.white);
+            textoNombre.requestFocus();
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
+            textoNombre.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "El nombre debe contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
+            textoNombre.setText("");
+            textoNombre.setBackground(Color.white);
+            textoNombre.requestFocus();
+        } else{
+            textoNombre.addActionListener(e -> textoApellidos.requestFocus());
+        }
     }//GEN-LAST:event_textoNombreActionPerformed
 
     private void textoApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoApellidosActionPerformed
         // TODO add your handling code here:
+        String texto = textoApellidos.getText();
+        if (texto.isEmpty()) {
+            textoApellidos.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            textoApellidos.setText("");
+            textoApellidos.setBackground(Color.white);
+            textoApellidos.requestFocus();
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
+            textoApellidos.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Los apellidos deben contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
+            textoApellidos.setText("");
+            textoApellidos.setBackground(Color.white);
+            textoApellidos.requestFocus();
+        } else{
+            textoApellidos.addActionListener(e -> textoDomicilio.requestFocus());
+        }
     }//GEN-LAST:event_textoApellidosActionPerformed
 
     private void textoDomicilioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDomicilioActionPerformed
         // TODO add your handling code here:
+        String texto = textoDomicilio.getText();
+        if (texto.isEmpty()) {
+            textoDomicilio.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            textoDomicilio.setText("");
+            textoDomicilio.setBackground(Color.white);
+            textoDomicilio.requestFocus();
+        } else{
+            textoDomicilio.addActionListener(e -> textoCp.requestFocus());
+        }
     }//GEN-LAST:event_textoDomicilioActionPerformed
 
     private void textoCpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCpActionPerformed
         // TODO add your handling code here:
+        String cp = textoCp.getText();
+        if (!cp.matches("[0-9]{5}")) {
+            textoCp.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            textoCp.setText("");
+            textoCp.setBackground(Color.white);
+            textoCp.requestFocus();
+        } else{
+            textoCp.addActionListener(e -> textoLocalidad.requestFocus());
+        }
     }//GEN-LAST:event_textoCpActionPerformed
 
     private void textoLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoLocalidadActionPerformed
         // TODO add your handling code here:
+        String texto = textoLocalidad.getText();
+        if (texto.isEmpty()) {
+            textoLocalidad.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            textoLocalidad.setText("");
+            textoLocalidad.setBackground(Color.white);
+            textoLocalidad.requestFocus();
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
+            textoLocalidad.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "La localidad debe contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
+            textoLocalidad.setText("");
+            textoLocalidad.setBackground(Color.white);
+            textoLocalidad.requestFocus();
+        } else{
+            textoLocalidad.addActionListener(e -> textoTelefono.requestFocus());
+        }
     }//GEN-LAST:event_textoLocalidadActionPerformed
 
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
         // TODO add your handling code here:
+        String texto = textoTelefono.getText();
+        if (!texto.matches("[0-9]{9}")) {
+            textoTelefono.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            textoTelefono.setText("");
+            textoTelefono.setBackground(Color.white);
+            textoTelefono.requestFocus();
+        } else{
+            textoTelefono.addActionListener(e -> textoMovil.requestFocus());
+        }
     }//GEN-LAST:event_textoTelefonoActionPerformed
 
     private void textoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMovilActionPerformed
         // TODO add your handling code here:
+        String texto = textoMovil.getText();
+        if (!texto.matches("[0-9]{9}")) {
+            textoMovil.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            textoMovil.setText("");
+            textoMovil.setBackground(Color.white);
+            textoMovil.requestFocus();
+        } else{
+            textoMovil.addActionListener(e -> textoFax.requestFocus());
+        }
     }//GEN-LAST:event_textoMovilActionPerformed
 
     private void textoFaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFaxActionPerformed
         // TODO add your handling code here:
+        String texto = textoFax.getText();
+        if (!texto.matches("[0-9]{9}")) {
+            textoFax.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            textoFax.setText("");
+            textoFax.setBackground(Color.white);
+            textoFax.requestFocus();
+        } else{
+            textoFax.addActionListener(e -> textoMail.requestFocus());
+        }
     }//GEN-LAST:event_textoFaxActionPerformed
 
     private void textoMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMailActionPerformed
         // TODO add your handling code here:
+        String texto = textoMail.getText();
+        if (texto.isEmpty()) {
+            textoMail.setBackground(Color.red);
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            textoMail.setText("");
+            textoMail.setBackground(Color.white);
+            textoMail.requestFocus();
+        } else{
+            textoMail.addActionListener(e -> textoTotal.requestFocus());
+        }
     }//GEN-LAST:event_textoMailActionPerformed
 
     private void textoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTotalActionPerformed
         // TODO add your handling code here:
+        //Valor 0
+        textoTotal.setText("0");
+        textoTotal.addActionListener(e -> botonAceptar.requestFocus());
     }//GEN-LAST:event_textoTotalActionPerformed
+
+    private void botonRechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRechazarActionPerformed
+        // TODO add your handling code here:
+        textoCodigo.setText("");
+        textoNif.setText("");
+        textoNif2.setText("");
+        textoNombre.setText("");
+        textoApellidos.setText("");
+        textoDomicilio.setText("");
+        textoCp.setText("");
+        textoLocalidad.setText("");
+        textoTelefono.setText("");
+        textoMovil.setText("");
+        textoFax.setText("");
+        textoMail.setText("");
+        textoTotal.setText("");
+    }//GEN-LAST:event_botonRechazarActionPerformed
+
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        // TODO add your handling code here:
+        // Abrir ventana si todo ha ido bien
+        if (codigoComprobado == true) {
+            JOptionPane.showConfirmDialog(null, "Formulario completo correctamente", "Resumen",JOptionPane.OK_OPTION);
+        }
+    }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**
      * @param args the command line arguments
