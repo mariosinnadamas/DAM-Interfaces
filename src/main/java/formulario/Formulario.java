@@ -5,6 +5,8 @@
 package formulario;
 
 import java.awt.Color;
+import java.nio.file.Path;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +18,19 @@ public class Formulario extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Formulario.class.getName());
     
 //Variables booleanas para comprobar todo
-    boolean codigoComprobado = false;
+    boolean Codigocomprobado = false;
+    boolean nifComprobado = false;
+    boolean nif2Comprobado = false;
+    boolean nombreComprobado = false;
+    boolean apellidosComprobado = false;
+    boolean domicilioComprobado = false;
+    boolean cpComprobado = false;
+    boolean localidadComprobado = false;
+    boolean telefonoComprobado = false;
+    boolean movilComprobado = false;
+    boolean faxComprobado = false;
+    boolean mailComprobado = false;
+    
     /**
      * Creates new form Formulario
      */
@@ -320,10 +334,11 @@ public class Formulario extends javax.swing.JFrame {
             textoCodigo.requestFocus();
         } else {
             textoCodigo.addActionListener(e -> textoNif.requestFocus());
+            Codigocomprobado = true;
         }
                 
     }//GEN-LAST:event_textoCodigoActionPerformed
-
+    
     private void textoNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNifActionPerformed
         // TODO add your handling code here:
         String texto = textoNif.getText();
@@ -335,6 +350,7 @@ public class Formulario extends javax.swing.JFrame {
             textoNif.requestFocus();
         } else {
             textoNif.addActionListener(e -> textoNif2.requestFocus());
+            nifComprobado = true;
         }
     }//GEN-LAST:event_textoNifActionPerformed
 
@@ -349,6 +365,7 @@ public class Formulario extends javax.swing.JFrame {
             textoNif2.requestFocus();
         } else{
             textoNif2.addActionListener(e -> textoNombre.requestFocus());
+            nif2Comprobado = true;
         }
         
     }//GEN-LAST:event_textoNif2ActionPerformed
@@ -370,6 +387,7 @@ public class Formulario extends javax.swing.JFrame {
             textoNombre.requestFocus();
         } else{
             textoNombre.addActionListener(e -> textoApellidos.requestFocus());
+            nombreComprobado = true;
         }
     }//GEN-LAST:event_textoNombreActionPerformed
 
@@ -390,6 +408,7 @@ public class Formulario extends javax.swing.JFrame {
             textoApellidos.requestFocus();
         } else{
             textoApellidos.addActionListener(e -> textoDomicilio.requestFocus());
+            apellidosComprobado = true;
         }
     }//GEN-LAST:event_textoApellidosActionPerformed
 
@@ -404,6 +423,7 @@ public class Formulario extends javax.swing.JFrame {
             textoDomicilio.requestFocus();
         } else{
             textoDomicilio.addActionListener(e -> textoCp.requestFocus());
+            domicilioComprobado = true;
         }
     }//GEN-LAST:event_textoDomicilioActionPerformed
 
@@ -418,6 +438,7 @@ public class Formulario extends javax.swing.JFrame {
             textoCp.requestFocus();
         } else{
             textoCp.addActionListener(e -> textoLocalidad.requestFocus());
+            cpComprobado = true;
         }
     }//GEN-LAST:event_textoCpActionPerformed
 
@@ -438,6 +459,7 @@ public class Formulario extends javax.swing.JFrame {
             textoLocalidad.requestFocus();
         } else{
             textoLocalidad.addActionListener(e -> textoTelefono.requestFocus());
+            localidadComprobado = true;
         }
     }//GEN-LAST:event_textoLocalidadActionPerformed
 
@@ -452,6 +474,7 @@ public class Formulario extends javax.swing.JFrame {
             textoTelefono.requestFocus();
         } else{
             textoTelefono.addActionListener(e -> textoMovil.requestFocus());
+            telefonoComprobado = true;
         }
     }//GEN-LAST:event_textoTelefonoActionPerformed
 
@@ -466,6 +489,7 @@ public class Formulario extends javax.swing.JFrame {
             textoMovil.requestFocus();
         } else{
             textoMovil.addActionListener(e -> textoFax.requestFocus());
+            movilComprobado = true;
         }
     }//GEN-LAST:event_textoMovilActionPerformed
 
@@ -480,6 +504,7 @@ public class Formulario extends javax.swing.JFrame {
             textoFax.requestFocus();
         } else{
             textoFax.addActionListener(e -> textoMail.requestFocus());
+            faxComprobado = true;
         }
     }//GEN-LAST:event_textoFaxActionPerformed
 
@@ -494,6 +519,7 @@ public class Formulario extends javax.swing.JFrame {
             textoMail.requestFocus();
         } else{
             textoMail.addActionListener(e -> textoTotal.requestFocus());
+            mailComprobado = true;
         }
     }//GEN-LAST:event_textoMailActionPerformed
 
@@ -523,10 +549,37 @@ public class Formulario extends javax.swing.JFrame {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         // TODO add your handling code here:
-        // Abrir ventana si todo ha ido bien
-        if (codigoComprobado == true) {
-            JOptionPane.showConfirmDialog(null, "Formulario completo correctamente", "Resumen",JOptionPane.OK_OPTION);
+        
+        //Icono personalizado
+        Path p = Path.of("src", "main", "java", "formulario", "IconoVerde.jpg");
+        ImageIcon imagen = new ImageIcon(p.toString());
+        imagen = new ImageIcon(imagen.getImage().getScaledInstance(70, 70, 0));
+        
+// Abrir ventana si todo ha ido bien
+        if (Codigocomprobado && 
+                nifComprobado && 
+                nif2Comprobado && 
+                nombreComprobado && 
+                apellidosComprobado && 
+                domicilioComprobado && 
+                cpComprobado && 
+                localidadComprobado &&
+                telefonoComprobado &&
+                movilComprobado &&
+                faxComprobado && 
+                mailComprobado) {
+            JOptionPane.showMessageDialog(null, 
+                    "Todos los campos estan bien", 
+                    "¡Enhorabuena!",
+                    JOptionPane.INFORMATION_MESSAGE,
+                    imagen);
+        } else{
+            JOptionPane.showMessageDialog(null, 
+                    "Uno o más campos están mal, vuelve a escribirlos y cuando acabes pulsa enter para comprobar", 
+                    "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**
