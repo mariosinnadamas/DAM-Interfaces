@@ -4,6 +4,8 @@
  */
 package menu;
 
+import java.nio.file.Path;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,8 +21,29 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        redimensionarImg();
+        groupBox();
     }
-
+    //Metodo para redimensionar iconos
+    private void redimensionarImg(){
+        Path p = Path.of("src", "main", "java", "formulario", "IconoVerde.jpg");
+        Path p2 = Path.of("src", "main", "java", "formulario", "IconoRojo.png");
+        ImageIcon iconoReescalado = new ImageIcon(p.toString());
+        ImageIcon iconoReescalado2 = new ImageIcon(p2.toString());
+        iconoReescalado = new ImageIcon(iconoReescalado.getImage().getScaledInstance(70, 70, 0));
+        iconoReescalado2 = new ImageIcon(iconoReescalado2.getImage().getScaledInstance(70, 70, 0));
+        BotonIconoVerde.setIcon(iconoReescalado);
+        BotonIconoRojo.setIcon(iconoReescalado2);
+    }
+    //Metodo para ver las distintas funciones del GroupBox
+    private void groupBox(){
+        //Añade un item
+        lista.addItem("Tobias");
+        //Devuelve el índice del valor escogido
+        System.out.println(lista.getSelectedIndex()); 
+        
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,8 +57,13 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
+        lista = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
+        jToolBar1 = new javax.swing.JToolBar();
+        BotonIconoVerde = new javax.swing.JButton();
+        BotonIconoRojo = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -46,12 +74,12 @@ public class Menu extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenu6 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +92,8 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        lista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pan", "Agua", "Pistacho", "Jose" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -72,8 +102,9 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jRadioButton1))
-                .addContainerGap(317, Short.MAX_VALUE))
+                    .addComponent(jRadioButton1)
+                    .addComponent(lista, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(583, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,7 +113,9 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton1)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab1", jPanel1);
@@ -93,7 +126,7 @@ public class Menu extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -105,6 +138,34 @@ public class Menu extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("tab2", jPanel2);
+
+        jToolBar1.setRollover(true);
+
+        BotonIconoVerde.setText("Aceptar");
+        BotonIconoVerde.setToolTipText("");
+        BotonIconoVerde.setFocusable(false);
+        BotonIconoVerde.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BotonIconoVerde.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BotonIconoVerde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonIconoVerdeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(BotonIconoVerde);
+
+        BotonIconoRojo.setText("Cancelar");
+        BotonIconoRojo.setFocusable(false);
+        BotonIconoRojo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        BotonIconoRojo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(BotonIconoRojo);
+
+        jButton4.setText("jButton4");
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton4);
+
+        jTabbedPane1.addTab("tab3", jToolBar1);
 
         jButton1.setText("Aceptar");
 
@@ -136,20 +197,6 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Envios");
-
-        jMenu8.setText("En reparto");
-
-        jMenu9.setText("Prueba");
-        jMenu8.add(jMenu9);
-
-        jMenu2.add(jMenu8);
-
-        jMenu10.setText("Entregado");
-        jMenu2.add(jMenu10);
-
-        jMenuBar1.add(jMenu2);
-
         jMenu4.setText("Menu2");
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -165,6 +212,20 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMenu3);
+
+        jMenu2.setText("Envios");
+
+        jMenu8.setText("En reparto");
+
+        jMenu9.setText("Prueba");
+        jMenu8.add(jMenu9);
+
+        jMenu2.add(jMenu8);
+
+        jMenu10.setText("Entregado");
+        jMenu2.add(jMenu10);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -210,6 +271,11 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
+    private void BotonIconoVerdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIconoVerdeActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_BotonIconoVerdeActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -236,7 +302,10 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonIconoRojo;
+    private javax.swing.JButton BotonIconoVerde;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLabel1;
@@ -258,5 +327,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JComboBox<String> lista;
     // End of variables declaration//GEN-END:variables
 }
