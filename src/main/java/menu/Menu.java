@@ -40,9 +40,7 @@ public class Menu extends javax.swing.JFrame {
         //Añade un item
         lista.addItem("Tobias");
         //Devuelve el índice del valor escogido
-        System.out.println(lista.getSelectedIndex()); 
-        
-        
+        System.out.println(lista.getSelectedIndex());  
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,8 +54,9 @@ public class Menu extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        RadioA = new javax.swing.JRadioButton();
         lista = new javax.swing.JComboBox<>();
+        RadioB = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
@@ -85,14 +84,26 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel1.setText("Aguacate");
 
-        jRadioButton1.setText("Opcion A");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        RadioA.setText("Opcion A");
+        RadioA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                RadioAActionPerformed(evt);
             }
         });
 
         lista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pan", "Agua", "Pistacho", "Jose" }));
+        lista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaActionPerformed(evt);
+            }
+        });
+
+        RadioB.setText("Opcion B");
+        RadioB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RadioBActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,9 +113,12 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jRadioButton1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(RadioA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RadioB))
                     .addComponent(lista, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(583, Short.MAX_VALUE))
+                .addContainerGap(512, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +126,9 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RadioA)
+                    .addComponent(RadioB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(78, Short.MAX_VALUE))
@@ -233,7 +249,7 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -267,14 +283,23 @@ public class Menu extends javax.swing.JFrame {
         v.setVisible(true); //La mantiene visible
     }//GEN-LAST:event_jMenu4MouseClicked
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void RadioAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioAActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_RadioAActionPerformed
 
     private void BotonIconoVerdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIconoVerdeActionPerformed
         // TODO add your handling code here:
         
     }//GEN-LAST:event_BotonIconoVerdeActionPerformed
+
+    private void listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_listaActionPerformed
+
+    private void RadioBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RadioBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RadioBActionPerformed
     
     /**
      * @param args the command line arguments
@@ -304,6 +329,8 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonIconoRojo;
     private javax.swing.JButton BotonIconoVerde;
+    private javax.swing.JRadioButton RadioA;
+    private javax.swing.JRadioButton RadioB;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
@@ -322,7 +349,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
