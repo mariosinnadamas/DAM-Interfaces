@@ -1,0 +1,78 @@
+# =========================
+# Apache NetBeans (Java/JFrame)
+# Compatible con macOS y Windows
+# =========================
+
+# --- NetBeans ---
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+*.nb-gradle.xml
+
+# Archivos de cache y temporales
+*.class
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# --- Java ---
+*.jar
+*.war
+*.ear
+*.class
+*.iml
+out/
+target/
+
+# --- Dependencias (por si usas Maven o Gradle) ---
+/.mvn/
+/.gradle/
+/build/
+/target/
+
+# --- IDEs ---
+# Eclipse
+.project
+.classpath
+.settings/
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+*.iml
+# VSCode
+.vscode/
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+__MACOSX/
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Archivos personales ---
+*.orig
+*.old
+*.rej
+*.user
+*.lock
+*.zip
+*.tar.gz
+*.rar
+
+# --- Otros ---
+# Logs generales
+*.log
+# Archivos temporales del sistema
+~$*
