@@ -43,14 +43,7 @@
                   <Component id="ProcesaOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="BotonAniadir" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="ProcesaOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="BotonBuscar" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="BotonEliminar" min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="ProcesaOpcionC" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="BotonCancelar" min="-2" pref="90" max="-2" attributes="0"/>
                       </Group>
@@ -61,54 +54,58 @@
                               <Component id="EtiquetaProcesador" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="EtiquetaMemoria" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MemoriaOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MemoriaOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MemoriaOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MemoriaOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="EtiquetaMonitor" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MonitorOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MonitorOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MonitorOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MonitorOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="EtiquetaDiscoDuro" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DiscoDuroOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DiscoDuroOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DiscoDuroOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DiscoDuroOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="CheckSinto" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CheckWifi" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CheckGrabadora" min="-2" max="-2" attributes="0"/>
-                                      <Component id="EtiquetaDiscoDuro1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CheckBackUp" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Component id="textoNombre" min="-2" pref="152" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                                  <Component id="EtiquetaClientes" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="textoNombre" min="-2" pref="152" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                                          <Component id="EtiquetaClientes" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="comboLocalidad" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" min="-2" pref="144" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="comboLocalidad" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="144" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="128" pref="128" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="EtiquetaMemoria" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MemoriaOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MemoriaOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MemoriaOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MemoriaOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="EtiquetaMonitor" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MonitorOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MonitorOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MonitorOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="MonitorOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="EtiquetaDiscoDuro" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="DiscoDuroOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="DiscoDuroOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="DiscoDuroOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="DiscoDuroOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="CheckSinto" min="-2" max="-2" attributes="0"/>
+                              <Component id="CheckWifi" min="-2" max="-2" attributes="0"/>
+                              <Component id="CheckGrabadora" min="-2" max="-2" attributes="0"/>
+                              <Component id="EtiquetaDiscoDuro1" min="-2" max="-2" attributes="0"/>
+                              <Component id="CheckBackUp" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="BotonAniadir" min="-2" pref="86" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BotonBuscar" min="-2" pref="86" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BotonEliminar" min="-2" pref="86" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="BotonSalir" alignment="1" min="-2" pref="90" max="-2" attributes="0"/>
@@ -478,6 +475,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonEliminarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BotonCancelar">
       <Properties>
