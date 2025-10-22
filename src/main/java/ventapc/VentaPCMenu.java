@@ -29,6 +29,9 @@ public class VentaPCMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         GrupoProcesador = new javax.swing.ButtonGroup();
+        GrupoMemoria = new javax.swing.ButtonGroup();
+        GrupoMonitor = new javax.swing.ButtonGroup();
+        GrupoDiscoDuro = new javax.swing.ButtonGroup();
         EtiquetaClientes = new javax.swing.JLabel();
         textoNombre = new javax.swing.JTextField();
         EtiquetaNombre = new javax.swing.JLabel();
@@ -41,22 +44,49 @@ public class VentaPCMenu extends javax.swing.JFrame {
         EtiquetaMonitor = new javax.swing.JLabel();
         EtiquetaDiscoDuro = new javax.swing.JLabel();
         EtiquetaDiscoDuro1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        ProcesaOpcionA = new javax.swing.JRadioButton();
+        ProcesaOpcionB = new javax.swing.JRadioButton();
+        ProcesaOpcionC = new javax.swing.JRadioButton();
+        ProcesaOpcionD = new javax.swing.JRadioButton();
+        MemoriaOpcionA = new javax.swing.JRadioButton();
+        MemoriaOpcionB = new javax.swing.JRadioButton();
+        MemoriaOpcionC = new javax.swing.JRadioButton();
+        MemoriaOpcionD = new javax.swing.JRadioButton();
+        MonitorOpcionD = new javax.swing.JRadioButton();
+        MonitorOpcionA = new javax.swing.JRadioButton();
+        MonitorOpcionB = new javax.swing.JRadioButton();
+        MonitorOpcionC = new javax.swing.JRadioButton();
+        DiscoDuroOpcionD = new javax.swing.JRadioButton();
+        DiscoDuroOpcionA = new javax.swing.JRadioButton();
+        DiscoDuroOpcionB = new javax.swing.JRadioButton();
+        DiscoDuroOpcionC = new javax.swing.JRadioButton();
+        CheckGrabadora = new javax.swing.JCheckBox();
+        CheckWifi = new javax.swing.JCheckBox();
+        CheckSinto = new javax.swing.JCheckBox();
+        CheckBackUp = new javax.swing.JCheckBox();
+        BotonAniadir = new javax.swing.JButton();
+        BotonBuscar = new javax.swing.JButton();
+        BotonEliminar = new javax.swing.JButton();
+        BotonCancelar = new javax.swing.JButton();
+        BotonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Venta de ordenadores");
+        setName("Venta de ordenadores"); // NOI18N
 
         EtiquetaClientes.setText("Lista de clientes");
 
-        textoNombre.setText("jTextField1");
+        textoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoNombreActionPerformed(evt);
+            }
+        });
 
         EtiquetaNombre.setText("Nombre del cliente");
 
         EtiquetaLocalidad.setText("Localidad");
 
-        comboLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Villalba", "Alpedrete", "Galapagar", "Guadarrama", "Moralzarzal" }));
 
         jScrollPane1.setViewportView(listaClientes);
 
@@ -75,13 +105,88 @@ public class VentaPCMenu extends javax.swing.JFrame {
         EtiquetaDiscoDuro1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         EtiquetaDiscoDuro1.setText("Opciones");
 
-        jRadioButton1.setText("jRadioButton1");
+        GrupoProcesador.add(ProcesaOpcionA);
+        ProcesaOpcionA.setText("P4 3.0 Gb");
+        ProcesaOpcionA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProcesaOpcionAActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setText("jRadioButton1");
+        GrupoProcesador.add(ProcesaOpcionB);
+        ProcesaOpcionB.setText("P4 3.2 Gb");
+        ProcesaOpcionB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProcesaOpcionBActionPerformed(evt);
+            }
+        });
 
-        jRadioButton3.setText("jRadioButton1");
+        GrupoProcesador.add(ProcesaOpcionC);
+        ProcesaOpcionC.setText("P4 Celeron");
 
-        jRadioButton4.setText("jRadioButton1");
+        GrupoProcesador.add(ProcesaOpcionD);
+        ProcesaOpcionD.setText("AMD 650");
+
+        GrupoMemoria.add(MemoriaOpcionA);
+        MemoriaOpcionA.setText("128 Mb");
+
+        GrupoMemoria.add(MemoriaOpcionB);
+        MemoriaOpcionB.setText("256 Mb");
+
+        GrupoMemoria.add(MemoriaOpcionC);
+        MemoriaOpcionC.setText("512 Mb");
+
+        GrupoMemoria.add(MemoriaOpcionD);
+        MemoriaOpcionD.setText("1024 Mb");
+
+        GrupoMonitor.add(MonitorOpcionD);
+        MonitorOpcionD.setText("TFT 17''");
+
+        GrupoMonitor.add(MonitorOpcionA);
+        MonitorOpcionA.setText("15''");
+
+        GrupoMonitor.add(MonitorOpcionB);
+        MonitorOpcionB.setText("17''");
+
+        GrupoMonitor.add(MonitorOpcionC);
+        MonitorOpcionC.setText("TFT 15''");
+
+        GrupoDiscoDuro.add(DiscoDuroOpcionD);
+        DiscoDuroOpcionD.setText("200 Gb");
+
+        GrupoDiscoDuro.add(DiscoDuroOpcionA);
+        DiscoDuroOpcionA.setText("60 Gb");
+        DiscoDuroOpcionA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DiscoDuroOpcionAActionPerformed(evt);
+            }
+        });
+
+        GrupoDiscoDuro.add(DiscoDuroOpcionB);
+        DiscoDuroOpcionB.setText("80 Gb");
+
+        GrupoDiscoDuro.add(DiscoDuroOpcionC);
+        DiscoDuroOpcionC.setText("120 Gb");
+
+        CheckGrabadora.setSelected(true);
+        CheckGrabadora.setText("Grabadora DVD");
+
+        CheckWifi.setSelected(true);
+        CheckWifi.setText("Wifi");
+
+        CheckSinto.setText("Sintonizador TV");
+
+        CheckBackUp.setText("Backup/Restore");
+
+        BotonAniadir.setText("Añadir");
+
+        BotonBuscar.setText("Buscar");
+
+        BotonEliminar.setText("Eliminar");
+
+        BotonCancelar.setText("Cancelar");
+
+        BotonSalir.setText("Salir");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,35 +195,66 @@ public class VentaPCMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EtiquetaNombre)
-                            .addComponent(EtiquetaLocalidad)
-                            .addComponent(EtiquetaProcesador))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(88, 88, 88)
-                                        .addComponent(EtiquetaClientes))
-                                    .addComponent(comboLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(EtiquetaMemoria)
-                                .addGap(91, 91, 91)
-                                .addComponent(EtiquetaMonitor)
-                                .addGap(28, 28, 28)
-                                .addComponent(EtiquetaDiscoDuro)
-                                .addGap(18, 18, 18)
-                                .addComponent(EtiquetaDiscoDuro1))))
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(ProcesaOpcionA)
+                    .addComponent(ProcesaOpcionB)
+                    .addComponent(ProcesaOpcionD)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(BotonAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ProcesaOpcionC, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BotonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(EtiquetaNombre)
+                                .addComponent(EtiquetaLocalidad)
+                                .addComponent(EtiquetaProcesador))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(EtiquetaMemoria)
+                                        .addComponent(MemoriaOpcionA)
+                                        .addComponent(MemoriaOpcionB)
+                                        .addComponent(MemoriaOpcionC)
+                                        .addComponent(MemoriaOpcionD))
+                                    .addGap(39, 39, 39)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(EtiquetaMonitor)
+                                        .addComponent(MonitorOpcionD)
+                                        .addComponent(MonitorOpcionA)
+                                        .addComponent(MonitorOpcionB)
+                                        .addComponent(MonitorOpcionC))
+                                    .addGap(40, 40, 40)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(EtiquetaDiscoDuro)
+                                        .addComponent(DiscoDuroOpcionA)
+                                        .addComponent(DiscoDuroOpcionB)
+                                        .addComponent(DiscoDuroOpcionC)
+                                        .addComponent(DiscoDuroOpcionD))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(CheckSinto)
+                                        .addComponent(CheckWifi)
+                                        .addComponent(CheckGrabadora)
+                                        .addComponent(EtiquetaDiscoDuro1)
+                                        .addComponent(CheckBackUp))
+                                    .addGap(16, 16, 16))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(88, 88, 88)
+                                            .addComponent(EtiquetaClientes))
+                                        .addComponent(comboLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(BotonSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -144,19 +280,77 @@ public class VentaPCMenu extends javax.swing.JFrame {
                     .addComponent(EtiquetaDiscoDuro)
                     .addComponent(EtiquetaDiscoDuro1))
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ProcesaOpcionA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ProcesaOpcionB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ProcesaOpcionC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ProcesaOpcionD))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(MemoriaOpcionA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MemoriaOpcionB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MemoriaOpcionC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MemoriaOpcionD))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(MonitorOpcionA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MonitorOpcionB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MonitorOpcionC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MonitorOpcionD))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DiscoDuroOpcionA)
+                            .addComponent(CheckGrabadora))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DiscoDuroOpcionB)
+                            .addComponent(CheckWifi))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DiscoDuroOpcionC)
+                            .addComponent(CheckSinto))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DiscoDuroOpcionD)
+                            .addComponent(CheckBackUp))))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addComponent(BotonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ProcesaOpcionAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesaOpcionAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProcesaOpcionAActionPerformed
+
+    private void DiscoDuroOpcionAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiscoDuroOpcionAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DiscoDuroOpcionAActionPerformed
+
+    private void ProcesaOpcionBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesaOpcionBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProcesaOpcionBActionPerformed
+
+    private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +378,19 @@ public class VentaPCMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonAniadir;
+    private javax.swing.JButton BotonBuscar;
+    private javax.swing.JButton BotonCancelar;
+    private javax.swing.JButton BotonEliminar;
+    private javax.swing.JButton BotonSalir;
+    private javax.swing.JCheckBox CheckBackUp;
+    private javax.swing.JCheckBox CheckGrabadora;
+    private javax.swing.JCheckBox CheckSinto;
+    private javax.swing.JCheckBox CheckWifi;
+    private javax.swing.JRadioButton DiscoDuroOpcionA;
+    private javax.swing.JRadioButton DiscoDuroOpcionB;
+    private javax.swing.JRadioButton DiscoDuroOpcionC;
+    private javax.swing.JRadioButton DiscoDuroOpcionD;
     private javax.swing.JLabel EtiquetaClientes;
     private javax.swing.JLabel EtiquetaDiscoDuro;
     private javax.swing.JLabel EtiquetaDiscoDuro1;
@@ -192,12 +399,23 @@ public class VentaPCMenu extends javax.swing.JFrame {
     private javax.swing.JLabel EtiquetaMonitor;
     private javax.swing.JLabel EtiquetaNombre;
     private javax.swing.JLabel EtiquetaProcesador;
+    private javax.swing.ButtonGroup GrupoDiscoDuro;
+    private javax.swing.ButtonGroup GrupoMemoria;
+    private javax.swing.ButtonGroup GrupoMonitor;
     private javax.swing.ButtonGroup GrupoProcesador;
+    private javax.swing.JRadioButton MemoriaOpcionA;
+    private javax.swing.JRadioButton MemoriaOpcionB;
+    private javax.swing.JRadioButton MemoriaOpcionC;
+    private javax.swing.JRadioButton MemoriaOpcionD;
+    private javax.swing.JRadioButton MonitorOpcionA;
+    private javax.swing.JRadioButton MonitorOpcionB;
+    private javax.swing.JRadioButton MonitorOpcionC;
+    private javax.swing.JRadioButton MonitorOpcionD;
+    private javax.swing.JRadioButton ProcesaOpcionA;
+    private javax.swing.JRadioButton ProcesaOpcionB;
+    private javax.swing.JRadioButton ProcesaOpcionC;
+    private javax.swing.JRadioButton ProcesaOpcionD;
     private javax.swing.JComboBox<String> comboLocalidad;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaClientes;
     private javax.swing.JTextField textoNombre;

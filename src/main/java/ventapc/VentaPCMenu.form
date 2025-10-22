@@ -4,9 +4,17 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="GrupoProcesador">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="GrupoMemoria">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="GrupoMonitor">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="GrupoDiscoDuro">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Venta de ordenadores"/>
+    <Property name="name" type="java.lang.String" value="Venta de ordenadores" noResource="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -30,42 +38,80 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jRadioButton1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="EtiquetaNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="EtiquetaLocalidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="EtiquetaProcesador" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="textoNombre" min="-2" pref="152" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                                      <Component id="EtiquetaClientes" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="comboLocalidad" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" pref="144" max="-2" attributes="0"/>
+                  <Component id="ProcesaOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="ProcesaOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="ProcesaOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="BotonAniadir" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="ProcesaOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="EtiquetaMemoria" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                              <Component id="EtiquetaMonitor" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="EtiquetaDiscoDuro" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="EtiquetaDiscoDuro1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BotonBuscar" min="-2" pref="75" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="BotonEliminar" min="-2" pref="75" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="BotonCancelar" min="-2" pref="90" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="EtiquetaNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="EtiquetaLocalidad" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="EtiquetaProcesador" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="EtiquetaMemoria" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MemoriaOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MemoriaOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MemoriaOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MemoriaOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="EtiquetaMonitor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MonitorOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MonitorOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MonitorOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="MonitorOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="EtiquetaDiscoDuro" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="DiscoDuroOpcionA" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="DiscoDuroOpcionB" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="DiscoDuroOpcionC" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="DiscoDuroOpcionD" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="CheckSinto" min="-2" max="-2" attributes="0"/>
+                                      <Component id="CheckWifi" min="-2" max="-2" attributes="0"/>
+                                      <Component id="CheckGrabadora" min="-2" max="-2" attributes="0"/>
+                                      <Component id="EtiquetaDiscoDuro1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="CheckBackUp" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="textoNombre" min="-2" pref="152" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                                          <Component id="EtiquetaClientes" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="comboLocalidad" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" min="-2" pref="144" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="jRadioButton2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButton4" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="BotonSalir" alignment="1" min="-2" pref="90" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
@@ -99,14 +145,66 @@
                   <Component id="EtiquetaDiscoDuro1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="ProcesaOpcionA" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ProcesaOpcionB" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ProcesaOpcionC" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ProcesaOpcionD" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="MemoriaOpcionA" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MemoriaOpcionB" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MemoriaOpcionC" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MemoriaOpcionD" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="MonitorOpcionA" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MonitorOpcionB" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MonitorOpcionC" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MonitorOpcionD" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="DiscoDuroOpcionA" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CheckGrabadora" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="DiscoDuroOpcionB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CheckWifi" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="DiscoDuroOpcionC" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CheckSinto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="DiscoDuroOpcionD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CheckBackUp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="BotonAniadir" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="BotonBuscar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="BotonEliminar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="BotonCancelar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <Component id="BotonSalir" min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -118,9 +216,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoNombre">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoNombreActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="EtiquetaNombre">
       <Properties>
@@ -135,11 +233,12 @@
     <Component class="javax.swing.JComboBox" name="comboLocalidad">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="5">
+            <StringItem index="0" value="Villalba"/>
+            <StringItem index="1" value="Alpedrete"/>
+            <StringItem index="2" value="Galapagar"/>
+            <StringItem index="3" value="Guadarrama"/>
+            <StringItem index="4" value="Moralzarzal"/>
           </StringArray>
         </Property>
       </Properties>
@@ -206,24 +305,188 @@
         <Property name="text" type="java.lang.String" value="Opciones"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+    <Component class="javax.swing.JRadioButton" name="ProcesaOpcionA">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jRadioButton1"/>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoProcesador"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="P4 3.0 Gb"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ProcesaOpcionAActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="ProcesaOpcionB">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoProcesador"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="P4 3.2 Gb"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ProcesaOpcionBActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="ProcesaOpcionC">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoProcesador"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="P4 Celeron"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+    <Component class="javax.swing.JRadioButton" name="ProcesaOpcionD">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jRadioButton1"/>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoProcesador"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="AMD 650"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+    <Component class="javax.swing.JRadioButton" name="MemoriaOpcionA">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jRadioButton1"/>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMemoria"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="128 Mb"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+    <Component class="javax.swing.JRadioButton" name="MemoriaOpcionB">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jRadioButton1"/>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMemoria"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="256 Mb"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="MemoriaOpcionC">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMemoria"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="512 Mb"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="MemoriaOpcionD">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMemoria"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="1024 Mb"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="MonitorOpcionD">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMonitor"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="TFT 17&apos;&apos;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="MonitorOpcionA">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMonitor"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="15&apos;&apos;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="MonitorOpcionB">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMonitor"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="17&apos;&apos;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="MonitorOpcionC">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoMonitor"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="TFT 15&apos;&apos;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="DiscoDuroOpcionD">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoDiscoDuro"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="200 Gb"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="DiscoDuroOpcionA">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoDiscoDuro"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="60 Gb"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DiscoDuroOpcionAActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="DiscoDuroOpcionB">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoDiscoDuro"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="80 Gb"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="DiscoDuroOpcionC">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GrupoDiscoDuro"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="120 Gb"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckGrabadora">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Grabadora DVD"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckWifi">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Wifi"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckSinto">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sintonizador TV"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="CheckBackUp">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Backup/Restore"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotonAniadir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="A&#xf1;adir"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotonBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotonEliminar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotonCancelar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BotonSalir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
     </Component>
   </SubComponents>
