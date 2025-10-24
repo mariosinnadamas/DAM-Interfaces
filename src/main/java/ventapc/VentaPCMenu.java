@@ -4,6 +4,10 @@
  */
 package ventapc;
 
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author mario
@@ -17,8 +21,28 @@ public class VentaPCMenu extends javax.swing.JFrame {
      */
     public VentaPCMenu() {
         initComponents();
+        comboLocalidad.setEnabled(false);
+        BotonAniadir.setEnabled(false);
+        BotonBuscar.setEnabled(false);
+        BotonEliminar.setEnabled(false);
+        desactivarRadioButtonGroup();
+        
     }
-
+    //Metodo para desactivar los botones de Radio
+    private void desactivarRadioButtonGroup(){
+        //Array con los grupos
+        ButtonGroup[] grupos = {GrupoProcesador,GrupoMemoria, GrupoDiscoDuro,GrupoMonitor};
+        //Recorro el array
+        for (ButtonGroup grupo: grupos){
+            //
+            Enumeration<AbstractButton> botones = grupo.getElements();
+            while(botones.hasMoreElements()){
+                AbstractButton b = botones.nextElement();
+                b.setEnabled(false);
+            }
+        }
+       
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,6 +130,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
         EtiquetaDiscoDuro1.setText("Opciones");
 
         GrupoProcesador.add(ProcesaOpcionA);
+        ProcesaOpcionA.setSelected(true);
         ProcesaOpcionA.setText("P4 3.0 Gb");
         ProcesaOpcionA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +156,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
         MemoriaOpcionA.setText("128 Mb");
 
         GrupoMemoria.add(MemoriaOpcionB);
+        MemoriaOpcionB.setSelected(true);
         MemoriaOpcionB.setText("256 Mb");
 
         GrupoMemoria.add(MemoriaOpcionC);
@@ -149,9 +175,11 @@ public class VentaPCMenu extends javax.swing.JFrame {
         MonitorOpcionB.setText("17''");
 
         GrupoMonitor.add(MonitorOpcionC);
+        MonitorOpcionC.setSelected(true);
         MonitorOpcionC.setText("TFT 15''");
 
         GrupoDiscoDuro.add(DiscoDuroOpcionD);
+        DiscoDuroOpcionD.setSelected(true);
         DiscoDuroOpcionD.setText("200 Gb");
 
         GrupoDiscoDuro.add(DiscoDuroOpcionA);
