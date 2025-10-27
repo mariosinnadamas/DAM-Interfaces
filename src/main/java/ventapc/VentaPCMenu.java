@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ventapc;
 
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,16 +13,33 @@ public class VentaPCMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu.class.getName());
 
-    /**
-     * Creates new form VentaPCMenu
-     */
     public VentaPCMenu() {
         initComponents();
+        //Desactivar todos los botones
         comboLocalidad.setEnabled(false);
         BotonAniadir.setEnabled(false);
         BotonBuscar.setEnabled(false);
         BotonEliminar.setEnabled(false);
+        CheckWifi.setEnabled(false);
+        CheckBackUp.setEnabled(false);
+        CheckGrabadora.setEnabled(false);
+        CheckSinto.setEnabled(false);
         desactivarRadioButtonGroup();
+        
+        //Asignar foco a textoNombre
+        textoNombre.requestFocus();
+        
+        //Seleccionar predeterminados porque desde la UI devuelve null
+        ProcesaOpcionA.setSelected(true);
+        MemoriaOpcionD.setSelected(true);
+        MonitorOpcionD.setSelected(true);
+        DiscoDuroOpcionD.setSelected(true);
+        
+        //Asignar ActionCommand a cada boton
+        ProcesaOpcionA.setActionCommand("P4 3.0 Gb");
+        ProcesaOpcionB.setActionCommand("P4 3.2 Gb");
+        ProcesaOpcionC.setActionCommand("P4 Celeron");
+        ProcesaOpcionD.setActionCommand("AMD 650");
         
     }
     //Metodo para desactivar los botones de Radio
@@ -41,7 +55,33 @@ public class VentaPCMenu extends javax.swing.JFrame {
                 b.setEnabled(false);
             }
         }
-       
+    }
+    
+    //Metodo para activar todos los radioButton
+    private void activarRadioButtonGroup(){
+        //Array con los grupos
+        ButtonGroup[] grupos = {GrupoProcesador,GrupoMemoria, GrupoDiscoDuro,GrupoMonitor};
+        //Recorro el array
+        for (ButtonGroup grupo: grupos){
+            //
+            Enumeration<AbstractButton> botones = grupo.getElements();
+            while(botones.hasMoreElements()){
+                AbstractButton b = botones.nextElement();
+                b.setEnabled(true);
+            }
+        }
+    }
+    
+    //Metodo para activar todos los botones del formulario menos eliminar
+    private void activarTodo(){
+        comboLocalidad.setEnabled(true);
+        BotonAniadir.setEnabled(true);
+        BotonBuscar.setEnabled(true);
+        CheckWifi.setEnabled(true);
+        CheckBackUp.setEnabled(true);
+        CheckGrabadora.setEnabled(true);
+        CheckSinto.setEnabled(true);
+        activarRadioButtonGroup();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,21 +170,10 @@ public class VentaPCMenu extends javax.swing.JFrame {
         EtiquetaDiscoDuro1.setText("Opciones");
 
         GrupoProcesador.add(ProcesaOpcionA);
-        ProcesaOpcionA.setSelected(true);
         ProcesaOpcionA.setText("P4 3.0 Gb");
-        ProcesaOpcionA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProcesaOpcionAActionPerformed(evt);
-            }
-        });
 
         GrupoProcesador.add(ProcesaOpcionB);
         ProcesaOpcionB.setText("P4 3.2 Gb");
-        ProcesaOpcionB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProcesaOpcionBActionPerformed(evt);
-            }
-        });
 
         GrupoProcesador.add(ProcesaOpcionC);
         ProcesaOpcionC.setText("P4 Celeron");
@@ -156,7 +185,6 @@ public class VentaPCMenu extends javax.swing.JFrame {
         MemoriaOpcionA.setText("128 Mb");
 
         GrupoMemoria.add(MemoriaOpcionB);
-        MemoriaOpcionB.setSelected(true);
         MemoriaOpcionB.setText("256 Mb");
 
         GrupoMemoria.add(MemoriaOpcionC);
@@ -175,20 +203,13 @@ public class VentaPCMenu extends javax.swing.JFrame {
         MonitorOpcionB.setText("17''");
 
         GrupoMonitor.add(MonitorOpcionC);
-        MonitorOpcionC.setSelected(true);
         MonitorOpcionC.setText("TFT 15''");
 
         GrupoDiscoDuro.add(DiscoDuroOpcionD);
-        DiscoDuroOpcionD.setSelected(true);
         DiscoDuroOpcionD.setText("200 Gb");
 
         GrupoDiscoDuro.add(DiscoDuroOpcionA);
         DiscoDuroOpcionA.setText("60 Gb");
-        DiscoDuroOpcionA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DiscoDuroOpcionAActionPerformed(evt);
-            }
-        });
 
         GrupoDiscoDuro.add(DiscoDuroOpcionB);
         DiscoDuroOpcionB.setText("80 Gb");
@@ -207,6 +228,11 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckBackUp.setText("Backup/Restore");
 
         BotonAniadir.setText("Añadir");
+        BotonAniadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonAniadirActionPerformed(evt);
+            }
+        });
 
         BotonBuscar.setText("Buscar");
 
@@ -368,29 +394,27 @@ public class VentaPCMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ProcesaOpcionAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesaOpcionAActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProcesaOpcionAActionPerformed
-
-    private void DiscoDuroOpcionAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiscoDuroOpcionAActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DiscoDuroOpcionAActionPerformed
-
-    private void ProcesaOpcionBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesaOpcionBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProcesaOpcionBActionPerformed
-
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
-        // TODO add your handling code here:
+        String texto = textoNombre.getText();
+        if(!texto.matches("")){
+            activarTodo();
+            comboLocalidad.requestFocus();
+        }
     }//GEN-LAST:event_textoNombreActionPerformed
 
     private void BotonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotonEliminarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void BotonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAniadirActionPerformed
+        String nombre = textoNombre.getText();
+        String localidad = comboLocalidad.getSelectedItem().toString();
+        String procesador = GrupoProcesador.getSelection().getActionCommand();
+        String memoria = GrupoMemoria.getSelection().getActionCommand();
+        System.out.println(procesador);
+        System.out.println(memoria);
+    }//GEN-LAST:event_BotonAniadirActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
