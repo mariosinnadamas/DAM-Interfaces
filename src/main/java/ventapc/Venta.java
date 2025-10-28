@@ -1,6 +1,5 @@
 package ventapc;
 
-
 /**
  *
  * @author mario
@@ -112,7 +111,16 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "Venta{" + "nombre=" + nombre + ", localidad=" + localidad + ", procesaOpcion=" + procesaOpcion + ", memoriaOpcion=" + memoriaOpcion + ", monitorOpcion=" + monitorOpcion + ", discoDuroOpcion=" + discoDuroOpcion + ", grabadoraDVD=" + grabadoraDVD + ", wifi=" + wifi + ", sintonizadorTV=" + sintonizadorTV + ", backUp=" + backUp + '}';
+        return "Nombre = " + nombre + "\n" +
+                "Localidad = " + localidad + "\n" +
+                "Procesador = " + procesaOpcion + "\n" +
+                "Memoria = " + memoriaOpcion + "\n" +
+                "Monitor = " + monitorOpcion + "\n" +
+                "Disco Duro = " + discoDuroOpcion + "\n" +
+                "Grabadora DVD = " + grabadoraDVD + "\n" +
+                "Wifi = " + wifi + "\n" +
+                "SintonizadorTV = " + sintonizadorTV + "\n" +
+                "BackUp = " + backUp;
     }
     
     

@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +16,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu.class.getName());
     
     ArrayList<Venta>listaVentas = new ArrayList();
-    DefaultListModel<String> modeloListaClientes = new DefaultListModel<>();
+    DefaultListModel<String> modeloListaVentas = new DefaultListModel<>();
     
     public VentaPCMenu() {
         initComponents();
@@ -61,16 +62,15 @@ public class VentaPCMenu extends javax.swing.JFrame {
         DiscoDuroOpcionD.setActionCommand("200 Gb");
         
         //Añado la lista como modelo
-        listaClientes.setModel(modeloListaClientes);
-        
+        listaClientes.setModel(modeloListaVentas);
     }
+    
     //Metodo para desactivar los botones de Radio
     private void desactivarRadioButtonGroup(){
         //Array con los grupos
         ButtonGroup[] grupos = {GrupoProcesador,GrupoMemoria, GrupoDiscoDuro,GrupoMonitor};
         //Recorro el array
         for (ButtonGroup grupo: grupos){
-            //
             Enumeration<AbstractButton> botones = grupo.getElements();
             while(botones.hasMoreElements()){
                 AbstractButton b = botones.nextElement();
@@ -258,6 +258,11 @@ public class VentaPCMenu extends javax.swing.JFrame {
         });
 
         BotonBuscar.setText("Buscar");
+        BotonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarActionPerformed(evt);
+            }
+        });
 
         BotonEliminar.setText("Eliminar");
         BotonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -442,9 +447,30 @@ public class VentaPCMenu extends javax.swing.JFrame {
         boolean backup = CheckBackUp.isSelected();
         Venta venta = new Venta(nombre,localidad,procesador,memoria,monitor,hdd,grabadora,wifi,sintonizador,backup);
         listaVentas.add(venta);
-        modeloListaClientes.addElement(nombre);
+        modeloListaVentas.addElement(nombre);
+        
+        //Reseteo el formulario
         textoNombre.setText("");
+        BotonAniadir.setEnabled(false);
+        BotonBuscar.setEnabled(false);
+        BotonEliminar.setEnabled(false);
+        CheckWifi.setEnabled(false);
+        CheckBackUp.setEnabled(false);
+        CheckGrabadora.setEnabled(false);
+        CheckSinto.setEnabled(false);
+        desactivarRadioButtonGroup();
     }//GEN-LAST:event_BotonAniadirActionPerformed
+
+    private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
+        String nombre = textoNombre.getText();
+        //Hacer array nuevo para volcar aquellos usuarios que coincidan y mostrarlos en lista
+        for (Venta temp : listaVentas) {
+            if (nombre.equalsIgnoreCase(temp.getNombre())) {
+                JOptionPane.showMessageDialog(rootPane, temp);
+            }
+        }
+        
+    }//GEN-LAST:event_BotonBuscarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
