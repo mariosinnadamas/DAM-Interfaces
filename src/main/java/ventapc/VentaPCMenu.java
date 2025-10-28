@@ -424,7 +424,10 @@ public class VentaPCMenu extends javax.swing.JFrame {
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
         String texto = textoNombre.getText();
-        if(!texto.matches("")){
+        if (!texto.matches("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]{1,15}$")){
+            JOptionPane.showMessageDialog(this, "El nombre no es válido. \n" + 
+                    "Debe contener solo letras y un máximo de 15 carácteres", "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } else{
             activarTodo();
             comboLocalidad.requestFocus();
         }
@@ -459,17 +462,50 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckGrabadora.setEnabled(false);
         CheckSinto.setEnabled(false);
         desactivarRadioButtonGroup();
+        textoNombre.requestFocus();
     }//GEN-LAST:event_BotonAniadirActionPerformed
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
         String nombre = textoNombre.getText();
-        //Hacer array nuevo para volcar aquellos usuarios que coincidan y mostrarlos en lista
+        ArrayList<Venta> listaClientesRepe = new ArrayList();
+        //Añado los clientes que coincidan con el nombre del JText a una nueva lista
         for (Venta temp : listaVentas) {
             if (nombre.equalsIgnoreCase(temp.getNombre())) {
-                JOptionPane.showMessageDialog(rootPane, temp);
+                listaClientesRepe.add(temp);
             }
         }
+        //Si la lista nueva esta vacía significa que no hay nadie
+        if (listaClientesRepe.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No se ha encontrado ninguna compra a nombre de " + nombre);
+        }
         
+        int contador = 0;
+        //Recorro la lista nueva mostrando una ventana en cada caso hasta que no se da a sí
+        boolean seguirBuscando = true;
+
+    while (seguirBuscando && contador < listaClientesRepe.size()) {
+        Venta v = listaClientesRepe.get(contador);
+        JOptionPane.showMessageDialog(this, v, 
+                "Venta " + (contador + 1) + " de " + listaClientesRepe.size(),
+                JOptionPane.INFORMATION_MESSAGE);
+        contador++;
+
+        // Si todavía quedan más ventas, pregunto si quiere seguir
+        if (contador < listaClientesRepe.size()) {
+            int respuesta = JOptionPane.showConfirmDialog(
+                this,
+                "¿Desea ver la siguiente venta del cliente?",
+                "Continuar búsqueda",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (respuesta != JOptionPane.YES_OPTION) {
+                seguirBuscando = false; // sale del bucle
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay más ventas de este cliente.");
+        }
+    }
     }//GEN-LAST:event_BotonBuscarActionPerformed
 
     public static void main(String args[]) {
