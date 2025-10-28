@@ -1,9 +1,10 @@
 package ventapc;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JOptionPane;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -12,7 +13,10 @@ import javax.swing.JOptionPane;
 public class VentaPCMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu.class.getName());
-
+    
+    ArrayList<Venta>listaVentas = new ArrayList();
+    DefaultListModel<String> modeloListaClientes = new DefaultListModel<>();
+    
     public VentaPCMenu() {
         initComponents();
         //Desactivar todos los botones
@@ -40,6 +44,24 @@ public class VentaPCMenu extends javax.swing.JFrame {
         ProcesaOpcionB.setActionCommand("P4 3.2 Gb");
         ProcesaOpcionC.setActionCommand("P4 Celeron");
         ProcesaOpcionD.setActionCommand("AMD 650");
+        
+        MemoriaOpcionA.setActionCommand("128 Mb");
+        MemoriaOpcionB.setActionCommand("256 Mb");
+        MemoriaOpcionC.setActionCommand("512 Mb");
+        MemoriaOpcionD.setActionCommand("1024 Mb");
+        
+        MonitorOpcionA.setActionCommand("15''");
+        MonitorOpcionB.setActionCommand("17''");
+        MonitorOpcionC.setActionCommand("TFT 15''");
+        MonitorOpcionD.setActionCommand("TFT 17''");
+        
+        DiscoDuroOpcionA.setActionCommand("60 Gb");
+        DiscoDuroOpcionB.setActionCommand("80 Gb");
+        DiscoDuroOpcionC.setActionCommand("120 Gb");
+        DiscoDuroOpcionD.setActionCommand("200 Gb");
+        
+        //Añado la lista como modelo
+        listaClientes.setModel(modeloListaClientes);
         
     }
     //Metodo para desactivar los botones de Radio
@@ -83,6 +105,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckSinto.setEnabled(true);
         activarRadioButtonGroup();
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -411,8 +434,16 @@ public class VentaPCMenu extends javax.swing.JFrame {
         String localidad = comboLocalidad.getSelectedItem().toString();
         String procesador = GrupoProcesador.getSelection().getActionCommand();
         String memoria = GrupoMemoria.getSelection().getActionCommand();
-        System.out.println(procesador);
-        System.out.println(memoria);
+        String monitor = GrupoMonitor.getSelection().getActionCommand();
+        String hdd = GrupoDiscoDuro.getSelection().getActionCommand();
+        boolean grabadora=CheckGrabadora.isSelected();
+        boolean wifi = CheckWifi.isSelected();
+        boolean sintonizador = CheckSinto.isSelected();
+        boolean backup = CheckBackUp.isSelected();
+        Venta venta = new Venta(nombre,localidad,procesador,memoria,monitor,hdd,grabadora,wifi,sintonizador,backup);
+        listaVentas.add(venta);
+        modeloListaClientes.addElement(nombre);
+        textoNombre.setText("");
     }//GEN-LAST:event_BotonAniadirActionPerformed
 
     public static void main(String args[]) {

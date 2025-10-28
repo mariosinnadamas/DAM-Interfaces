@@ -1,6 +1,5 @@
 package ventapc;
 
-import java.util.List;
 
 /**
  *
@@ -13,16 +12,22 @@ public class Venta {
     private String memoriaOpcion;
     private String monitorOpcion;
     private String discoDuroOpcion;
-    private List<String> opciones;
+    private boolean grabadoraDVD;
+    private boolean wifi;
+    private boolean sintonizadorTV;
+    private boolean backUp;
 
-    public Venta(String nombre, String localidad, String procesaOpcion, String memoriaOpcion, String monitorOpcion, String discoDuroOpcion, List<String> opciones) {
+    public Venta(String nombre, String localidad, String procesaOpcion, String memoriaOpcion, String monitorOpcion, String discoDuroOpcion, boolean grabadoraDVD, boolean wifi, boolean sintonizadorTV, boolean backUp) {
         this.nombre = nombre;
         this.localidad = localidad;
         this.procesaOpcion = procesaOpcion;
         this.memoriaOpcion = memoriaOpcion;
         this.monitorOpcion = monitorOpcion;
         this.discoDuroOpcion = discoDuroOpcion;
-        this.opciones = opciones;
+        this.grabadoraDVD = grabadoraDVD;
+        this.wifi = wifi;
+        this.sintonizadorTV = sintonizadorTV;
+        this.backUp = backUp;
     }
 
     public String getNombre() {
@@ -73,22 +78,42 @@ public class Venta {
         this.discoDuroOpcion = discoDuroOpcion;
     }
 
-    public List<String> getOpciones() {
-        return opciones;
+    public boolean isGrabadoraDVD() {
+        return grabadoraDVD;
     }
 
-    public void setOpciones(List<String> opciones) {
-        this.opciones = opciones;
+    public void setGrabadoraDVD(boolean grabadoraDVD) {
+        this.grabadoraDVD = grabadoraDVD;
+    }
+
+    public boolean isWifi() {
+        return wifi;
+    }
+
+    public void setWifi(boolean wifi) {
+        this.wifi = wifi;
+    }
+
+    public boolean isSintonizadorTV() {
+        return sintonizadorTV;
+    }
+
+    public void setSintonizadorTV(boolean sintonizadorTV) {
+        this.sintonizadorTV = sintonizadorTV;
+    }
+
+    public boolean isBackUp() {
+        return backUp;
+    }
+
+    public void setBackUp(boolean backUp) {
+        this.backUp = backUp;
     }
 
     @Override
     public String toString() {
-        return "Venta{" + "nombre=" + nombre + 
-                ", localidad=" + localidad + 
-                ", procesaOpcion=" + procesaOpcion + 
-                ", memoriaOpcion=" + memoriaOpcion + 
-                ", monitorOpcion=" + monitorOpcion + 
-                ", discoDuroOpcion=" + discoDuroOpcion + 
-                ", opciones=" + opciones + '}';
+        return "Venta{" + "nombre=" + nombre + ", localidad=" + localidad + ", procesaOpcion=" + procesaOpcion + ", memoriaOpcion=" + memoriaOpcion + ", monitorOpcion=" + monitorOpcion + ", discoDuroOpcion=" + discoDuroOpcion + ", grabadoraDVD=" + grabadoraDVD + ", wifi=" + wifi + ", sintonizadorTV=" + sintonizadorTV + ", backUp=" + backUp + '}';
     }
+    
+    
 }
