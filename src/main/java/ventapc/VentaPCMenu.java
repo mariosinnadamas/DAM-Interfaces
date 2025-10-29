@@ -20,25 +20,11 @@ public class VentaPCMenu extends javax.swing.JFrame {
     
     public VentaPCMenu() {
         initComponents();
-        //Desactivar todos los botones
-        comboLocalidad.setEnabled(false);
-        BotonAniadir.setEnabled(false);
-        BotonBuscar.setEnabled(false);
-        BotonEliminar.setEnabled(false);
-        CheckWifi.setEnabled(false);
-        CheckBackUp.setEnabled(false);
-        CheckGrabadora.setEnabled(false);
-        CheckSinto.setEnabled(false);
-        desactivarRadioButtonGroup();
+        //Evito que puedan modificar el tamaño de la ventana
+        this.setResizable(false);
         
-        //Asignar foco a textoNombre
-        textoNombre.requestFocus();
-        
-        //Seleccionar predeterminados porque desde la UI devuelve null
-        ProcesaOpcionA.setSelected(true);
-        MemoriaOpcionD.setSelected(true);
-        MonitorOpcionD.setSelected(true);
-        DiscoDuroOpcionD.setSelected(true);
+        //Desactivar todos los botones, asigno el foco y establezco las opciones predeterminadas
+        resetFormulario();
         
         //Asignar ActionCommand a cada boton
         ProcesaOpcionA.setActionCommand("P4 3.0 Gb");
@@ -61,12 +47,15 @@ public class VentaPCMenu extends javax.swing.JFrame {
         DiscoDuroOpcionC.setActionCommand("120 Gb");
         DiscoDuroOpcionD.setActionCommand("200 Gb");
         
-        //Añado la lista como modelo
+        //Añado la lista como modelo para poder agregar elementos después
         listaClientes.setModel(modeloListaVentas);
+        
+        //Evito que se pueda cerrar el formulario con la X
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
-    //Metodo para desactivar los botones de Radio
-    private void desactivarRadioButtonGroup(){
+    //Metodo para modificar los botones de Radio
+    private void estadoRadioButtonGroup(boolean activar){
         //Array con los grupos
         ButtonGroup[] grupos = {GrupoProcesador,GrupoMemoria, GrupoDiscoDuro,GrupoMonitor};
         //Recorro el array
@@ -74,22 +63,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
             Enumeration<AbstractButton> botones = grupo.getElements();
             while(botones.hasMoreElements()){
                 AbstractButton b = botones.nextElement();
-                b.setEnabled(false);
-            }
-        }
-    }
-    
-    //Metodo para activar todos los radioButton
-    private void activarRadioButtonGroup(){
-        //Array con los grupos
-        ButtonGroup[] grupos = {GrupoProcesador,GrupoMemoria, GrupoDiscoDuro,GrupoMonitor};
-        //Recorro el array
-        for (ButtonGroup grupo: grupos){
-            //
-            Enumeration<AbstractButton> botones = grupo.getElements();
-            while(botones.hasMoreElements()){
-                AbstractButton b = botones.nextElement();
-                b.setEnabled(true);
+                b.setEnabled(activar);
             }
         }
     }
@@ -103,7 +77,46 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckBackUp.setEnabled(true);
         CheckGrabadora.setEnabled(true);
         CheckSinto.setEnabled(true);
-        activarRadioButtonGroup();
+        estadoRadioButtonGroup(true);
+    }
+    //Metodo para establecer las opciones predeterminadas
+    private void opcionesPredeterminadas(){
+        ProcesaOpcionA.setSelected(true);
+        MemoriaOpcionD.setSelected(true);
+        MonitorOpcionD.setSelected(true);
+        DiscoDuroOpcionD.setSelected(true);
+        comboLocalidad.setSelectedIndex(0);
+        CheckGrabadora.setSelected(true);
+        CheckWifi.setSelected(true);
+        CheckSinto.setSelected(false);
+        CheckBackUp.setSelected(false);
+    }
+    
+    //Metodo para resetear el formulario
+    private void resetFormulario(){
+        textoNombre.setText("");
+        BotonAniadir.setEnabled(false);
+        BotonBuscar.setEnabled(false);
+        BotonEliminar.setEnabled(false);
+        CheckWifi.setEnabled(false);
+        CheckBackUp.setEnabled(false);
+        CheckGrabadora.setEnabled(false);
+        CheckSinto.setEnabled(false);
+        comboLocalidad.setEnabled(false);
+        estadoRadioButtonGroup(false);
+        opcionesPredeterminadas();
+        textoNombre.requestFocus();
+    }
+    
+    //Metodo para seleccionar los RadioButons de un cliente seleccionado
+    private void seleccionarRadioButtons(ButtonGroup grupo, String actionCommand){
+        Enumeration<AbstractButton> botones = grupo.getElements();
+        while (botones.hasMoreElements()) {
+            AbstractButton b = botones.nextElement();
+            if (b.getActionCommand().equals(actionCommand)) {
+                b.setSelected(true);
+            }
+        }
     }
     
     /**
@@ -175,6 +188,11 @@ public class VentaPCMenu extends javax.swing.JFrame {
 
         comboLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Villalba", "Alpedrete", "Galapagar", "Guadarrama", "Moralzarzal" }));
 
+        listaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listaClientesMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaClientes);
 
         EtiquetaProcesador.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
@@ -272,8 +290,18 @@ public class VentaPCMenu extends javax.swing.JFrame {
         });
 
         BotonCancelar.setText("Cancelar");
+        BotonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonCancelarActionPerformed(evt);
+            }
+        });
 
         BotonSalir.setText("Salir");
+        BotonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -432,9 +460,29 @@ public class VentaPCMenu extends javax.swing.JFrame {
             comboLocalidad.requestFocus();
         }
     }//GEN-LAST:event_textoNombreActionPerformed
-
+    
     private void BotonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarActionPerformed
-        // TODO add your handling code here:
+        
+        int indice = listaClientes.getSelectedIndex();
+        String nombreSeleccionado = listaClientes.getSelectedValue();
+        if (indice == -1) {
+            JOptionPane.showMessageDialog(this, "No hay ningún cliente seleccionado", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int dec = JOptionPane.showConfirmDialog(this, 
+                "¿Seguro que quieres eliminar la venta seleccionada?", 
+                "Confirmar eliminar venta", 
+                JOptionPane.YES_NO_OPTION);
+        
+        if (dec == JOptionPane.YES_OPTION) {
+            //Elimino de ambas listas
+            listaVentas.remove(indice);
+            modeloListaVentas.remove(indice);
+            
+            //Reseteo el formulario
+            resetFormulario();
+        }
     }//GEN-LAST:event_BotonEliminarActionPerformed
 
     private void BotonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAniadirActionPerformed
@@ -453,60 +501,93 @@ public class VentaPCMenu extends javax.swing.JFrame {
         modeloListaVentas.addElement(nombre);
         
         //Reseteo el formulario
-        textoNombre.setText("");
-        BotonAniadir.setEnabled(false);
-        BotonBuscar.setEnabled(false);
-        BotonEliminar.setEnabled(false);
-        CheckWifi.setEnabled(false);
-        CheckBackUp.setEnabled(false);
-        CheckGrabadora.setEnabled(false);
-        CheckSinto.setEnabled(false);
-        desactivarRadioButtonGroup();
-        textoNombre.requestFocus();
+        resetFormulario();
     }//GEN-LAST:event_BotonAniadirActionPerformed
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
         String nombre = textoNombre.getText();
         ArrayList<Venta> listaClientesRepe = new ArrayList();
+        
         //Añado los clientes que coincidan con el nombre del JText a una nueva lista
         for (Venta temp : listaVentas) {
-            if (nombre.equalsIgnoreCase(temp.getNombre())) {
+            if (nombre.matches(temp.getNombre())) {
                 listaClientesRepe.add(temp);
             }
         }
+        
         //Si la lista nueva esta vacía significa que no hay nadie
         if (listaClientesRepe.isEmpty()){
             JOptionPane.showMessageDialog(this, "No se ha encontrado ninguna compra a nombre de " + nombre);
         }
         
+        //Recorro la lista nueva mostrando una ventana en cada caso que coincida la venta
         int contador = 0;
-        //Recorro la lista nueva mostrando una ventana en cada caso hasta que no se da a sí
         boolean seguirBuscando = true;
 
-    while (seguirBuscando && contador < listaClientesRepe.size()) {
-        Venta v = listaClientesRepe.get(contador);
-        JOptionPane.showMessageDialog(this, v, 
-                "Venta " + (contador + 1) + " de " + listaClientesRepe.size(),
-                JOptionPane.INFORMATION_MESSAGE);
-        contador++;
+        while (seguirBuscando && contador < listaClientesRepe.size()) {
+            Venta v = listaClientesRepe.get(contador);
+            JOptionPane.showMessageDialog(this, v, 
+                    "Venta " + (contador + 1) + " de " + listaClientesRepe.size(),
+                    JOptionPane.INFORMATION_MESSAGE);
+            contador++;
 
-        // Si todavía quedan más ventas, pregunto si quiere seguir
-        if (contador < listaClientesRepe.size()) {
-            int respuesta = JOptionPane.showConfirmDialog(
-                this,
-                "¿Desea ver la siguiente venta del cliente?",
-                "Continuar búsqueda",
-                JOptionPane.YES_NO_OPTION
-            );
+            // Si todavía quedan más ventas, pregunto si quiere seguir
+            if (contador < listaClientesRepe.size()) {
+                int respuesta = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Desea ver la siguiente venta del cliente?",
+                    "Continuar búsqueda",
+                    JOptionPane.YES_NO_OPTION
+                );
 
-            if (respuesta != JOptionPane.YES_OPTION) {
-                seguirBuscando = false; // sale del bucle
+                if (respuesta != JOptionPane.YES_OPTION) {
+                    seguirBuscando = false; // sale del bucle
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay más ventas de este cliente.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay más ventas de este cliente.");
         }
-    }
     }//GEN-LAST:event_BotonBuscarActionPerformed
+
+    private void listaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaClientesMousePressed
+        //Activo boton eliminar cuando selecciona un cliente y desactivo añadir y buscar
+        BotonEliminar.setEnabled(true);
+        BotonAniadir.setEnabled(false);
+        BotonBuscar.setEnabled(false);
+        
+        //Introduzco el nombre del cliente de la venta seleccionada en el JTextField
+        textoNombre.setText(listaClientes.getSelectedValue());
+        
+        //Asigno los datos de esa venta a cada campo del formulario
+        for (Venta temp : listaVentas) {
+            if (temp.getNombre().matches(textoNombre.getText())) {
+                comboLocalidad.setSelectedItem(temp.getLocalidad());
+                seleccionarRadioButtons(GrupoProcesador,temp.getProcesaOpcion());
+                seleccionarRadioButtons(GrupoMemoria,temp.getMemoriaOpcion());
+                seleccionarRadioButtons(GrupoMonitor,temp.getMonitorOpcion());
+                seleccionarRadioButtons(GrupoDiscoDuro,temp.getDiscoDuroOpcion());
+                CheckGrabadora.setSelected(temp.isGrabadoraDVD());
+                CheckWifi.setSelected(temp.isWifi());
+                CheckSinto.setSelected(temp.isSintonizadorTV());
+                CheckBackUp.setSelected(temp.isBackUp());
+            }
+        }
+    }//GEN-LAST:event_listaClientesMousePressed
+
+    private void BotonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarActionPerformed
+        resetFormulario();
+    }//GEN-LAST:event_BotonCancelarActionPerformed
+
+    private void BotonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSalirActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, 
+                "¿Desea salir del formulario?", 
+                "Confirmar salida", 
+                JOptionPane.YES_NO_OPTION);
+        
+        if (respuesta == JOptionPane.YES_OPTION) {
+            System.exit(0); //Cierra todo
+        }
+    }//GEN-LAST:event_BotonSalirActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
