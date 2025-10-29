@@ -455,6 +455,8 @@ public class VentaPCMenu extends javax.swing.JFrame {
         if (!texto.matches("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]{1,15}$")){
             JOptionPane.showMessageDialog(this, "El nombre no es válido. \n" + 
                     "Debe contener solo letras y un máximo de 15 carácteres", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            textoNombre.setText("");
+            resetFormulario(); //Por si ha introducido un nombre válido y luego uno mal
         } else{
             activarTodo();
             comboLocalidad.requestFocus();
