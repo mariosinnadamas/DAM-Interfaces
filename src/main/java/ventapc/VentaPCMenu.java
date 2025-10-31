@@ -465,6 +465,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
             textoNombre.setText("");
             resetFormulario(); //Por si ha introducido un nombre válido y luego uno mal
         } else{
+            
             activarTodo();
             comboLocalidad.requestFocus();
         }
@@ -505,10 +506,13 @@ public class VentaPCMenu extends javax.swing.JFrame {
         boolean wifi = CheckWifi.isSelected();
         boolean sintonizador = CheckSinto.isSelected();
         boolean backup = CheckBackUp.isSelected();
+        
         //Creo el objeto
         Venta venta = new Venta(nombre,localidad,procesador,memoria,monitor,hdd,grabadora,wifi,sintonizador,backup);
+        
         //Lo añado a la lista
         listaVentas.add(venta);
+        
         //Añado el elemento al modelo para que se vea en el JList
         modeloListaVentas.addElement(nombre);
         
@@ -568,23 +572,25 @@ public class VentaPCMenu extends javax.swing.JFrame {
         BotonAniadir.setEnabled(false);
         BotonBuscar.setEnabled(false);
         
+        //Almaceno el índice del JList seleccionado
+        int indice = listaClientes.getSelectedIndex();
+        if(indice == -1)return;
+        
+        //Como mi jlist y mi ArrayList estan parejos puedo simplemente seleccionar el índice
+        Venta temp = listaVentas.get(indice);
+        
         //Introduzco el nombre del cliente de la venta seleccionada en el JTextField
         textoNombre.setText(listaClientes.getSelectedValue());
         
-        //Asigno los datos de esa venta a cada campo del formulario
-        for (Venta temp : listaVentas) {
-            if (temp.getNombre().matches(textoNombre.getText())) {
-                comboLocalidad.setSelectedItem(temp.getLocalidad());
-                seleccionarRadioButtons(GrupoProcesador,temp.getProcesaOpcion());
-                seleccionarRadioButtons(GrupoMemoria,temp.getMemoriaOpcion());
-                seleccionarRadioButtons(GrupoMonitor,temp.getMonitorOpcion());
-                seleccionarRadioButtons(GrupoDiscoDuro,temp.getDiscoDuroOpcion());
-                CheckGrabadora.setSelected(temp.isGrabadoraDVD());
-                CheckWifi.setSelected(temp.isWifi());
-                CheckSinto.setSelected(temp.isSintonizadorTV());
-                CheckBackUp.setSelected(temp.isBackUp());
-            }
-        }
+        comboLocalidad.setSelectedItem(temp.getLocalidad());
+        seleccionarRadioButtons(GrupoProcesador,temp.getProcesaOpcion());
+        seleccionarRadioButtons(GrupoMemoria,temp.getMemoriaOpcion());
+        seleccionarRadioButtons(GrupoMonitor,temp.getMonitorOpcion());
+        seleccionarRadioButtons(GrupoDiscoDuro,temp.getDiscoDuroOpcion());
+        CheckGrabadora.setSelected(temp.isGrabadoraDVD());
+        CheckWifi.setSelected(temp.isWifi());
+        CheckSinto.setSelected(temp.isSintonizadorTV());
+        CheckBackUp.setSelected(temp.isBackUp());
     }//GEN-LAST:event_listaClientesMousePressed
 
     private void BotonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarActionPerformed
