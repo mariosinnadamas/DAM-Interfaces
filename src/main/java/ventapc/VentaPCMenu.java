@@ -14,8 +14,9 @@ import javax.swing.JOptionPane;
 public class VentaPCMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu.class.getName());
-    
+    //Arraylist en la que almacenaré las ventas
     ArrayList<Venta>listaVentas = new ArrayList();
+    //Modelo de lista ventas para poder manipular datos en el JList
     DefaultListModel<String> modeloListaVentas = new DefaultListModel<>();
     
     public VentaPCMenu() {
@@ -60,8 +61,10 @@ public class VentaPCMenu extends javax.swing.JFrame {
         ButtonGroup[] grupos = {GrupoProcesador,GrupoMemoria, GrupoDiscoDuro,GrupoMonitor};
         //Recorro el array
         for (ButtonGroup grupo: grupos){
+            //Creo una lista de botones del grupo seleccionado
             Enumeration<AbstractButton> botones = grupo.getElements();
             while(botones.hasMoreElements()){
+                //Creo un abstractButton y lo activo
                 AbstractButton b = botones.nextElement();
                 b.setEnabled(activar);
             }
@@ -110,9 +113,12 @@ public class VentaPCMenu extends javax.swing.JFrame {
     
     //Metodo para seleccionar los RadioButons de un cliente seleccionado
     private void seleccionarRadioButtons(ButtonGroup grupo, String actionCommand){
+        //Hago una lista de botones del grupo pasado por parámetro
         Enumeration<AbstractButton> botones = grupo.getElements();
         while (botones.hasMoreElements()) {
+            //Creo un boton
             AbstractButton b = botones.nextElement();
+            //Si coincide el action comand del boton con el pasado por parámetro selecciono el botón
             if (b.getActionCommand().equals(actionCommand)) {
                 b.setSelected(true);
             }
@@ -452,6 +458,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
         String texto = textoNombre.getText();
+        //Me aseguro de que no tenga simbología y tenga de 1 a 15 carácteres
         if (!texto.matches("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]{1,15}$")){
             JOptionPane.showMessageDialog(this, "El nombre no es válido. \n" + 
                     "Debe contener solo letras y un máximo de 15 carácteres", "Error de validación", JOptionPane.ERROR_MESSAGE);
@@ -464,9 +471,8 @@ public class VentaPCMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_textoNombreActionPerformed
     
     private void BotonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarActionPerformed
-        
+        //Elimino por índice porque si lo hago por nombre puedo eliminar varias ventas del mismo cliente sin querer
         int indice = listaClientes.getSelectedIndex();
-        String nombreSeleccionado = listaClientes.getSelectedValue();
         if (indice == -1) {
             JOptionPane.showMessageDialog(this, "No hay ningún cliente seleccionado", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
@@ -488,6 +494,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonEliminarActionPerformed
 
     private void BotonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAniadirActionPerformed
+        //Creo variables y guardo los valores dentro
         String nombre = textoNombre.getText();
         String localidad = comboLocalidad.getSelectedItem().toString();
         String procesador = GrupoProcesador.getSelection().getActionCommand();
@@ -498,8 +505,11 @@ public class VentaPCMenu extends javax.swing.JFrame {
         boolean wifi = CheckWifi.isSelected();
         boolean sintonizador = CheckSinto.isSelected();
         boolean backup = CheckBackUp.isSelected();
+        //Creo el objeto
         Venta venta = new Venta(nombre,localidad,procesador,memoria,monitor,hdd,grabadora,wifi,sintonizador,backup);
+        //Lo añado a la lista
         listaVentas.add(venta);
+        //Añado el elemento al modelo para que se vea en el JList
         modeloListaVentas.addElement(nombre);
         
         //Reseteo el formulario
@@ -508,9 +518,10 @@ public class VentaPCMenu extends javax.swing.JFrame {
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
         String nombre = textoNombre.getText();
+        //Creo una nueva lista por si hay varia sventas de un mismo cliente
         ArrayList<Venta> listaClientesRepe = new ArrayList();
         
-        //Añado los clientes que coincidan con el nombre del JText a una nueva lista
+        //Añado los clientes que coincidan con el nombre del JText a la nueva lista
         for (Venta temp : listaVentas) {
             if (nombre.matches(temp.getNombre())) {
                 listaClientesRepe.add(temp);
