@@ -465,7 +465,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
             textoNombre.setText("");
             resetFormulario(); //Por si ha introducido un nombre válido y luego uno mal
         } else{
-            
+            opcionesPredeterminadas();
             activarTodo();
             comboLocalidad.requestFocus();
         }
@@ -522,7 +522,8 @@ public class VentaPCMenu extends javax.swing.JFrame {
 
     private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
         String nombre = textoNombre.getText();
-        //Creo una nueva lista por si hay varia sventas de un mismo cliente
+        
+        //Creo una nueva lista por si hay varias ventas de un mismo cliente
         ArrayList<Venta> listaClientesRepe = new ArrayList();
         
         //Añado los clientes que coincidan con el nombre del JText a la nueva lista
@@ -540,12 +541,30 @@ public class VentaPCMenu extends javax.swing.JFrame {
         //Recorro la lista nueva mostrando una ventana en cada caso que coincida la venta
         int contador = 0;
         boolean seguirBuscando = true;
-
+        
+        //Desactivo todo lo necesario
+        BotonAniadir.setEnabled(false);
+        estadoRadioButtonGroup(false);
+        CheckWifi.setEnabled(false);
+        CheckBackUp.setEnabled(false);
+        CheckGrabadora.setEnabled(false);
+        CheckSinto.setEnabled(false);
+        comboLocalidad.setEnabled(false);
+        
         while (seguirBuscando && contador < listaClientesRepe.size()) {
             Venta v = listaClientesRepe.get(contador);
-            JOptionPane.showMessageDialog(this, v, 
-                    "Venta " + (contador + 1) + " de " + listaClientesRepe.size(),
-                    JOptionPane.INFORMATION_MESSAGE);
+            
+            //Selecciono los elementos
+            comboLocalidad.setSelectedItem(v.getLocalidad());
+            seleccionarRadioButtons(GrupoProcesador,v.getProcesaOpcion());
+            seleccionarRadioButtons(GrupoMemoria,v.getMemoriaOpcion());
+            seleccionarRadioButtons(GrupoMonitor,v.getMonitorOpcion());
+            seleccionarRadioButtons(GrupoDiscoDuro,v.getDiscoDuroOpcion());
+            CheckGrabadora.setSelected(v.isGrabadoraDVD());
+            CheckWifi.setSelected(v.isWifi());
+            CheckSinto.setSelected(v.isSintonizadorTV());
+            CheckBackUp.setSelected(v.isBackUp());
+            
             contador++;
 
             // Si todavía quedan más ventas, pregunto si quiere seguir
@@ -553,7 +572,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
                 int respuesta = JOptionPane.showConfirmDialog(
                     this,
                     "¿Desea ver la siguiente venta del cliente?",
-                    "Continuar búsqueda",
+                    "Continuar búsqueda" + " (" + contador + "/"+listaClientesRepe.size() + ")",
                     JOptionPane.YES_NO_OPTION
                 );
 
@@ -576,12 +595,13 @@ public class VentaPCMenu extends javax.swing.JFrame {
         int indice = listaClientes.getSelectedIndex();
         if(indice == -1)return;
         
-        //Como mi jlist y mi ArrayList estan parejos puedo simplemente seleccionar el índice
+        //Como mi JList y mi ArrayList estan parejos puedo simplemente seleccionar el índice
         Venta temp = listaVentas.get(indice);
         
         //Introduzco el nombre del cliente de la venta seleccionada en el JTextField
         textoNombre.setText(listaClientes.getSelectedValue());
         
+        //Selecciono las opciones de la venta
         comboLocalidad.setSelectedItem(temp.getLocalidad());
         seleccionarRadioButtons(GrupoProcesador,temp.getProcesaOpcion());
         seleccionarRadioButtons(GrupoMemoria,temp.getMemoriaOpcion());
@@ -591,6 +611,15 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckWifi.setSelected(temp.isWifi());
         CheckSinto.setSelected(temp.isSintonizadorTV());
         CheckBackUp.setSelected(temp.isBackUp());
+        
+        //Desactivo los radioButtons y checkbox para que no puedan ser modificados
+        estadoRadioButtonGroup(false);
+        CheckWifi.setEnabled(false);
+        CheckBackUp.setEnabled(false);
+        CheckGrabadora.setEnabled(false);
+        CheckSinto.setEnabled(false);
+        comboLocalidad.setEnabled(false);
+        
     }//GEN-LAST:event_listaClientesMousePressed
 
     private void BotonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarActionPerformed
