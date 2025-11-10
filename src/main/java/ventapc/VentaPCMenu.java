@@ -14,8 +14,10 @@ import javax.swing.JOptionPane;
 public class VentaPCMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu.class.getName());
+    
     //Arraylist en la que almacenaré las ventas
     ArrayList<Venta>listaVentas = new ArrayList();
+    
     //Modelo de lista ventas para poder manipular datos en el JList
     DefaultListModel<String> modeloListaVentas = new DefaultListModel<>();
     
@@ -82,6 +84,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckSinto.setEnabled(true);
         estadoRadioButtonGroup(true);
     }
+    
     //Metodo para establecer las opciones predeterminadas
     private void opcionesPredeterminadas(){
         ProcesaOpcionA.setSelected(true);
@@ -98,6 +101,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
     //Metodo para resetear el formulario
     private void resetFormulario(){
         textoNombre.setText("");
+        textoNombre.setEnabled(true);
         BotonAniadir.setEnabled(false);
         BotonBuscar.setEnabled(false);
         BotonEliminar.setEnabled(false);
@@ -468,6 +472,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
             opcionesPredeterminadas();
             activarTodo();
             comboLocalidad.requestFocus();
+            textoNombre.setEnabled(false);
         }
     }//GEN-LAST:event_textoNombreActionPerformed
     
@@ -542,7 +547,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
         int contador = 0;
         boolean seguirBuscando = true;
         
-        //Desactivo todo lo necesario
+        //Desactivo y activo todo lo necesario
         BotonAniadir.setEnabled(false);
         estadoRadioButtonGroup(false);
         CheckWifi.setEnabled(false);
@@ -550,6 +555,7 @@ public class VentaPCMenu extends javax.swing.JFrame {
         CheckGrabadora.setEnabled(false);
         CheckSinto.setEnabled(false);
         comboLocalidad.setEnabled(false);
+        textoNombre.setEnabled(true);
         
         while (seguirBuscando && contador < listaClientesRepe.size()) {
             Venta v = listaClientesRepe.get(contador);
