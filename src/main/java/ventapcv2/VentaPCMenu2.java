@@ -2,9 +2,15 @@ package ventapcv2;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import ventapc.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -681,7 +687,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
 
     private void BotonMostrarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarVentasActionPerformed
         // TODO add your handling code here:
-        File f = new File ("src/main/java/ventapcv2/recursos/ventas.txt");
+        File f = new File ("src/main/java/ventapcv2/recursos/ventas.bin");
         
         if (!f.exists()) {
             JOptionPane.showMessageDialog(this, "ERROR, el fichero no existe", "Documento no encontrado", JOptionPane.ERROR_MESSAGE);
@@ -693,71 +699,39 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         modeloListaVentas.clear();
         
         //Leo el archivo
-        try (BufferedReader br = new BufferedReader(new FileReader(f))){
-            String linea = "";
-            int contadorLineas = 0;
-            Venta2 v = new Venta2();
-            
-                while((linea = br.readLine()) != null){
-                    
-                    String [] partes = linea.split("=");
-                    
-                    if (partes.length == 2) {
-                       String campo = partes [0].trim();
-                       String valor = partes [1].trim();
-                       
-                      switch (campo) {
-                           case "Nombre" -> v.setNombre(valor);
-                           case "Localidad" -> v.setLocalidad(valor);
-                           case "Procesador" -> v.setProcesaOpcion(valor);
-                           case "Memoria" -> v.setMemoriaOpcion(valor);
-                           case "Monitor" -> v.setMonitorOpcion(valor);
-                           case "Disco Duro" -> v.setDiscoDuroOpcion(valor);
-                           case "Grabadora DVD" -> v.setGrabadoraDVD(Boolean.parseBoolean(valor));
-                           case "Wifi" -> v.setWifi(Boolean.parseBoolean(valor));
-                           case "SintonizadorTV" -> v.setSintonizadorTV(Boolean.parseBoolean(valor));
-                           case "BackUp" -> v.setBackUp(Boolean.parseBoolean(valor));
-                        }
-                      
-                        contadorLineas++;
-                        
-                        if (contadorLineas == 10) {
-                            listaVentas.add(v);
-                            modeloListaVentas.addElement(v.getNombre());
-                            
-                            //Preparo la siguiente venta
-                            v = new Venta2();
-                            contadorLineas = 0;
-                        }
-                    }  
-                    //Actualizo el Jlist
-                    listaClientes.setModel(modeloListaVentas);
-                    
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
+            while(true){
+                try {
+                    Venta2 venta = (Venta2) ois.readObject();
+                    listaVentas.add(venta);
+                    modeloListaVentas.addElement(venta.getNombre());
+                } catch (EOFException e) {
+                    break;
                 }
-            } catch (Exception e) {  
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_BotonMostrarVentasActionPerformed
 
     private void BotonGuardarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarVentasActionPerformed
         // TODO add your handling code here:
-        File f = new File ("src/main/java/ventapcv2/recursos/ventas.txt");
+        File f = new File ("src/main/java/ventapcv2/recursos/ventas.bin");
         
         if (listaVentas == null || listaVentas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "ERROR, no hay nada que guardar", "Lista Vacía", JOptionPane.ERROR_MESSAGE);
         }
         
-        
-        
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(f,true))) {
-            for (Venta2 temp : listaVentas){
-                bw.write(temp.toString());
-                bw.newLine();
+        //Escribo los objetos 
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
+            for (Venta2 v : listaVentas){
+                oos.writeObject(v);
             }
         } catch (Exception e){
             e.printStackTrace();
         }
         
+        //Limpio las listas para empezar de 0 el formulario en caché
         listaVentas.clear();
         modeloListaVentas.clear();
     }//GEN-LAST:event_BotonGuardarVentasActionPerformed

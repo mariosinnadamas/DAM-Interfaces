@@ -1,12 +1,16 @@
 package ventapcv2;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import ventapc.*;
 
 /**
  *
  * @author mario
  */
-public class Venta2 {
+public class Venta2 implements Externalizable{
     private String nombre;
     private String localidad;
     private String procesaOpcion;
@@ -128,6 +132,32 @@ public class Venta2 {
                 "SintonizadorTV = " + sintonizadorTV + "\n" +
                 "BackUp = " + backUp;
     }
-    
-    
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeUTF(nombre);
+        out.writeUTF(localidad);
+        out.writeUTF(procesaOpcion);
+        out.writeUTF(memoriaOpcion);
+        out.writeUTF(monitorOpcion);
+        out.writeUTF(discoDuroOpcion);
+        out.writeBoolean(grabadoraDVD);
+        out.writeBoolean(wifi);
+        out.writeBoolean(sintonizadorTV);
+        out.writeBoolean(backUp);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        nombre = in.readUTF();
+        localidad = in.readUTF();
+        procesaOpcion = in.readUTF();
+        memoriaOpcion = in.readUTF();
+        monitorOpcion = in.readUTF();
+        discoDuroOpcion = in.readUTF();
+        grabadoraDVD = in.readBoolean();
+        wifi = in.readBoolean();
+        sintonizadorTV = in.readBoolean();
+        backUp = in.readBoolean();
+    }
 }
