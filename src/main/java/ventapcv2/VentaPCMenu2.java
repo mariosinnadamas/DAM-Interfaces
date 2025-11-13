@@ -714,6 +714,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         
         if (listaVentas == null || listaVentas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "ERROR, no hay nada que guardar", "Lista Vacía", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         
         //Escribo los objetos 
