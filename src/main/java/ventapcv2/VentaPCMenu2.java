@@ -681,10 +681,10 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
 
     private void BotonMostrarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarVentasActionPerformed
         // TODO add your handling code here:
-        File f = new File ("src/main/java/ventapcv2/recursos/ventas.bin");
+        File f = new File ("recursos/ventas.bin");
         
         if (!f.exists()) {
-            JOptionPane.showMessageDialog(this, "ERROR, el fichero no existe", "Documento no encontrado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error, el fichero no existe", "Documento no encontrado", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -710,13 +710,19 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
 
     private void BotonGuardarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarVentasActionPerformed
         // TODO add your handling code here:
-        File f = new File ("src/main/java/ventapcv2/recursos/ventas.bin");
+        
+        File directorio = new File ("recursos");
         
         if (listaVentas == null || listaVentas.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "ERROR, no hay nada que guardar", "Lista Vacía", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error, no hay nada que guardar, la lista está vacía", "Lista Vacía", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //Si la carpeta no existe la creo
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
         
+        File f = new File ("recursos/ventas.bin");
         //Escribo los objetos 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
             for (Venta2 v : listaVentas){
