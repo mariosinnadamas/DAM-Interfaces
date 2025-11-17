@@ -720,6 +720,8 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
                     System.out.println(v);
                     listaVentas.add(v);
                     modeloListaVentas.addElement(v.getNombre());
+                } else{
+                    JOptionPane.showMessageDialog(this, "Ha habido un error, no coinciden la cantidad de campos", "Error en la lectura del CSV", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (Exception e) {
@@ -729,53 +731,87 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
 
     private void BotonGuardarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarVentasActionPerformed
         
-        File directorio = new File ("recursos");
-        
+        File directorio = new File("recursos");
+
         if (listaVentas == null || listaVentas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Error, no hay nada que guardar, la lista está vacía", "Lista Vacía", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        //Si la carpeta no existe la creo
+
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
-        
-        File fichero = new File ("recursos/ventas.csv");
-        
-        //ArrayList<Venta2> nuevasVentas = new ArrayList();
-        
-        //Escribo los objetos
+
+        File fichero = new File("recursos/ventas.csv");
+
+        ArrayList<Venta2> ventasTotales = new ArrayList<>();
+
+        // Leo las ventas que ya están en el CSV (si existe)
         if (fichero.exists()) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero,true))) {
-                
-                for (Venta2 listaVenta : listaVentas) {
-                    bw.write(listaVenta.toCSV());
-                    bw.newLine();
+            try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
+
+                String linea;
+                boolean primeraLinea = true;
+
+                while ((linea = br.readLine()) != null) {
+                    if (primeraLinea) { 
+                        primeraLinea = false;
+                        continue;
+                    }
+                    if (linea.trim().isEmpty()) continue;
+
+                    String[] datos = linea.split(",");
+                    if (datos.length >= 10) {
+                        ventasTotales.add(new Venta2(
+                            datos[0].trim(), datos[1].trim(), datos[2].trim(), datos[3].trim(),
+                            datos[4].trim(), datos[5].trim(),
+                            Boolean.parseBoolean(datos[6].trim()),
+                            Boolean.parseBoolean(datos[7].trim()),
+                            Boolean.parseBoolean(datos[8].trim()),
+                            Boolean.parseBoolean(datos[9].trim())
+                        ));
+                    }
                 }
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
-        } else{
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero,true))) {
-                bw.write("Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp");
-                bw.newLine();
-                
-                for (Venta2 listaVenta : listaVentas) {
-                    bw.write(listaVenta.toCSV());
-                    bw.newLine();
-                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
-        
-        //Limpio las listas para empezar de 0 el formulario en caché
+
+        // Añado solo las ventas nuevas que NO estaban antes
+        for (Venta2 nueva : listaVentas) {
+            boolean existe = false;
+
+            for (Venta2 v : ventasTotales) {
+                if (v.toCSV().equals(nueva.toCSV())) {
+                    existe = true;
+                    break;
+                }
+            }
+
+            if (!existe) {
+                ventasTotales.add(nueva);
+            }
+        }
+
+        //Escribo todo el contenido
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero))) {
+            
+            bw.write("Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp");
+            bw.newLine();
+            
+            for (Venta2 v : ventasTotales) {
+                bw.write(v.toCSV());
+                bw.newLine();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         listaVentas.clear();
         modeloListaVentas.clear();
+       
     }//GEN-LAST:event_BotonGuardarVentasActionPerformed
 
     public static void main(String args[]) {
