@@ -1,11 +1,10 @@
 package ventapcv2;
 
-import java.io.EOFException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
@@ -680,10 +679,10 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonSalirActionPerformed
 
     private void BotonMostrarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarVentasActionPerformed
-        // TODO add your handling code here:
-        File f = new File ("recursos/ventas.bin");
         
-        if (!f.exists()) {
+        File fichero = new File ("recursos/ventas.csv");
+        
+        if (!fichero.exists()) {
             JOptionPane.showMessageDialog(this, "Error, el fichero no existe", "Documento no encontrado", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -692,15 +691,35 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         listaVentas.clear();
         modeloListaVentas.clear();
         
-        //Leo el archivo
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))){
-            while(true){
-                try {
-                    Venta2 venta = (Venta2) ois.readObject();
-                    listaVentas.add(venta);
-                    modeloListaVentas.addElement(venta.getNombre());
-                } catch (EOFException e) {
-                    break;
+        String [] datos;
+        String linea = "";
+        boolean primeraLinea = true;
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(fichero))){
+            while ((linea=br.readLine()) != null) {
+                if (primeraLinea) {
+                    primeraLinea = false;
+                    continue;
+                }
+                if (linea.trim().isEmpty()) {
+                    continue;
+                }
+                datos = linea.split(",");
+                if (datos.length >=10) {
+                    String nombre = datos[0].trim();
+                    String localidad = datos[1].trim();
+                    String procesaOpcion = datos[2].trim();
+                    String memoriaOpcion = datos[3].trim();
+                    String monitorOpcion = datos[4].trim();
+                    String discoDuroOpcion = datos[5].trim();
+                    boolean grabadoraDVD = Boolean.parseBoolean(datos[6].trim());
+                    boolean wifi = Boolean.parseBoolean(datos[7].trim());
+                    boolean sintonizadorTV = Boolean.parseBoolean(datos[8].trim());
+                    boolean backUp = Boolean.parseBoolean(datos[9].trim());
+                    Venta2 v = new Venta2(nombre, localidad, procesaOpcion, memoriaOpcion, monitorOpcion, discoDuroOpcion, grabadoraDVD, wifi, sintonizadorTV, backUp);
+                    System.out.println(v);
+                    listaVentas.add(v);
+                    modeloListaVentas.addElement(v.getNombre());
                 }
             }
         } catch (Exception e) {
@@ -709,7 +728,6 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonMostrarVentasActionPerformed
 
     private void BotonGuardarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarVentasActionPerformed
-        // TODO add your handling code here:
         
         File directorio = new File ("recursos");
         
@@ -717,20 +735,43 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error, no hay nada que guardar, la lista está vacía", "Lista Vacía", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         //Si la carpeta no existe la creo
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
         
-        File f = new File ("recursos/ventas.bin");
-        //Escribo los objetos 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
-            for (Venta2 v : listaVentas){
-                oos.writeObject(v);
+        File fichero = new File ("recursos/ventas.csv");
+        
+        //ArrayList<Venta2> nuevasVentas = new ArrayList();
+        
+        //Escribo los objetos
+        if (fichero.exists()) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero,true))) {
+                
+                for (Venta2 listaVenta : listaVentas) {
+                    bw.write(listaVenta.toCSV());
+                    bw.newLine();
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e){
-            e.printStackTrace();
+            
+        } else{
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero,true))) {
+                bw.write("Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp");
+                bw.newLine();
+                
+                for (Venta2 listaVenta : listaVentas) {
+                    bw.write(listaVenta.toCSV());
+                    bw.newLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        
         
         //Limpio las listas para empezar de 0 el formulario en caché
         listaVentas.clear();
