@@ -1,5 +1,6 @@
-package ventapcv2;
+package repaso;
 
+import ventapcv2.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,17 +17,17 @@ import javax.swing.JOptionPane;
  *
  * @author mario
  */
-public class VentaPCMenu2 extends javax.swing.JFrame {
+public class VentaPCMenu2Examen extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu2.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentaPCMenu2Examen.class.getName());
     
     //Arraylist en la que almacenaré las ventas
-    ArrayList<Venta2>listaVentas = new ArrayList();
+    ArrayList<Venta2Examen>listaVentas = new ArrayList();
     
     //Modelo de lista ventas para poder manipular datos en el JList
     DefaultListModel<String> modeloListaVentas = new DefaultListModel<>();
     
-    public VentaPCMenu2() {
+    public VentaPCMenu2Examen() {
         initComponents();
         //Evito que puedan modificar el tamaño de la ventana
         this.setResizable(false);
@@ -548,7 +549,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         boolean backup = CheckBackUp.isSelected();
         
         //Creo el objeto
-        Venta2 venta = new Venta2(nombre,localidad,procesador,memoria,monitor,hdd,grabadora,wifi,sintonizador,backup);
+        Venta2Examen venta = new Venta2Examen(nombre,localidad,procesador,memoria,monitor,hdd,grabadora,wifi,sintonizador,backup);
         
         //Lo añado a la lista
         listaVentas.add(venta);
@@ -564,10 +565,10 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         String nombre = textoNombre.getText();
         
         //Creo una nueva lista por si hay varias ventas de un mismo cliente
-        ArrayList<Venta2> listaClientesRepe = new ArrayList();
+        ArrayList<Venta2Examen> listaClientesRepe = new ArrayList();
         
         //Añado los clientes que coincidan con el nombre del JText a la nueva lista
-        for (Venta2 temp : listaVentas) {
+        for (Venta2Examen temp : listaVentas) {
             if (nombre.matches(temp.getNombre())) {
                 listaClientesRepe.add(temp);
             }
@@ -593,7 +594,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         textoNombre.setEnabled(true);
         
         while (seguirBuscando && contador < listaClientesRepe.size()) {
-            Venta2 v = listaClientesRepe.get(contador);
+            Venta2Examen v = listaClientesRepe.get(contador);
             
             //Selecciono los elementos
             comboLocalidad.setSelectedItem(v.getLocalidad());
@@ -637,7 +638,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         if(indice == -1)return;
         
         //Como mi JList y mi ArrayList estan parejos puedo simplemente seleccionar el índice
-        Venta2 temp = listaVentas.get(indice);
+        Venta2Examen temp = listaVentas.get(indice);
         
         //Introduzco el nombre del cliente de la venta seleccionada en el JTextField
         textoNombre.setText(listaClientes.getSelectedValue());
@@ -716,7 +717,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
                     boolean wifi = Boolean.parseBoolean(datos[7].trim());
                     boolean sintonizadorTV = Boolean.parseBoolean(datos[8].trim());
                     boolean backUp = Boolean.parseBoolean(datos[9].trim());
-                    Venta2 v = new Venta2(nombre, localidad, procesaOpcion, memoriaOpcion, monitorOpcion, discoDuroOpcion, grabadoraDVD, wifi, sintonizadorTV, backUp);
+                    Venta2Examen v = new Venta2Examen(nombre, localidad, procesaOpcion, memoriaOpcion, monitorOpcion, discoDuroOpcion, grabadoraDVD, wifi, sintonizadorTV, backUp);
                     listaVentas.add(v);
                     modeloListaVentas.addElement(v.getNombre());
                 } else{
@@ -749,7 +750,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
             bw.write("Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp");
             bw.newLine();
 
-            for (Venta2 v : listaVentas) {
+            for (Venta2Examen v : listaVentas) {
                 bw.write(v.toCSV());
                 bw.newLine();
             }
@@ -785,7 +786,7 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentaPCMenu2().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VentaPCMenu2Examen().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
