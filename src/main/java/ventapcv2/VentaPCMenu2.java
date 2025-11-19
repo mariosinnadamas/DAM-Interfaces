@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
@@ -25,6 +27,8 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
     
     //Modelo de lista ventas para poder manipular datos en el JList
     DefaultListModel<String> modeloListaVentas = new DefaultListModel<>();
+    
+    boolean cargado = false;
     
     public VentaPCMenu2() {
         initComponents();
@@ -133,6 +137,43 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void cargarVentasDesdeCSV() {
+        File fichero = new File("recursos/ventas.csv");
+
+        if (!fichero.exists()) {
+            return; // Nada que cargar
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
+
+            listaVentas.clear();
+
+            String linea;
+            boolean primera = true;
+
+            while ((linea = br.readLine()) != null) {
+                if (primera) { primera = false; continue; }
+
+                if (linea.trim().isEmpty()) continue;
+
+                String[] d = linea.split(",");
+                if (d.length < 10) continue;
+
+                listaVentas.add(new Venta2(
+                    d[0], d[1], d[2], d[3], d[4], d[5],
+                    Boolean.parseBoolean(d[6]),
+                    Boolean.parseBoolean(d[7]),
+                    Boolean.parseBoolean(d[8]),
+                    Boolean.parseBoolean(d[9])
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -680,52 +721,65 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
 
     private void BotonMostrarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarVentasActionPerformed
         
+        
+        
         File fichero = new File ("recursos/ventas.csv");
         
         if (!fichero.exists()) {
-            JOptionPane.showMessageDialog(this, "Error, el fichero no existe", "Documento no encontrado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error, el fichero no existe o está vacío", "Documento no encontrado", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        //Limpio las listas antes de cargar los datos
-        listaVentas.clear();
-        modeloListaVentas.clear();
-        
-        String [] datos;
-        String linea = "";
-        boolean primeraLinea = true;
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(fichero))){
-            while ((linea=br.readLine()) != null) {
-                if (primeraLinea) {
-                    primeraLinea = false;
-                    continue;
+        if (!cargado) {
+            //Limpio las listas antes de cargar los datos
+            listaVentas.clear();
+            modeloListaVentas.clear();
+
+            String [] datos;
+            String linea = "";
+            boolean primeraLinea = true;
+
+            try (BufferedReader br = new BufferedReader(new FileReader(fichero))){
+                while ((linea=br.readLine()) != null) {
+                    if (primeraLinea) {
+                        primeraLinea = false;
+                        continue;
+                    }
+                    if (linea.trim().isEmpty()) {
+                        continue;
+                    }
+                    datos = linea.split(",");
+                    if (datos.length >=10) {
+                        String nombre = datos[0].trim();
+                        String localidad = datos[1].trim();
+                        String procesaOpcion = datos[2].trim();
+                        String memoriaOpcion = datos[3].trim();
+                        String monitorOpcion = datos[4].trim();
+                        String discoDuroOpcion = datos[5].trim();
+                        boolean grabadoraDVD = Boolean.parseBoolean(datos[6].trim());
+                        boolean wifi = Boolean.parseBoolean(datos[7].trim());
+                        boolean sintonizadorTV = Boolean.parseBoolean(datos[8].trim());
+                        boolean backUp = Boolean.parseBoolean(datos[9].trim());
+                        Venta2 v = new Venta2(nombre, localidad, procesaOpcion, memoriaOpcion, monitorOpcion, discoDuroOpcion, grabadoraDVD, wifi, sintonizadorTV, backUp);
+                        listaVentas.add(v);
+                        modeloListaVentas.addElement(v.getNombre());
+                    } else{
+                        JOptionPane.showMessageDialog(this, "Ha habido un error, no coinciden la cantidad de campos", "Error en la lectura del CSV", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
-                if (linea.trim().isEmpty()) {
-                    continue;
-                }
-                datos = linea.split(",");
-                if (datos.length >=10) {
-                    String nombre = datos[0].trim();
-                    String localidad = datos[1].trim();
-                    String procesaOpcion = datos[2].trim();
-                    String memoriaOpcion = datos[3].trim();
-                    String monitorOpcion = datos[4].trim();
-                    String discoDuroOpcion = datos[5].trim();
-                    boolean grabadoraDVD = Boolean.parseBoolean(datos[6].trim());
-                    boolean wifi = Boolean.parseBoolean(datos[7].trim());
-                    boolean sintonizadorTV = Boolean.parseBoolean(datos[8].trim());
-                    boolean backUp = Boolean.parseBoolean(datos[9].trim());
-                    Venta2 v = new Venta2(nombre, localidad, procesaOpcion, memoriaOpcion, monitorOpcion, discoDuroOpcion, grabadoraDVD, wifi, sintonizadorTV, backUp);
-                    listaVentas.add(v);
-                    modeloListaVentas.addElement(v.getNombre());
-                } else{
-                    JOptionPane.showMessageDialog(this, "Ha habido un error, no coinciden la cantidad de campos", "Error en la lectura del CSV", JOptionPane.INFORMATION_MESSAGE);
-                }
+                cargado = true;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                Files.write(Paths.get("recursos/ventas.csv"), new byte[0]);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else{
+            JOptionPane.showMessageDialog(this, "Ya has cargado las ventas", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }
+        
+        
     }//GEN-LAST:event_BotonMostrarVentasActionPerformed
 
     private void BotonGuardarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarVentasActionPerformed
@@ -740,14 +794,17 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
         if (!directorio.exists()) {
             directorio.mkdirs();
         }
-
+        
         File fichero = new File("recursos/ventas.csv");
 
+        
+        
         // Escribo todo el contenido actual de listaVentas
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero))) {
-
-            bw.write("Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp");
-            bw.newLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero,true))) {
+            if (fichero.length()==0) {
+                bw.write("Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp");
+                bw.newLine();
+            }
 
             for (Venta2 v : listaVentas) {
                 bw.write(v.toCSV());
@@ -761,9 +818,9 @@ public class VentaPCMenu2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar las ventas", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-    listaVentas.clear();
-    modeloListaVentas.clear();
-       
+        listaVentas.clear();
+        modeloListaVentas.clear();
+        cargado = false;
     }//GEN-LAST:event_BotonGuardarVentasActionPerformed
 
     public static void main(String args[]) {

@@ -1,4 +1,3 @@
 Nombre,Localidad,Procesador,Memoria,Monitor,HDD,GrabadoraDVD,WIFI,SintonizadorTV,BackUp
-paco,Villalba,P4 3.0 Gb,128 Mb,15'',60 Gb,true,false,false,false
-joseba,Villalba,P4 Celeron,512 Mb,TFT 15'',120 Gb,false,false,true,false
-Mario,Moralzarzal,P4 3.0 Gb,256 Mb,TFT 15'',200 Gb,true,true,true,true
+a,Villalba,P4 3.0 Gb,1024 Mb,TFT 17'',200 Gb,true,true,false,false
+b,Villalba,P4 3.0 Gb,1024 Mb,TFT 17'',200 Gb,true,true,false,false
