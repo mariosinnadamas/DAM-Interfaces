@@ -7,6 +7,7 @@ package gestion.almacen;
 import java.awt.Color;
 import java.nio.file.Path;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +17,8 @@ import javax.swing.JOptionPane;
 public class Formulario_Cliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Formulario_Cliente.class.getName());
+    
+    private JFrame padre;
     
 //Variables booleanas para comprobar todo
     boolean Codigocomprobado = false;
@@ -34,6 +37,11 @@ public class Formulario_Cliente extends javax.swing.JFrame {
     /**
      * Creates new form Formulario
      */
+    public Formulario_Cliente(JFrame padre) {
+        initComponents();
+        this.padre = padre;
+    }
+    
     public Formulario_Cliente() {
         initComponents();
     }

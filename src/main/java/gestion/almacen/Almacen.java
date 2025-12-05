@@ -4,6 +4,8 @@
  */
 package gestion.almacen;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mario
@@ -87,6 +89,7 @@ public class Almacen extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
@@ -95,6 +98,9 @@ public class Almacen extends javax.swing.JFrame {
 
     private void botonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonClientesActionPerformed
         // TODO add your handling code here:
+        Formulario_Cliente fc = new Formulario_Cliente(this);
+        fc.setVisible(true);
+        
     }//GEN-LAST:event_botonClientesActionPerformed
 
     private void botonArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonArticulosActionPerformed
