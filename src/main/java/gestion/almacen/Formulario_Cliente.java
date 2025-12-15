@@ -6,6 +6,9 @@ package gestion.almacen;
 
 import java.awt.Color;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,6 +22,7 @@ public class Formulario_Cliente extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Formulario_Cliente.class.getName());
     
     private JFrame padre;
+    private ConexionDB conn = new ConexionDB();
     
 //Variables booleanas para comprobar todo
     boolean Codigocomprobado = false;
@@ -44,6 +48,7 @@ public class Formulario_Cliente extends javax.swing.JFrame {
     
     public Formulario_Cliente() {
         initComponents();
+        textoNif2.setEnabled(false);
     }
 
     /**
@@ -330,8 +335,7 @@ public class Formulario_Cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCodigoActionPerformed
-        // TODO add your handling code here:
-        //5 numeros
+        //5 numeros 
         
         String texto = textoCodigo.getText();
         if (!texto.matches("[0-9]{5}")){
@@ -343,13 +347,17 @@ public class Formulario_Cliente extends javax.swing.JFrame {
         } else {
             textoCodigo.addActionListener(e -> textoNif.requestFocus());
             Codigocomprobado = true;
-        }
-                
+        } 
     }//GEN-LAST:event_textoCodigoActionPerformed
     //Todo: Generar automáticamente con fórmula matemática
     private void textoNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNifActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoNif.getText();
+        final char[] DNI_LETTERS = {
+        'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 
+        'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 
+        'C', 'K', 'E'};
+        
         if (!texto.matches("[0-9]{8}")) {
             textoNif.setBackground(Color.red);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 8 dígitos","Error",JOptionPane.ERROR_MESSAGE);
@@ -357,25 +365,18 @@ public class Formulario_Cliente extends javax.swing.JFrame {
             textoNif.setBackground(Color.white);
             textoNif.requestFocus();
         } else {
-            textoNif.addActionListener(e -> textoNif2.requestFocus());
+            int dniNumber = Integer.parseInt(textoNif.getText());
+            int remainder = dniNumber % 23;
+            char letter = DNI_LETTERS[remainder];
+            textoNif2.setText(String.valueOf(letter));
+            textoNif.addActionListener(e -> textoNombre.requestFocus());
             nifComprobado = true;
+            nif2Comprobado = true;
         }
     }//GEN-LAST:event_textoNifActionPerformed
 
     private void textoNif2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNif2ActionPerformed
-        // TODO add your handling code here:
-        String texto = textoNif2.getText();
-        if (!texto.matches("[A-Z]")) {
-            textoNif2.setBackground(Color.red);
-            JOptionPane.showMessageDialog(null, "Debe ser una letra mayúscula","Error",JOptionPane.ERROR_MESSAGE);
-            textoNif2.setText("");
-            textoNif2.setBackground(Color.white);
-            textoNif2.requestFocus();
-        } else{
-            textoNif2.addActionListener(e -> textoNombre.requestFocus());
-            nif2Comprobado = true;
-        }
-        
+       
     }//GEN-LAST:event_textoNif2ActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
@@ -563,7 +564,7 @@ public class Formulario_Cliente extends javax.swing.JFrame {
         ImageIcon imagen = new ImageIcon(p.toString());
         imagen = new ImageIcon(imagen.getImage().getScaledInstance(70, 70, 0));
         
-// Abrir ventana si todo ha ido bien
+        // Abrir ventana si todo ha ido bien
         if (Codigocomprobado && 
                 nifComprobado && 
                 nif2Comprobado && 
@@ -576,18 +577,45 @@ public class Formulario_Cliente extends javax.swing.JFrame {
                 movilComprobado &&
                 faxComprobado && 
                 mailComprobado) {
+            
+            String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
+                    + "domicilio,codigo_postal,localidad,telefono,movil,"
+                    + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            
+            try (Connection conexion = conn.connect();
+                    PreparedStatement stm = conexion.prepareStatement(query)){
+                
+                    stm.setString(1, textoCodigo.getText());
+                    stm.setString(2, textoNif.getText());
+                    stm.setString(3, textoApellidos.getText());
+                    stm.setString(4, textoNombre.getText());
+                    stm.setString(5, textoDomicilio.getText());
+                    stm.setString(6, textoCp.getText());
+                    stm.setString(7, textoLocalidad.getText());
+                    stm.setString(8, textoTelefono.getText());
+                    stm.setString(9, textoMovil.getText());
+                    stm.setString(10, textoFax.getText());
+                    stm.setString(11, textoMail.getText());
+                    stm.setString(12, textoTotal.getText());
+                    
+                    stm.executeQuery();
+                    
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
             JOptionPane.showMessageDialog(null, 
-                    "Todos los campos estan bien", 
+                    "Todos los campos estan bien, cliente agregado a la BdD", 
                     "¡Enhorabuena!",
                     JOptionPane.INFORMATION_MESSAGE,
                     imagen);
+            
         } else{
             JOptionPane.showMessageDialog(null, 
-                    "Uno o más campos están mal, vuelve a escribirlos y cuando acabes pulsa enter para comprobar", 
+                    "Uno o más campos están mal: ", 
                     "ERROR",
                     JOptionPane.ERROR_MESSAGE);
         }
-        
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**

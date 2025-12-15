@@ -19,6 +19,7 @@ public class ConexionDB {
     private static final String PASS = "alumno";
     
     public Connection connect() throws SQLException{
-        return DriverManager.getConnection(URL,USER,PASS);
+        Connection conn = DriverManager.getConnection(URL,USER,PASS);
+        return conn;
     }
 }

@@ -4,8 +4,6 @@
  */
 package gestion.almacen;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author mario
