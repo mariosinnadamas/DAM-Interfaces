@@ -8,12 +8,14 @@ package gestion.almacen;
  *
  * @author mario
  */
-public class Almacen extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Almacen.class.getName());
-
-    public Almacen() {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Main.class.getName());
+    
+    public Main() {
         initComponents();
+        this.setResizable(false);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     /**
@@ -91,23 +93,18 @@ public class Almacen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-        // TODO add your handling code here:
+        
+        Navegador.salir();
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonClientesActionPerformed
-        // TODO add your handling code here:
-        Formulario_Cliente fc = new Formulario_Cliente(this);
-        fc.setVisible(true);
-        
+        Navegador.irA(Vista.CLIENTES);
     }//GEN-LAST:event_botonClientesActionPerformed
 
     private void botonArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonArticulosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonArticulosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -126,8 +123,8 @@ public class Almacen extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Almacen().setVisible(true));
+        //Cambio que ejecute el main porque llame al navegador y este llame al menu
+        java.awt.EventQueue.invokeLater(() -> {Navegador.irA(Vista.MENU);});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

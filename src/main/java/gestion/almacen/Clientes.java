@@ -8,23 +8,26 @@ import java.awt.Color;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author mario
  */
-public class Formulario_Cliente extends javax.swing.JFrame {
+
+public class Clientes extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Formulario_Cliente.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Clientes.class.getName());
     
-    private JFrame padre;
+    private enum Modo {ALTA,BAJA,MODIFICACIONES,CONSULTAPORCODIGO};
+    private Modo modo;
+    
     private ConexionDB conn = new ConexionDB();
     
-//Variables booleanas para comprobar todo
+    //Variables booleanas para comprobar todo
     boolean Codigocomprobado = false;
     boolean nifComprobado = false;
     boolean nif2Comprobado = false;
@@ -38,19 +41,56 @@ public class Formulario_Cliente extends javax.swing.JFrame {
     boolean faxComprobado = false;
     boolean mailComprobado = false;
     
-    /**
-     * Creates new form Formulario
-     */
-    public Formulario_Cliente(JFrame padre) {
-        initComponents();
-        this.padre = padre;
-    }
-    
-    public Formulario_Cliente() {
+    public Clientes() {
         initComponents();
         textoNif2.setEnabled(false);
+        textoTotal.setEnabled(false);
+        desactivarTodo();
+        
+    }
+    
+    //Metodo para desactivar todo
+    public void desactivarTodo(){
+        textoCodigo.setEnabled(false);
+        textoNif.setEnabled(false);
+        textoNombre.setEnabled(false);
+        textoApellidos.setEnabled(false);
+        textoDomicilio.setEnabled(false);
+        textoCp.setEnabled(false);
+        textoLocalidad.setEnabled(false);
+        textoTelefono.setEnabled(false);
+        textoMovil.setEnabled(false);
+        textoFax.setEnabled(false);
+        textoMail.setEnabled(false);
+        botonAceptar.setEnabled(false);
+        botonCancelar.setEnabled(false);
+        botonSalir.setEnabled(false);
+    }
+    
+    public void activarTodo(){
+        textoCodigo.setEnabled(true);
+        textoNif.setEnabled(true);
+        textoNombre.setEnabled(true);
+        textoApellidos.setEnabled(true);
+        textoDomicilio.setEnabled(true);
+        textoCp.setEnabled(true);
+        textoLocalidad.setEnabled(true);
+        textoTelefono.setEnabled(true);
+        textoMovil.setEnabled(true);
+        textoFax.setEnabled(true);
+        textoMail.setEnabled(true);
+        botonAceptar.setEnabled(true);
+        botonCancelar.setEnabled(true);
+        botonSalir.setEnabled(true);
     }
 
+    public void modoAbcm(){
+        textoCodigo.setEnabled(true);
+        botonAceptar.setEnabled(true);
+        botonCancelar.setEnabled(true);
+        botonSalir.setEnabled(true);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +126,21 @@ public class Formulario_Cliente extends javax.swing.JFrame {
         textoMail = new javax.swing.JTextField();
         textoTotal = new javax.swing.JTextField();
         botonAceptar = new javax.swing.JButton();
-        botonRechazar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
+        botonSalir = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mantenimiento = new javax.swing.JMenu();
+        altas = new javax.swing.JMenuItem();
+        bajas = new javax.swing.JMenuItem();
+        modificaciones = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        volver = new javax.swing.JMenuItem();
+        consultas = new javax.swing.JMenu();
+        porCodigo = new javax.swing.JMenuItem();
+        listados = new javax.swing.JMenu();
+        porCodigos = new javax.swing.JMenuItem();
+        entreCodigos = new javax.swing.JMenuItem();
+        graficos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -199,12 +253,83 @@ public class Formulario_Cliente extends javax.swing.JFrame {
             }
         });
 
-        botonRechazar.setText("Cancelar");
-        botonRechazar.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRechazarActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
+
+        botonSalir.setText("Salir");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+
+        mantenimiento.setText("Mantenimiento");
+
+        altas.setText("Altas");
+        altas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altasActionPerformed(evt);
+            }
+        });
+        mantenimiento.add(altas);
+
+        bajas.setText("Bajas");
+        bajas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bajasActionPerformed(evt);
+            }
+        });
+        mantenimiento.add(bajas);
+
+        modificaciones.setText("Modificaciones");
+        modificaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificacionesActionPerformed(evt);
+            }
+        });
+        mantenimiento.add(modificaciones);
+        mantenimiento.add(jSeparator1);
+
+        volver.setText("Volver");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+        mantenimiento.add(volver);
+
+        jMenuBar1.add(mantenimiento);
+
+        consultas.setText("Consultas");
+
+        porCodigo.setText("Por código");
+        porCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                porCodigoActionPerformed(evt);
+            }
+        });
+        consultas.add(porCodigo);
+
+        listados.setText("Listados");
+
+        porCodigos.setText("Por códigos");
+        listados.add(porCodigos);
+
+        entreCodigos.setText("Entre códigos");
+        listados.add(entreCodigos);
+
+        graficos.setText("Gráficos");
+        listados.add(graficos);
+
+        consultas.add(listados);
+
+        jMenuBar1.add(consultas);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -251,28 +376,30 @@ public class Formulario_Cliente extends javax.swing.JFrame {
                         .addGap(119, 119, 119)
                         .addComponent(localidad))
                     .addComponent(apellidos)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(botonAceptar)
-                            .addGap(23, 23, 23)
-                            .addComponent(botonRechazar))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(61, 61, 61))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(mail)
-                                    .addGap(271, 271, 271)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(total)
-                                .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(mail)
+                                .addGap(271, 271, 271)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(total)
+                            .addComponent(textoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGap(140, 140, 140)
                             .addComponent(textoLocalidad, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
                         .addComponent(textoDomicilio)
-                        .addComponent(textoApellidos)))
+                        .addComponent(textoApellidos))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botonAceptar)
+                        .addGap(23, 23, 23)
+                        .addComponent(botonCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonSalir)
+                        .addGap(2, 2, 2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -326,8 +453,9 @@ public class Formulario_Cliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
-                    .addComponent(botonRechazar))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(botonCancelar)
+                    .addComponent(botonSalir))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -527,19 +655,17 @@ public class Formulario_Cliente extends javax.swing.JFrame {
             textoMail.setBackground(Color.white);
             textoMail.requestFocus();
         } else{
-            textoMail.addActionListener(e -> textoTotal.requestFocus());
+            textoMail.addActionListener(e -> botonAceptar.requestFocus());
+            textoTotal.setText("0");
             mailComprobado = true;
         }
     }//GEN-LAST:event_textoMailActionPerformed
 
     private void textoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTotalActionPerformed
         // TODO add your handling code here:
-        //Valor 0
-        textoTotal.setText("0");
-        textoTotal.addActionListener(e -> botonAceptar.requestFocus());
     }//GEN-LAST:event_textoTotalActionPerformed
 
-    private void botonRechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRechazarActionPerformed
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // TODO add your handling code here:
         textoCodigo.setText("");
         textoNif.setText("");
@@ -554,7 +680,7 @@ public class Formulario_Cliente extends javax.swing.JFrame {
         textoFax.setText("");
         textoMail.setText("");
         textoTotal.setText("");
-    }//GEN-LAST:event_botonRechazarActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         // TODO add your handling code here:
@@ -563,7 +689,35 @@ public class Formulario_Cliente extends javax.swing.JFrame {
         Path p = Path.of("src", "main", "java", "formulario", "IconoVerde.jpg");
         ImageIcon imagen = new ImageIcon(p.toString());
         imagen = new ImageIcon(imagen.getImage().getScaledInstance(70, 70, 0));
-        
+        switch (modo) {
+            case ALTA:
+                
+                break;
+                
+            case BAJA:
+                break;
+                
+            case MODIFICACIONES:
+                break;
+            case CONSULTAPORCODIGO:
+                
+                String sql = "SELECT * FROM clientes WHERE codigo = ?";
+                
+                try (Connection conexion = conn.connect();
+                        PreparedStatement stm = conexion.prepareStatement(sql)) {
+                    stm.setString(1, textoCodigo.getText());
+                    try (ResultSet rs = stm.executeQuery()){
+                        
+                    } catch (SQLException e) {
+                        //No se ha encontrado nadie?
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                }
+                break;
+            default:
+                throw new AssertionError();
+        }
         // Abrir ventana si todo ha ido bien
         if (Codigocomprobado && 
                 nifComprobado && 
@@ -600,7 +754,7 @@ public class Formulario_Cliente extends javax.swing.JFrame {
                     
                     stm.executeQuery();
                     
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             
@@ -617,6 +771,37 @@ public class Formulario_Cliente extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        desactivarTodo();
+    }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void altasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altasActionPerformed
+        
+        modoAbcm();
+        modo = Modo.ALTA;
+    }//GEN-LAST:event_altasActionPerformed
+
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        
+        Navegador.irA(Vista.MENU);
+    }//GEN-LAST:event_volverActionPerformed
+
+    private void bajasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajasActionPerformed
+        modo = Modo.BAJA;
+        modoAbcm();
+        
+    }//GEN-LAST:event_bajasActionPerformed
+
+    private void modificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificacionesActionPerformed
+        modo = Modo.MODIFICACIONES;
+        modoAbcm();
+    }//GEN-LAST:event_modificacionesActionPerformed
+
+    private void porCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porCodigoActionPerformed
+        modo = Modo.CONSULTAPORCODIGO;
+        modoAbcm();
+    }//GEN-LAST:event_porCodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -640,22 +825,35 @@ public class Formulario_Cliente extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Formulario_Cliente().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Clientes().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem altas;
     private javax.swing.JLabel apellidos;
+    private javax.swing.JMenuItem bajas;
     private javax.swing.JButton botonAceptar;
-    private javax.swing.JButton botonRechazar;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonSalir;
     private javax.swing.JLabel codigo;
+    private javax.swing.JMenu consultas;
     private javax.swing.JLabel cp;
     private javax.swing.JLabel domicilio;
+    private javax.swing.JMenuItem entreCodigos;
     private javax.swing.JLabel fax;
+    private javax.swing.JMenuItem graficos;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenu listados;
     private javax.swing.JLabel localidad;
     private javax.swing.JLabel mail;
+    private javax.swing.JMenu mantenimiento;
+    private javax.swing.JMenuItem modificaciones;
     private javax.swing.JLabel movil;
     private javax.swing.JLabel nif;
     private javax.swing.JLabel nombre;
+    private javax.swing.JMenuItem porCodigo;
+    private javax.swing.JMenuItem porCodigos;
     private javax.swing.JLabel telefono;
     private javax.swing.JTextField textoApellidos;
     private javax.swing.JTextField textoCodigo;
@@ -671,5 +869,6 @@ public class Formulario_Cliente extends javax.swing.JFrame {
     private javax.swing.JTextField textoTelefono;
     private javax.swing.JTextField textoTotal;
     private javax.swing.JLabel total;
+    private javax.swing.JMenuItem volver;
     // End of variables declaration//GEN-END:variables
 }
