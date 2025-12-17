@@ -46,7 +46,6 @@ public class Clientes extends javax.swing.JFrame {
         textoNif2.setEnabled(false);
         textoTotal.setEnabled(false);
         desactivarTodo();
-        
     }
     
     //Metodo para desactivar todo
@@ -67,6 +66,7 @@ public class Clientes extends javax.swing.JFrame {
         botonSalir.setEnabled(false);
     }
     
+    //Metodo para activar todo
     public void activarTodo(){
         textoCodigo.setEnabled(true);
         textoNif.setEnabled(true);
@@ -84,6 +84,7 @@ public class Clientes extends javax.swing.JFrame {
         botonSalir.setEnabled(true);
     }
 
+    
     public void modoAbcm(){
         textoCodigo.setEnabled(true);
         botonAceptar.setEnabled(true);
@@ -91,6 +92,30 @@ public class Clientes extends javax.swing.JFrame {
         botonSalir.setEnabled(true);
         
     }
+    
+    public void resetFormulario(){
+        textoCodigo.setText("");
+        textoNif.setText("");
+        textoNif2.setText("");
+        textoNombre.setText("");
+        textoApellidos.setText("");
+        textoDomicilio.setText("");
+        textoCp.setText("");
+        textoLocalidad.setText("");
+        textoTelefono.setText("");
+        textoMovil.setText("");
+        textoFax.setText("");
+        textoMail.setText("");
+        textoTotal.setText("");
+    }
+    
+    public boolean comprobarFormulario(){
+        return Codigocomprobado&& nifComprobado && nif2Comprobado && 
+                nombreComprobado && apellidosComprobado && domicilioComprobado && 
+                cpComprobado && localidadComprobado && telefonoComprobado &&
+                movilComprobado && faxComprobado && mailComprobado;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -477,7 +502,7 @@ public class Clientes extends javax.swing.JFrame {
             Codigocomprobado = true;
         } 
     }//GEN-LAST:event_textoCodigoActionPerformed
-    //Todo: Generar automáticamente con fórmula matemática
+    
     private void textoNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNifActionPerformed
         
         String texto = textoNif.getText();
@@ -508,7 +533,6 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoNif2ActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
-        // TODO add your handling code here:
         String texto = textoNombre.getText();
         if (texto.isEmpty()) {
             textoNombre.setBackground(Color.red);
@@ -529,7 +553,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoNombreActionPerformed
 
     private void textoApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoApellidosActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoApellidos.getText();
         if (texto.isEmpty()) {
             textoApellidos.setBackground(Color.red);
@@ -550,7 +574,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoApellidosActionPerformed
 
     private void textoDomicilioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDomicilioActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoDomicilio.getText();
         if (texto.isEmpty()) {
             textoDomicilio.setBackground(Color.red);
@@ -565,7 +589,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoDomicilioActionPerformed
 
     private void textoCpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCpActionPerformed
-        // TODO add your handling code here:
+        
         String cp = textoCp.getText();
         if (!cp.matches("[0-9]{5}")) {
             textoCp.setBackground(Color.red);
@@ -666,34 +690,61 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoTotalActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        // TODO add your handling code here:
-        textoCodigo.setText("");
-        textoNif.setText("");
-        textoNif2.setText("");
-        textoNombre.setText("");
-        textoApellidos.setText("");
-        textoDomicilio.setText("");
-        textoCp.setText("");
-        textoLocalidad.setText("");
-        textoTelefono.setText("");
-        textoMovil.setText("");
-        textoFax.setText("");
-        textoMail.setText("");
-        textoTotal.setText("");
+        
+        resetFormulario();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        // TODO add your handling code here:
         
         //Icono personalizado
         Path p = Path.of("src", "main", "java", "formulario", "IconoVerde.jpg");
         ImageIcon imagen = new ImageIcon(p.toString());
         imagen = new ImageIcon(imagen.getImage().getScaledInstance(70, 70, 0));
+        
         switch (modo) {
             case ALTA:
                 
+                //Comprobar que esto funcione
+                if (comprobarFormulario()) {
+                    String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
+                            + "domicilio,codigo_postal,localidad,telefono,movil,"
+                            + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    String dni = textoNif.getText() + textoNif2.getText();
+                    try (Connection conexion = conn.connect();
+                            PreparedStatement stm = conexion.prepareStatement(query)){
+
+                            stm.setString(1, textoCodigo.getText());
+                            stm.setString(2, dni);
+                            stm.setString(3, textoApellidos.getText());
+                            stm.setString(4, textoNombre.getText());
+                            stm.setString(5, textoDomicilio.getText());
+                            stm.setString(6, textoCp.getText());
+                            stm.setString(7, textoLocalidad.getText());
+                            stm.setString(8, textoTelefono.getText());
+                            stm.setString(9, textoMovil.getText());
+                            stm.setString(10, textoFax.getText());
+                            stm.setString(11, textoMail.getText());
+                            stm.setString(12, textoTotal.getText());
+
+                            stm.executeQuery();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    JOptionPane.showMessageDialog(null, 
+                            "Todos los campos estan bien, cliente agregado a la BdD", 
+                            "¡Enhorabuena!",
+                            JOptionPane.INFORMATION_MESSAGE,
+                            imagen);
+
+                } else{
+                    JOptionPane.showMessageDialog(null, 
+                            "Uno o más campos están mal: ", 
+                            "ERROR",
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 break;
-                
             case BAJA:
                 break;
                 
@@ -707,77 +758,38 @@ public class Clientes extends javax.swing.JFrame {
                         PreparedStatement stm = conexion.prepareStatement(sql)) {
                     stm.setString(1, textoCodigo.getText());
                     try (ResultSet rs = stm.executeQuery()){
+                        if (rs != null) {
+                            while (rs.next()) {                                
+                                textoNif.setText(rs.getString("nif"));
+                            }
+                            //No funciona
+                        } else{
+                            JOptionPane.showMessageDialog(null, 
+                                    "No existe ningún usuario con ese código", 
+                                    "Error", 
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                         
                     } catch (SQLException e) {
                         //No se ha encontrado nadie?
                         e.printStackTrace();
                     }
                 } catch (Exception e) {
+                    //Error en la conexión
+                    e.printStackTrace();
                 }
                 break;
             default:
                 throw new AssertionError();
         }
-        // Abrir ventana si todo ha ido bien
-        if (Codigocomprobado && 
-                nifComprobado && 
-                nif2Comprobado && 
-                nombreComprobado && 
-                apellidosComprobado && 
-                domicilioComprobado && 
-                cpComprobado && 
-                localidadComprobado &&
-                telefonoComprobado &&
-                movilComprobado &&
-                faxComprobado && 
-                mailComprobado) {
-            
-            String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
-                    + "domicilio,codigo_postal,localidad,telefono,movil,"
-                    + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-            
-            try (Connection conexion = conn.connect();
-                    PreparedStatement stm = conexion.prepareStatement(query)){
-                
-                    stm.setString(1, textoCodigo.getText());
-                    stm.setString(2, textoNif.getText());
-                    stm.setString(3, textoApellidos.getText());
-                    stm.setString(4, textoNombre.getText());
-                    stm.setString(5, textoDomicilio.getText());
-                    stm.setString(6, textoCp.getText());
-                    stm.setString(7, textoLocalidad.getText());
-                    stm.setString(8, textoTelefono.getText());
-                    stm.setString(9, textoMovil.getText());
-                    stm.setString(10, textoFax.getText());
-                    stm.setString(11, textoMail.getText());
-                    stm.setString(12, textoTotal.getText());
-                    
-                    stm.executeQuery();
-                    
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            
-            JOptionPane.showMessageDialog(null, 
-                    "Todos los campos estan bien, cliente agregado a la BdD", 
-                    "¡Enhorabuena!",
-                    JOptionPane.INFORMATION_MESSAGE,
-                    imagen);
-            
-        } else{
-            JOptionPane.showMessageDialog(null, 
-                    "Uno o más campos están mal: ", 
-                    "ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         desactivarTodo();
+        resetFormulario();
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void altasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altasActionPerformed
-        
         modoAbcm();
         modo = Modo.ALTA;
     }//GEN-LAST:event_altasActionPerformed
