@@ -10,8 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -24,6 +27,8 @@ public class Clientes extends javax.swing.JFrame {
     
     private enum Modo {ALTA,BAJA,MODIFICACIONES,CONSULTAPORCODIGO};
     private Modo modo;
+    private List <String> errores = new ArrayList<>();
+    
     
     private ConexionDB conn = new ConexionDB();
     
@@ -84,7 +89,7 @@ public class Clientes extends javax.swing.JFrame {
         botonSalir.setEnabled(true);
     }
 
-    
+    //Modo Altas-Bajas-Consultas-Modificaciones
     public void modoAbcm(){
         textoCodigo.setEnabled(true);
         botonAceptar.setEnabled(true);
@@ -110,10 +115,42 @@ public class Clientes extends javax.swing.JFrame {
     }
     
     public boolean comprobarFormulario(){
-        return Codigocomprobado&& nifComprobado && nif2Comprobado && 
-                nombreComprobado && apellidosComprobado && domicilioComprobado && 
-                cpComprobado && localidadComprobado && telefonoComprobado &&
-                movilComprobado && faxComprobado && mailComprobado;
+        errores.clear();
+        
+        if (!Codigocomprobado){ 
+            errores.add("Codigo"); 
+            textoCodigo.setBackground(Color.red);
+        } else {
+            textoCodigo.setBackground(Color.white);
+        }
+        
+        if (!nifComprobado) errores.add("Nif");
+        if (!nif2Comprobado) errores.add("Letra Nif");
+        if (!nombreComprobado) errores.add("Nombre");
+        if (!apellidosComprobado) errores.add("Apellidos");
+        if (!domicilioComprobado) errores.add("Domicilio");
+        if (!cpComprobado) errores.add("Código postal");
+        if (!localidadComprobado) errores.add("Localidad");
+        if (!telefonoComprobado) errores.add("Telefono");
+        if (!movilComprobado) errores.add("Movil");
+        if (!faxComprobado) errores.add("Fax");
+        if (!mailComprobado) errores.add("eMail");
+        
+        if (errores.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void marcarError(JTextField campo){
+        campo.setBackground(Color.red);
+        campo.setText("");
+        campo.requestFocus();
+    }
+    
+    public void marcarCorrecto (JTextField campo){
+        campo.setBackground(Color.white);
     }
     
     /**
@@ -488,18 +525,50 @@ public class Clientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCodigoActionPerformed
-        //5 numeros 
         
         String texto = textoCodigo.getText();
         if (!texto.matches("[0-9]{5}")){
-            textoCodigo.setBackground(Color.red);
+            marcarError(textoCodigo);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos","Error",JOptionPane.ERROR_MESSAGE);
-            textoCodigo.setText("");
-            textoCodigo.setBackground(Color.white);
-            textoCodigo.requestFocus();
         } else {
-            textoCodigo.addActionListener(e -> textoNif.requestFocus());
-            Codigocomprobado = true;
+            marcarCorrecto(textoCodigo);
+            switch (modo) {
+                case ALTA:
+                    String sql = "SELECT * FROM clientes WHERE codigo = ?";
+                
+                    try (Connection conexion = conn.connect();
+                            PreparedStatement stm = conexion.prepareStatement(sql)) {
+                        stm.setString(1, textoCodigo.getText());
+                        try (ResultSet rs = stm.executeQuery()){
+                            if (!rs.next()) {
+                               activarTodo();
+                               textoCodigo.addActionListener(e -> textoNif.requestFocus());
+                               Codigocomprobado = true;
+                            } else{
+                                JOptionPane.showMessageDialog(null, 
+                                        "Ya existe un usuario con ese código, no es posible agregarlo", 
+                                        "Error", 
+                                        JOptionPane.ERROR_MESSAGE);
+                                textoCodigo.requestFocus();
+                            }
+                        } catch (SQLException e) {
+                            //No se ha encontrado nadie?
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        //Error en la conexión
+                        e.printStackTrace();
+                    }
+                    break;
+                case BAJA:
+                    break;
+                case MODIFICACIONES:
+                    break;
+                case CONSULTAPORCODIGO:
+                    break;
+                default:
+                    break;
+            }
         } 
     }//GEN-LAST:event_textoCodigoActionPerformed
     
@@ -512,12 +581,10 @@ public class Clientes extends javax.swing.JFrame {
         'C', 'K', 'E'};
         
         if (!texto.matches("[0-9]{8}")) {
-            textoNif.setBackground(Color.red);
+            marcarError(textoNif);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 8 dígitos","Error",JOptionPane.ERROR_MESSAGE);
-            textoNif.setText("");
-            textoNif.setBackground(Color.white);
-            textoNif.requestFocus();
         } else {
+            marcarCorrecto(textoNif);
             int dniNumber = Integer.parseInt(textoNif.getText());
             int remainder = dniNumber % 23;
             char letter = DNI_LETTERS[remainder];
@@ -533,20 +600,16 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoNif2ActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
+        
         String texto = textoNombre.getText();
         if (texto.isEmpty()) {
-            textoNombre.setBackground(Color.red);
+            marcarError(textoNombre);
             JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-            textoNombre.setText("");
-            textoNombre.setBackground(Color.white);
-            textoNombre.requestFocus();
         } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
-            textoNombre.setBackground(Color.red);
+            marcarError(textoNombre);
             JOptionPane.showMessageDialog(null, "El nombre debe contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
-            textoNombre.setText("");
-            textoNombre.setBackground(Color.white);
-            textoNombre.requestFocus();
         } else{
+            marcarCorrecto(textoNombre);
             textoNombre.addActionListener(e -> textoApellidos.requestFocus());
             nombreComprobado = true;
         }
@@ -556,18 +619,13 @@ public class Clientes extends javax.swing.JFrame {
         
         String texto = textoApellidos.getText();
         if (texto.isEmpty()) {
-            textoApellidos.setBackground(Color.red);
+            marcarError(textoApellidos);
             JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-            textoApellidos.setText("");
-            textoApellidos.setBackground(Color.white);
-            textoApellidos.requestFocus();
         } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
-            textoApellidos.setBackground(Color.red);
+            marcarError(textoApellidos);
             JOptionPane.showMessageDialog(null, "Los apellidos deben contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
-            textoApellidos.setText("");
-            textoApellidos.setBackground(Color.white);
-            textoApellidos.requestFocus();
         } else{
+            marcarCorrecto(textoApellidos);
             textoApellidos.addActionListener(e -> textoDomicilio.requestFocus());
             apellidosComprobado = true;
         }
@@ -577,12 +635,10 @@ public class Clientes extends javax.swing.JFrame {
         
         String texto = textoDomicilio.getText();
         if (texto.isEmpty()) {
-            textoDomicilio.setBackground(Color.red);
+            marcarError(textoDomicilio);
             JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-            textoDomicilio.setText("");
-            textoDomicilio.setBackground(Color.white);
-            textoDomicilio.requestFocus();
         } else{
+            marcarCorrecto(textoDomicilio);
             textoDomicilio.addActionListener(e -> textoCp.requestFocus());
             domicilioComprobado = true;
         }
@@ -592,93 +648,78 @@ public class Clientes extends javax.swing.JFrame {
         
         String cp = textoCp.getText();
         if (!cp.matches("[0-9]{5}")) {
-            textoCp.setBackground(Color.red);
+            marcarError(textoCp);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos","Error",JOptionPane.ERROR_MESSAGE);
-            textoCp.setText("");
-            textoCp.setBackground(Color.white);
-            textoCp.requestFocus();
         } else{
+            marcarCorrecto(textoCp);
             textoCp.addActionListener(e -> textoLocalidad.requestFocus());
             cpComprobado = true;
         }
     }//GEN-LAST:event_textoCpActionPerformed
 
     private void textoLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoLocalidadActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoLocalidad.getText();
         if (texto.isEmpty()) {
-            textoLocalidad.setBackground(Color.red);
+            marcarError(textoLocalidad);
             JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-            textoLocalidad.setText("");
-            textoLocalidad.setBackground(Color.white);
-            textoLocalidad.requestFocus();
         } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
-            textoLocalidad.setBackground(Color.red);
+            marcarError(textoLocalidad);
             JOptionPane.showMessageDialog(null, "La localidad debe contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
-            textoLocalidad.setText("");
-            textoLocalidad.setBackground(Color.white);
-            textoLocalidad.requestFocus();
         } else{
+            marcarCorrecto(textoLocalidad);
             textoLocalidad.addActionListener(e -> textoTelefono.requestFocus());
             localidadComprobado = true;
         }
     }//GEN-LAST:event_textoLocalidadActionPerformed
 
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoTelefono.getText();
         if (!texto.matches("[0-9]{9}")) {
-            textoTelefono.setBackground(Color.red);
+            marcarError(textoTelefono);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
-            textoTelefono.setText("");
-            textoTelefono.setBackground(Color.white);
-            textoTelefono.requestFocus();
         } else{
+            marcarCorrecto(textoTelefono);
             textoTelefono.addActionListener(e -> textoMovil.requestFocus());
             telefonoComprobado = true;
         }
     }//GEN-LAST:event_textoTelefonoActionPerformed
 
     private void textoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMovilActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoMovil.getText();
         if (!texto.matches("[0-9]{9}")) {
-            textoMovil.setBackground(Color.red);
+            marcarError(textoMovil);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
-            textoMovil.setText("");
-            textoMovil.setBackground(Color.white);
-            textoMovil.requestFocus();
         } else{
+            marcarCorrecto(textoMovil);
             textoMovil.addActionListener(e -> textoFax.requestFocus());
             movilComprobado = true;
         }
     }//GEN-LAST:event_textoMovilActionPerformed
 
     private void textoFaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFaxActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoFax.getText();
         if (!texto.matches("[0-9]{9}")) {
-            textoFax.setBackground(Color.red);
+            marcarError(textoFax);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
-            textoFax.setText("");
-            textoFax.setBackground(Color.white);
-            textoFax.requestFocus();
         } else{
+            marcarCorrecto(textoFax);
             textoFax.addActionListener(e -> textoMail.requestFocus());
             faxComprobado = true;
         }
     }//GEN-LAST:event_textoFaxActionPerformed
 
     private void textoMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMailActionPerformed
-        // TODO add your handling code here:
+        
         String texto = textoMail.getText();
         if (texto.isEmpty()) {
-            textoMail.setBackground(Color.red);
+            marcarError(textoMail);
             JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-            textoMail.setText("");
-            textoMail.setBackground(Color.white);
-            textoMail.requestFocus();
         } else{
+            marcarCorrecto(textoMail);
             textoMail.addActionListener(e -> botonAceptar.requestFocus());
             textoTotal.setText("0");
             mailComprobado = true;
@@ -686,11 +727,10 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_textoMailActionPerformed
 
     private void textoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTotalActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_textoTotalActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        
         resetFormulario();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
@@ -704,43 +744,43 @@ public class Clientes extends javax.swing.JFrame {
         switch (modo) {
             case ALTA:
                 
-                //Comprobar que esto funcione
                 if (comprobarFormulario()) {
                     String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
                             + "domicilio,codigo_postal,localidad,telefono,movil,"
                             + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-                    String dni = textoNif.getText() + textoNif2.getText();
+                    String dni = textoNif.getText().trim() + textoNif2.getText().trim();
                     try (Connection conexion = conn.connect();
                             PreparedStatement stm = conexion.prepareStatement(query)){
 
-                            stm.setString(1, textoCodigo.getText());
+                            stm.setString(1, textoCodigo.getText().trim());
                             stm.setString(2, dni);
-                            stm.setString(3, textoApellidos.getText());
-                            stm.setString(4, textoNombre.getText());
-                            stm.setString(5, textoDomicilio.getText());
-                            stm.setString(6, textoCp.getText());
-                            stm.setString(7, textoLocalidad.getText());
-                            stm.setString(8, textoTelefono.getText());
-                            stm.setString(9, textoMovil.getText());
-                            stm.setString(10, textoFax.getText());
-                            stm.setString(11, textoMail.getText());
-                            stm.setString(12, textoTotal.getText());
+                            stm.setString(3, textoApellidos.getText().trim());
+                            stm.setString(4, textoNombre.getText().trim());
+                            stm.setString(5, textoDomicilio.getText().trim());
+                            stm.setString(6, textoCp.getText().trim());
+                            stm.setString(7, textoLocalidad.getText().trim());
+                            stm.setString(8, textoTelefono.getText().trim());
+                            stm.setString(9, textoMovil.getText().trim());
+                            stm.setString(10, textoFax.getText().trim());
+                            stm.setString(11, textoMail.getText().trim());
+                            stm.setString(12, textoTotal.getText().trim());
 
-                            stm.executeQuery();
+                            stm.executeUpdate();
 
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
 
                     JOptionPane.showMessageDialog(null, 
-                            "Todos los campos estan bien, cliente agregado a la BdD", 
+                            "Todos los campos estan bien, cliente agregado a la base de datos", 
                             "¡Enhorabuena!",
                             JOptionPane.INFORMATION_MESSAGE,
                             imagen);
 
                 } else{
                     JOptionPane.showMessageDialog(null, 
-                            "Uno o más campos están mal: ", 
+                            "Los siguientes campos están mal: " + errores.toString() 
+                                    + "\n" + "Una vez corregidos los campos pulse Enter en cada campo que este mal", 
                             "ERROR",
                             JOptionPane.ERROR_MESSAGE);
                 }
@@ -756,18 +796,31 @@ public class Clientes extends javax.swing.JFrame {
                 
                 try (Connection conexion = conn.connect();
                         PreparedStatement stm = conexion.prepareStatement(sql)) {
+                    
                     stm.setString(1, textoCodigo.getText());
+                    
                     try (ResultSet rs = stm.executeQuery()){
-                        if (rs != null) {
-                            while (rs.next()) {                                
-                                textoNif.setText(rs.getString("nif"));
-                            }
-                            //No funciona
+                        if (rs.next()) {
+                            textoCodigo.setEnabled(false);
+                            String dni = rs.getString("nif");
+                            textoNif.setText(dni.substring(0,8));
+                            textoNif2.setText(dni.substring(8));
+                            textoNombre.setText(rs.getString("nombre"));
+                            textoApellidos.setText(rs.getString("apellidos"));
+                            textoDomicilio.setText(rs.getString("domicilio"));
+                            textoCp.setText(rs.getString("codigo_postal"));
+                            textoLocalidad.setText(rs.getString("localidad"));
+                            textoTelefono.setText(rs.getString("telefono"));
+                            textoMovil.setText(rs.getString("movil"));
+                            textoFax.setText(rs.getString("fax"));
+                            textoMail.setText(rs.getString("email"));
+                            textoTotal.setText(rs.getString("total_ventas"));
                         } else{
                             JOptionPane.showMessageDialog(null, 
                                     "No existe ningún usuario con ese código", 
                                     "Error", 
                                     JOptionPane.ERROR_MESSAGE);
+                            resetFormulario();
                         }
                         
                     } catch (SQLException e) {
@@ -780,7 +833,7 @@ public class Clientes extends javax.swing.JFrame {
                 }
                 break;
             default:
-                throw new AssertionError();
+                break;
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -795,7 +848,6 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_altasActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        
         Navegador.irA(Vista.MENU);
     }//GEN-LAST:event_volverActionPerformed
 
