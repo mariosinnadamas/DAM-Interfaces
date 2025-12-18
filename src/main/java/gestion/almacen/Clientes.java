@@ -28,7 +28,8 @@ public class Clientes extends javax.swing.JFrame {
     private enum Modo {ALTA,BAJA,MODIFICACIONES,CONSULTAPORCODIGO};
     private Modo modo;
     private List <String> errores = new ArrayList<>();
-    
+    private String consultaClientes = "SELECT * FROM clientes WHERE codigo = ?";
+
     
     private ConexionDB conn = new ConexionDB();
     
@@ -534,10 +535,9 @@ public class Clientes extends javax.swing.JFrame {
             marcarCorrecto(textoCodigo);
             switch (modo) {
                 case ALTA:
-                    String sql = "SELECT * FROM clientes WHERE codigo = ?";
                 
                     try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(sql)) {
+                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
                         stm.setString(1, textoCodigo.getText());
                         try (ResultSet rs = stm.executeQuery()){
                             if (!rs.next()) {
@@ -561,8 +561,53 @@ public class Clientes extends javax.swing.JFrame {
                     }
                     break;
                 case BAJA:
+                
+                    try (Connection conexion = conn.connect();
+                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                        stm.setString(1, textoCodigo.getText());
+                        try (ResultSet rs = stm.executeQuery()){
+                            if (rs.next()) {
+                               botonAceptar.requestFocus();
+                            } else{
+                                JOptionPane.showMessageDialog(null, 
+                                        "No se ha encontrado ningun cliente asociado a ese código", 
+                                        "Error", 
+                                        JOptionPane.ERROR_MESSAGE);
+                                textoCodigo.requestFocus();
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case MODIFICACIONES:
+                
+                    try (Connection conexion = conn.connect();
+                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                        stm.setString(1, textoCodigo.getText());
+                        try (ResultSet rs = stm.executeQuery()){
+                            if (!rs.next()) {
+                               activarTodo();
+                               textoCodigo.addActionListener(e -> textoNif.requestFocus());
+                               Codigocomprobado = true;
+                            } else{
+                                JOptionPane.showMessageDialog(null, 
+                                        "Ya existe un usuario con ese código, no es posible agregarlo", 
+                                        "Error", 
+                                        JOptionPane.ERROR_MESSAGE);
+                                textoCodigo.requestFocus();
+                            }
+                        } catch (SQLException e) {
+                            //No se ha encontrado nadie?
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        //Error en la conexión
+                        e.printStackTrace();
+                    }
+                    
                     break;
                 case CONSULTAPORCODIGO:
                     break;
@@ -786,16 +831,29 @@ public class Clientes extends javax.swing.JFrame {
                 }
                 break;
             case BAJA:
+                
+                String sql = "DELETE FROM clientes WHERE codigo = ?";
+                
+                    try (Connection conexion = conn.connect();
+                            PreparedStatement stm = conexion.prepareStatement(sql)) {
+                        stm.setString(1, textoCodigo.getText());
+                        
+                        stm.executeUpdate();
+                        
+                    } catch (Exception e) {
+                        //Error en la conexión
+                        e.printStackTrace();
+                    }
                 break;
                 
             case MODIFICACIONES:
                 break;
             case CONSULTAPORCODIGO:
                 
-                String sql = "SELECT * FROM clientes WHERE codigo = ?";
+                String sql2 = "SELECT * FROM clientes WHERE codigo = ?";
                 
                 try (Connection conexion = conn.connect();
-                        PreparedStatement stm = conexion.prepareStatement(sql)) {
+                        PreparedStatement stm = conexion.prepareStatement(sql2)) {
                     
                     stm.setString(1, textoCodigo.getText());
                     
