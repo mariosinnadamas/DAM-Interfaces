@@ -28,7 +28,7 @@ public class Clientes extends javax.swing.JFrame {
     private enum Modo {ALTA,BAJA,MODIFICACIONES,CONSULTAPORCODIGO};
     private Modo modo;
     private List <String> errores = new ArrayList<>();
-    private String consultaClientes = "SELECT * FROM clientes WHERE codigo = ?";
+    private String consultaClientes = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_ventas FROM clientes WHERE codigo = ?";
 
     
     private ConexionDB conn = new ConexionDB();
@@ -116,15 +116,10 @@ public class Clientes extends javax.swing.JFrame {
     }
     
     public boolean comprobarFormulario(){
+        // Hay que hacer que este metodo saque la ventana de errores llamando a otro metodo
         errores.clear();
         
-        if (!Codigocomprobado){ 
-            errores.add("Codigo"); 
-            textoCodigo.setBackground(Color.red);
-        } else {
-            textoCodigo.setBackground(Color.white);
-        }
-        
+        if (!Codigocomprobado) errores.add("Codigo");
         if (!nifComprobado) errores.add("Nif");
         if (!nif2Comprobado) errores.add("Letra Nif");
         if (!nombreComprobado) errores.add("Nombre");
@@ -137,21 +132,45 @@ public class Clientes extends javax.swing.JFrame {
         if (!faxComprobado) errores.add("Fax");
         if (!mailComprobado) errores.add("eMail");
         
-        if (errores.isEmpty()) {
-            return true;
-        } else {
+        if (!errores.isEmpty()) {
+            mostrarErrores(errores);
             return false;
         }
+        return true;
+    }
+    
+    public void mostrarErrores(List <String> errores){
+        
+        JOptionPane.showMessageDialog(
+        this,
+        "Corrige los siguientes campos:\n " + String.join("\n- ", errores),
+        "ERROR",
+        JOptionPane.ERROR_MESSAGE
+    );
     }
     
     public void marcarError(JTextField campo){
         campo.setBackground(Color.red);
-        campo.setText("");
         campo.requestFocus();
     }
     
     public void marcarCorrecto (JTextField campo){
         campo.setBackground(Color.white);
+    }
+    
+    private void marcarFormularioComoValido(){
+        Codigocomprobado = true;
+        nifComprobado = true;
+        nif2Comprobado = true;
+        nombreComprobado = true;
+        apellidosComprobado = true;
+        domicilioComprobado = true;
+        cpComprobado = true;
+        localidadComprobado = true;
+        telefonoComprobado = true;
+        movilComprobado = true;
+        faxComprobado = true;
+        mailComprobado = true;
     }
     
     /**
@@ -534,6 +553,7 @@ public class Clientes extends javax.swing.JFrame {
         } else {
             marcarCorrecto(textoCodigo);
             switch (modo) {
+                //Realiza una consulta antes de agregar para comprobar que puedas dar de alta
                 case ALTA:
                 
                     try (Connection conexion = conn.connect();
@@ -542,6 +562,7 @@ public class Clientes extends javax.swing.JFrame {
                         try (ResultSet rs = stm.executeQuery()){
                             if (!rs.next()) {
                                activarTodo();
+                               textoCodigo.setEnabled(false);
                                textoCodigo.addActionListener(e -> textoNif.requestFocus());
                                Codigocomprobado = true;
                             } else{
@@ -560,6 +581,7 @@ public class Clientes extends javax.swing.JFrame {
                         e.printStackTrace();
                     }
                     break;
+                    //Hace una consulta para comprobar que exista, de no ser así no pasa el focus a aceptar
                 case BAJA:
                 
                     try (Connection conexion = conn.connect();
@@ -584,32 +606,48 @@ public class Clientes extends javax.swing.JFrame {
                     break;
                 case MODIFICACIONES:
                 
+                    //Hace una consulta para comprobar que pueda modificar
                     try (Connection conexion = conn.connect();
                             PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
                         stm.setString(1, textoCodigo.getText());
+                        
                         try (ResultSet rs = stm.executeQuery()){
-                            if (!rs.next()) {
-                               activarTodo();
-                               textoCodigo.addActionListener(e -> textoNif.requestFocus());
-                               Codigocomprobado = true;
+                            if (rs.next()) {
+                                activarTodo();
+                                String dni = rs.getString("nif");
+                                textoNif.setText(dni.substring(0,8));
+                                textoNif2.setText(dni.substring(8));
+                                textoNombre.setText(rs.getString("nombre"));
+                                textoApellidos.setText(rs.getString("apellidos"));
+                                textoDomicilio.setText(rs.getString("domicilio"));
+                                textoCp.setText(rs.getString("codigo_postal"));
+                                textoLocalidad.setText(rs.getString("localidad"));
+                                textoTelefono.setText(rs.getString("telefono"));
+                                textoMovil.setText(rs.getString("movil"));
+                                textoFax.setText(rs.getString("fax"));
+                                textoMail.setText(rs.getString("email"));
+                                textoTotal.setText(rs.getString("total_ventas"));
+                                textoNif.addActionListener(e -> textoNif.requestFocus());
+                                textoCodigo.setEnabled(false);
+                                Codigocomprobado = true;
                             } else{
                                 JOptionPane.showMessageDialog(null, 
-                                        "Ya existe un usuario con ese código, no es posible agregarlo", 
+                                        "No existe ningún usuario con ese código", 
                                         "Error", 
                                         JOptionPane.ERROR_MESSAGE);
                                 textoCodigo.requestFocus();
                             }
+                            
                         } catch (SQLException e) {
                             //No se ha encontrado nadie?
                             e.printStackTrace();
                         }
+                        
                     } catch (Exception e) {
                         //Error en la conexión
                         e.printStackTrace();
                     }
                     
-                    break;
-                case CONSULTAPORCODIGO:
                     break;
                 default:
                     break;
@@ -780,7 +818,6 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        
         //Icono personalizado
         Path p = Path.of("src", "main", "java", "formulario", "IconoVerde.jpg");
         ImageIcon imagen = new ImageIcon(p.toString());
@@ -847,13 +884,63 @@ public class Clientes extends javax.swing.JFrame {
                 break;
                 
             case MODIFICACIONES:
+                if (!comprobarFormulario()) {
+                    break;  
+                } 
+                
+                String query = "UPDATE clientes SET nif = ?,"
+                        + "apellidos = ?, "
+                        + "nombre = ?, "
+                        + "domicilio = ?, "
+                        + "codigo_postal = ?, "
+                        + "localidad = ?, "
+                        + "telefono = ?, "
+                        + "movil=?, "
+                        + "fax = ?, "
+                        + "email = ? "
+                        + "WHERE codigo = ?";
+                    
+                try (Connection conexion = conn.connect();
+                        PreparedStatement stm = conexion.prepareStatement(query)){
+
+                    String dni = textoNif.getText().trim() + textoNif2.getText().trim();
+                    stm.setString(1, dni);
+                    stm.setString(2, textoApellidos.getText().trim());
+                    stm.setString(3, textoNombre.getText().trim());
+                    stm.setString(4, textoDomicilio.getText().trim());
+                    stm.setString(5, textoCp.getText().trim());
+                    stm.setString(6, textoLocalidad.getText().trim());
+                    stm.setString(7, textoTelefono.getText().trim());
+                    stm.setString(8, textoMovil.getText().trim());
+                    stm.setString(9, textoFax.getText().trim());
+                    stm.setString(10, textoMail.getText().trim());
+                    stm.setString(11, textoCodigo.getText().trim());
+
+                    int filas = stm.executeUpdate();
+                    
+                    if (filas == 1) {
+                        JOptionPane.showMessageDialog(null, 
+                        "Cliente modificado con éxito", 
+                        "¡Enhorabuena!",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        imagen);
+                    } else {
+                        JOptionPane.showMessageDialog(
+                            this,
+                            "No se ha podido modificar el cliente",
+                            "ERROR",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
+                
             case CONSULTAPORCODIGO:
                 
-                String sql2 = "SELECT * FROM clientes WHERE codigo = ?";
-                
                 try (Connection conexion = conn.connect();
-                        PreparedStatement stm = conexion.prepareStatement(sql2)) {
+                        PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
                     
                     stm.setString(1, textoCodigo.getText());
                     
@@ -873,6 +960,7 @@ public class Clientes extends javax.swing.JFrame {
                             textoFax.setText(rs.getString("fax"));
                             textoMail.setText(rs.getString("email"));
                             textoTotal.setText(rs.getString("total_ventas"));
+                            
                         } else{
                             JOptionPane.showMessageDialog(null, 
                                     "No existe ningún usuario con ese código", 
