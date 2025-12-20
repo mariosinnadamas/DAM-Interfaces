@@ -49,6 +49,7 @@ public class Clientes extends javax.swing.JFrame {
     
     public Clientes() {
         initComponents();
+        //this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         textoNif2.setEnabled(false);
         textoTotal.setEnabled(false);
         desactivarTodo();
@@ -649,6 +650,9 @@ public class Clientes extends javax.swing.JFrame {
                     }
                     
                     break;
+                    
+                case CONSULTAPORCODIGO:
+                    botonAceptar.requestFocus();
                 default:
                     break;
             }
@@ -759,7 +763,7 @@ public class Clientes extends javax.swing.JFrame {
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
         
         String texto = textoTelefono.getText();
-        if (!texto.matches("[0-9]{9}")) {
+        if (!texto.matches("^([0-9]{9})?$")) {
             marcarError(textoTelefono);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
         } else{
@@ -772,7 +776,7 @@ public class Clientes extends javax.swing.JFrame {
     private void textoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMovilActionPerformed
         
         String texto = textoMovil.getText();
-        if (!texto.matches("[0-9]{9}")) {
+        if (!texto.matches("^([0-9]{9})?$")) {
             marcarError(textoMovil);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
         } else{
@@ -785,7 +789,7 @@ public class Clientes extends javax.swing.JFrame {
     private void textoFaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFaxActionPerformed
         
         String texto = textoFax.getText();
-        if (!texto.matches("[0-9]{9}")) {
+        if (!texto.matches("^([0-9]{9})?$")) {
             marcarError(textoFax);
             JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
         } else{
@@ -798,9 +802,9 @@ public class Clientes extends javax.swing.JFrame {
     private void textoMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMailActionPerformed
         
         String texto = textoMail.getText();
-        if (texto.isEmpty()) {
+        if (!texto.matches("^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")) {
             marcarError(textoMail);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El formato del email es inválido","Error",JOptionPane.ERROR_MESSAGE);
         } else{
             marcarCorrecto(textoMail);
             textoMail.addActionListener(e -> botonAceptar.requestFocus());
@@ -823,6 +827,7 @@ public class Clientes extends javax.swing.JFrame {
         ImageIcon imagen = new ImageIcon(p.toString());
         imagen = new ImageIcon(imagen.getImage().getScaledInstance(70, 70, 0));
         
+        //modificar alta, que no saque las ventanas
         switch (modo) {
             case ALTA:
                 
@@ -858,14 +863,14 @@ public class Clientes extends javax.swing.JFrame {
                             "¡Enhorabuena!",
                             JOptionPane.INFORMATION_MESSAGE,
                             imagen);
+                    
+                    resetFormulario();
+                    desactivarTodo();
 
                 } else{
-                    JOptionPane.showMessageDialog(null, 
-                            "Los siguientes campos están mal: " + errores.toString() 
-                                    + "\n" + "Una vez corregidos los campos pulse Enter en cada campo que este mal", 
-                            "ERROR",
-                            JOptionPane.ERROR_MESSAGE);
+                    mostrarErrores(errores);
                 }
+                
                 break;
             case BAJA:
                 
