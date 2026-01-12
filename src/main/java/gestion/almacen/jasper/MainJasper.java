@@ -7,12 +7,9 @@ package gestion.almacen.jasper;
 import gestion.almacen.ConexionDB;
 import java.sql.SQLException;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -21,11 +18,11 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class MainJasper {
     public static void main(String[] args) throws JRException, SQLException {
         ConexionDB conn = new ConexionDB();
-        String direccionBuena = "src/main/java/gestion/almacen/";
         
-        JasperCompileManager.compileReportToFile("src/main/java/gestion/almacen/prueba.jrxml", direccionBuena + "Prueba.jasper");
-	JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(direccionBuena + "Prueba.jasper");
-        JasperPrint print = JasperFillManager.fillReport(report, null, conn.connect());
-        JasperExportManager.exportReportToPdfFile(print, direccionBuena+"output.pdf");
+        String informeOrigen = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/ClientesTodos.jasper";
+        String informeDestino = "src/main/java/gestion/almacen/jasper/ClientesTodos.pdf";
+        
+        JasperPrint print = JasperFillManager.fillReport(informeOrigen, null, conn.connect());
+        JasperExportManager.exportReportToPdfFile(print, informeDestino);
     }
 }
