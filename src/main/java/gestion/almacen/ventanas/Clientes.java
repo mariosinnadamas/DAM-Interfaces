@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gestion.almacen;
+package gestion.almacen.ventanas;
 
+import gestion.almacen.ConexionDB;
+import gestion.almacen.navegacion.Navegador;
+import gestion.almacen.navegacion.Vista;
 import java.awt.Color;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -15,6 +18,10 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  *
@@ -30,6 +37,9 @@ public class Clientes extends javax.swing.JFrame {
     private List <String> errores = new ArrayList<>();
     private String consultaClientes = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_ventas FROM clientes WHERE codigo = ?";
     
+    //Directorios para el jasper
+    private String informeOrigen = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/ClientesTodos.jasper";
+    private String informeDestino = "src/main/java/gestion/almacen/jasper/ClientesTodos.pdf";
     
     private ConexionDB conn = new ConexionDB();
     
@@ -404,9 +414,19 @@ public class Clientes extends javax.swing.JFrame {
         listados.setText("Listados");
 
         porCodigos.setText("Por códigos");
+        porCodigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                porCodigosActionPerformed(evt);
+            }
+        });
         listados.add(porCodigos);
 
         entreCodigos.setText("Entre códigos");
+        entreCodigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entreCodigosActionPerformed(evt);
+            }
+        });
         listados.add(entreCodigos);
 
         graficos.setText("Gráficos");
@@ -1012,6 +1032,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_altasActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        
         Navegador.irA(Vista.MENU);
     }//GEN-LAST:event_volverActionPerformed
 
@@ -1033,6 +1054,26 @@ public class Clientes extends javax.swing.JFrame {
         etiquetaModoModificar.setText("Consulta por código");
         modoAbcm();
     }//GEN-LAST:event_porCodigoActionPerformed
+
+    private void porCodigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porCodigosActionPerformed
+        
+        try {
+            JasperPrint print = JasperFillManager.fillReport(informeOrigen, null, conn.connect());
+            JasperExportManager.exportReportToPdfFile(print, informeDestino);
+        } catch (SQLException ex) {
+            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (JRException ex) {
+            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+    }//GEN-LAST:event_porCodigosActionPerformed
+
+    private void entreCodigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entreCodigosActionPerformed
+        
+        Navegador.irA(Vista.BUSQUEDAENTRECODIGOS);
+        
+        
+    }//GEN-LAST:event_entreCodigosActionPerformed
 
     /**
      * @param args the command line arguments

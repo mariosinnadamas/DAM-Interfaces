@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package gestion.almacen;
+package gestion.almacen.navegacion;
 
+import gestion.almacen.Main;
+import gestion.almacen.ventanas.BusquedaPorCodigo;
+import gestion.almacen.ventanas.Clientes;
 import javax.swing.JFrame;
 
 /**
@@ -33,6 +36,9 @@ public class Navegador {
                 break;
             case CLIENTES:
                 ventanaActual = new Clientes();
+                break;
+            case BUSQUEDAENTRECODIGOS:
+                ventanaActual= new BusquedaPorCodigo();
                 break;
             default:
                 throw new AssertionError();

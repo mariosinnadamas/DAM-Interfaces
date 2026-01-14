@@ -67,11 +67,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Por c&#xf3;digos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="porCodigosActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="entreCodigos">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Entre c&#xf3;digos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="entreCodigosActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="graficos">
                   <Properties>

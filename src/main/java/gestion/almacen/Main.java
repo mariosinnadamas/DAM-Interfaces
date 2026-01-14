@@ -4,6 +4,9 @@
  */
 package gestion.almacen;
 
+import gestion.almacen.navegacion.Navegador;
+import gestion.almacen.navegacion.Vista;
+
 /**
  *
  * @author mario
