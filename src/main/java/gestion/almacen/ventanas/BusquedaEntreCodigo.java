@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -21,22 +20,19 @@ import net.sf.jasperreports.engine.JasperPrint;
  *
  * @author mario
  */
-public class BusquedaPorCodigo extends javax.swing.JFrame {
+public class BusquedaEntreCodigo extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BusquedaPorCodigo.class.getName());
-
-    /**
-     * Creates new form BusquedaPorCodigo
-     */
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BusquedaEntreCodigo.class.getName());
     
     private ConexionDB conn = new ConexionDB();
-    private String informeOrigen = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/ClientesEntreCodigos.jasper";
-    private String informeDestino = "src/main/java/gestion/almacen/jasper/ClientesEntreCodigos.pdf";
+    private String informeOrigen = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.jasper";
+    private String informeDestino = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.pdf";
     private String codigoMenor = "";
     private String codigoMayor = "";
     
-    public BusquedaPorCodigo() {
+    public BusquedaEntreCodigo() {
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
     private void reset(){
@@ -147,10 +143,22 @@ public class BusquedaPorCodigo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+          
+        int nMenor = Integer.valueOf(codigoMenor);
+        int nMayor = Integer.valueOf(codigoMayor);
+        
+        if (nMenor > nMayor) {
+            JOptionPane.showMessageDialog(null, 
+                    "El número menor no puede ser mayor que el número mayor",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            reset();
+            textoCodigo1.requestFocus();
+            return;
+        }
         
         try {
             HashMap<String,Object> parametros = new HashMap<>();
-            //Comprobar que codigo es el menor y cual el mayor
+            
             parametros.put("codigoMenor", codigoMenor);
             parametros.put("codigoMayor", codigoMayor);
             
@@ -182,6 +190,7 @@ public class BusquedaPorCodigo extends javax.swing.JFrame {
             textoCodigo1.setBackground(Color.red);
         } else {
             textoCodigo1.setBackground(Color.white);
+            textoCodigo1.addActionListener(e -> textoCodigo2.requestFocus());
         }
     }//GEN-LAST:event_textoCodigo1CaretUpdate
 
@@ -193,6 +202,7 @@ public class BusquedaPorCodigo extends javax.swing.JFrame {
             textoCodigo2.setBackground(Color.red);
         } else {
             textoCodigo2.setBackground(Color.white);
+            textoCodigo2.addActionListener(e -> botonAceptar.requestFocus());
         }
     }//GEN-LAST:event_textoCodigo2CaretUpdate
 
@@ -218,7 +228,7 @@ public class BusquedaPorCodigo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new BusquedaPorCodigo().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new BusquedaEntreCodigo().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

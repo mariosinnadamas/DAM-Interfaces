@@ -34,12 +34,18 @@ public class Clientes extends javax.swing.JFrame {
     
     private enum Modo {ALTA,BAJA,MODIFICACIONES,CONSULTAPORCODIGO};
     private Modo modo;
+    
+    //Array para almacenar los errores
     private List <String> errores = new ArrayList<>();
+    
+    //Consulta reutilizada
     private String consultaClientes = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_ventas FROM clientes WHERE codigo = ?";
     
     //Directorios para el jasper
-    private String informeOrigen = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/ClientesTodos.jasper";
-    private String informeDestino = "src/main/java/gestion/almacen/jasper/ClientesTodos.pdf";
+    private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.jasper";
+    private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.pdf";
+    private String informeOrigenGraficos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/Graficos.jasper";
+    private String informeDestinoGraficos = "src/main/java/gestion/almacen/jasper/clientes/Graficos.pdf";
     
     private ConexionDB conn = new ConexionDB();
     
@@ -107,7 +113,6 @@ public class Clientes extends javax.swing.JFrame {
         botonAceptar.setEnabled(true);
         botonCancelar.setEnabled(true);
         botonSalir.setEnabled(true);
-        
     }
     
     public void resetFormulario(){
@@ -150,6 +155,7 @@ public class Clientes extends javax.swing.JFrame {
         return true;
     }
     
+    //Metodo para mostrar una ventana con los errores
     public void mostrarErrores(List <String> errores){
         
         JOptionPane.showMessageDialog(
@@ -160,28 +166,15 @@ public class Clientes extends javax.swing.JFrame {
     );
     }
     
+    //Metodo para marcar un campo como erroneo
     public void marcarError(JTextField campo){
         campo.setBackground(Color.red);
         campo.requestFocus();
     }
     
+    //Metodo para marcar un campo como correcto
     public void marcarCorrecto (JTextField campo){
         campo.setBackground(Color.white);
-    }
-    
-    private void marcarFormularioComoValido(){
-        Codigocomprobado = true;
-        nifComprobado = true;
-        nif2Comprobado = true;
-        nombreComprobado = true;
-        apellidosComprobado = true;
-        domicilioComprobado = true;
-        cpComprobado = true;
-        localidadComprobado = true;
-        telefonoComprobado = true;
-        movilComprobado = true;
-        faxComprobado = true;
-        mailComprobado = true;
     }
     
     /**
@@ -271,12 +264,6 @@ public class Clientes extends javax.swing.JFrame {
         textoNif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoNifActionPerformed(evt);
-            }
-        });
-
-        textoNif2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoNif2ActionPerformed(evt);
             }
         });
 
@@ -430,6 +417,11 @@ public class Clientes extends javax.swing.JFrame {
         listados.add(entreCodigos);
 
         graficos.setText("Gráficos");
+        graficos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                graficosActionPerformed(evt);
+            }
+        });
         listados.add(graficos);
 
         consultas.add(listados);
@@ -587,7 +579,7 @@ public class Clientes extends javax.swing.JFrame {
             switch (modo) {
                 //Realiza una consulta antes de agregar para comprobar que puedas dar de alta
                 case ALTA:
-                
+                    
                     try (Connection conexion = conn.connect();
                             PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
                         stm.setString(1, textoCodigo.getText());
@@ -705,17 +697,13 @@ public class Clientes extends javax.swing.JFrame {
             marcarCorrecto(textoNif);
             int dniNumber = Integer.parseInt(textoNif.getText());
             int remainder = dniNumber % 23;
-            char letter = DNI_LETTERS[remainder];
-            textoNif2.setText(String.valueOf(letter));
+            char letra = DNI_LETTERS[remainder];
+            textoNif2.setText(String.valueOf(letra));
             textoNif.addActionListener(e -> textoNombre.requestFocus());
             nifComprobado = true;
             nif2Comprobado = true;
         }
     }//GEN-LAST:event_textoNifActionPerformed
-
-    private void textoNif2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNif2ActionPerformed
-       
-    }//GEN-LAST:event_textoNif2ActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
         
@@ -850,6 +838,8 @@ public class Clientes extends javax.swing.JFrame {
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         resetFormulario();
+        desactivarTodo();
+        modoAbcm();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
@@ -912,6 +902,11 @@ public class Clientes extends javax.swing.JFrame {
                         stm.setString(1, textoCodigo.getText());
                         
                         stm.executeUpdate();
+                        
+                        JOptionPane.showMessageDialog(null,
+                                "El cliente ha sido borrado con éxito",
+                                "Operación realizada", 
+                                JOptionPane.INFORMATION_MESSAGE);
                         
                     } catch (Exception e) {
                         //Error en la conexión
@@ -1027,6 +1022,7 @@ public class Clientes extends javax.swing.JFrame {
 
     private void altasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altasActionPerformed
         modoAbcm();
+        textoCodigo.setText("");
         modo = Modo.ALTA;
         etiquetaModoModificar.setText("Alta de usuario");
     }//GEN-LAST:event_altasActionPerformed
@@ -1037,29 +1033,34 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_volverActionPerformed
 
     private void bajasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajasActionPerformed
+        
+        modoAbcm();
+        textoCodigo.setText("");
         modo = Modo.BAJA;
         etiquetaModoModificar.setText("Baja de usuario");
-        modoAbcm();
-        
     }//GEN-LAST:event_bajasActionPerformed
 
     private void modificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificacionesActionPerformed
+        
+        modoAbcm();
+        textoCodigo.setText("");
         modo = Modo.MODIFICACIONES;
         etiquetaModoModificar.setText("Modificación de usuario");
-        modoAbcm();
     }//GEN-LAST:event_modificacionesActionPerformed
 
     private void porCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porCodigoActionPerformed
+        
+        modoAbcm();
+        textoCodigo.setText("");
         modo = Modo.CONSULTAPORCODIGO;
         etiquetaModoModificar.setText("Consulta por código");
-        modoAbcm();
     }//GEN-LAST:event_porCodigoActionPerformed
 
     private void porCodigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porCodigosActionPerformed
         
         try {
-            JasperPrint print = JasperFillManager.fillReport(informeOrigen, null, conn.connect());
-            JasperExportManager.exportReportToPdfFile(print, informeDestino);
+            JasperPrint print = JasperFillManager.fillReport(informeOrigenTodos, null, conn.connect());
+            JasperExportManager.exportReportToPdfFile(print, informeDestinoTodos);
         } catch (SQLException ex) {
             System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         } catch (JRException ex) {
@@ -1071,9 +1072,19 @@ public class Clientes extends javax.swing.JFrame {
     private void entreCodigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entreCodigosActionPerformed
         
         Navegador.irA(Vista.BUSQUEDAENTRECODIGOS);
-        
-        
     }//GEN-LAST:event_entreCodigosActionPerformed
+
+    private void graficosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graficosActionPerformed
+        
+        try {
+            JasperPrint print = JasperFillManager.fillReport(informeOrigenGraficos, null, conn.connect());
+            JasperExportManager.exportReportToPdfFile(print, informeDestinoGraficos);
+        } catch (SQLException ex) {
+            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (JRException ex) {
+            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_graficosActionPerformed
 
     /**
      * @param args the command line arguments
