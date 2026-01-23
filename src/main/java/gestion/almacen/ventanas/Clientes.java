@@ -8,6 +8,7 @@ import gestion.almacen.ConexionDB;
 import gestion.almacen.navegacion.Navegador;
 import gestion.almacen.navegacion.Vista;
 import java.awt.Color;
+import java.awt.Image;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,7 +51,7 @@ public class Clientes extends javax.swing.JFrame {
     private ConexionDB conn = new ConexionDB();
     
     //Variables booleanas para comprobar todo
-    boolean Codigocomprobado = false;
+    boolean codigoComprobado = false;
     boolean nifComprobado = false;
     boolean nif2Comprobado = false;
     boolean nombreComprobado = false;
@@ -69,6 +70,20 @@ public class Clientes extends javax.swing.JFrame {
         textoNif2.setEnabled(false);
         textoTotal.setEnabled(false);
         desactivarTodo();
+    }
+    
+    //Icono personalizado
+    public ImageIcon imagenPerso(boolean estaBien){
+        
+        String nombreIcono = estaBien ? "IconoVerde.jpg" : "IconoRojo.png";
+
+        Path ruta = Path.of( "src", "main", "java", "gestion", "almacen", 
+                "resources", nombreIcono);
+
+        Image imagen = new ImageIcon(ruta.toString()).getImage()
+                .getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+
+        return new ImageIcon(imagen);  
     }
     
     //Metodo para desactivar todo
@@ -129,13 +144,37 @@ public class Clientes extends javax.swing.JFrame {
         textoFax.setText("");
         textoMail.setText("");
         textoTotal.setText("");
+        marcarCorrecto(textoCodigo);
+        marcarCorrecto(textoNif);
+        marcarCorrecto(textoNombre);
+        marcarCorrecto(textoApellidos);
+        marcarCorrecto(textoDomicilio);
+        marcarCorrecto(textoCp);
+        marcarCorrecto(textoLocalidad);
+        marcarCorrecto(textoTelefono);
+        marcarCorrecto(textoMovil);
+        marcarCorrecto(textoFax);
+        marcarCorrecto(textoMail);
+        marcarCorrecto(textoTotal);
+        codigoComprobado = false;
+        nifComprobado = false;
+        nif2Comprobado = false;
+        nombreComprobado = false;
+        apellidosComprobado = false;
+        domicilioComprobado = false;
+        cpComprobado = false;
+        localidadComprobado = false;
+        telefonoComprobado = false;
+        movilComprobado = false;
+        faxComprobado = false;
+        mailComprobado = false;
     }
     
     public boolean comprobarFormulario(){
         // Hay que hacer que este metodo saque la ventana de errores llamando a otro metodo
         errores.clear();
         
-        if (!Codigocomprobado) errores.add("Codigo");
+        if (!codigoComprobado) errores.add("Codigo");
         if (!nifComprobado) errores.add("Nif");
         if (!nif2Comprobado) errores.add("Letra Nif");
         if (!nombreComprobado) errores.add("Nombre");
@@ -147,12 +186,7 @@ public class Clientes extends javax.swing.JFrame {
         if (!movilComprobado) errores.add("Movil");
         if (!faxComprobado) errores.add("Fax");
         if (!mailComprobado) errores.add("eMail");
-        
-        if (!errores.isEmpty()) {
-            mostrarErrores(errores);
-            return false;
-        }
-        return true;
+        return errores.isEmpty();
     }
     
     //Metodo para mostrar una ventana con los errores
@@ -162,7 +196,7 @@ public class Clientes extends javax.swing.JFrame {
         this,
         "Corrige los siguientes campos:\n " + String.join("\n- ", errores),
         "ERROR",
-        JOptionPane.ERROR_MESSAGE
+        JOptionPane.ERROR_MESSAGE,imagenPerso(false)
     );
     }
     
@@ -318,12 +352,6 @@ public class Clientes extends javax.swing.JFrame {
         textoMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoMailActionPerformed(evt);
-            }
-        });
-
-        textoTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoTotalActionPerformed(evt);
             }
         });
 
@@ -573,7 +601,8 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoCodigo.getText();
         if (!texto.matches("[0-9]{5}")){
             marcarError(textoCodigo);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else {
             marcarCorrecto(textoCodigo);
             switch (modo) {
@@ -588,12 +617,12 @@ public class Clientes extends javax.swing.JFrame {
                                activarTodo();
                                textoCodigo.setEnabled(false);
                                textoCodigo.addActionListener(e -> textoNif.requestFocus());
-                               Codigocomprobado = true;
+                               codigoComprobado = true;
                             } else{
                                 JOptionPane.showMessageDialog(null, 
                                         "Ya existe un usuario con ese código, no es posible agregarlo", 
                                         "Error", 
-                                        JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.ERROR_MESSAGE, imagenPerso(false));
                                 textoCodigo.requestFocus();
                             }
                         } catch (SQLException e) {
@@ -614,13 +643,16 @@ public class Clientes extends javax.swing.JFrame {
                         try (ResultSet rs = stm.executeQuery()){
                             if (rs.next()) {
                                botonAceptar.requestFocus();
+                               codigoComprobado = true;
+                               textoCodigo.setEnabled(false);
                             } else{
                                 JOptionPane.showMessageDialog(null, 
                                         "No se ha encontrado ningun cliente asociado a ese código", 
                                         "Error", 
-                                        JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.ERROR_MESSAGE, imagenPerso(false));
                                 textoCodigo.requestFocus();
                             }
+                            
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -653,12 +685,12 @@ public class Clientes extends javax.swing.JFrame {
                                 textoTotal.setText(rs.getString("total_ventas"));
                                 textoNif.addActionListener(e -> textoNif.requestFocus());
                                 textoCodigo.setEnabled(false);
-                                Codigocomprobado = true;
+                                codigoComprobado = true;
                             } else{
                                 JOptionPane.showMessageDialog(null, 
                                         "No existe ningún usuario con ese código", 
                                         "Error", 
-                                        JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.ERROR_MESSAGE, imagenPerso(false));
                                 textoCodigo.requestFocus();
                             }
                             
@@ -692,7 +724,8 @@ public class Clientes extends javax.swing.JFrame {
         
         if (!texto.matches("[0-9]{8}")) {
             marcarError(textoNif);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 8 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 8 dígitos",
+                    "Error",JOptionPane.ERROR_MESSAGE, imagenPerso(false));
         } else {
             marcarCorrecto(textoNif);
             int dniNumber = Integer.parseInt(textoNif.getText());
@@ -710,10 +743,13 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoNombre.getText();
         if (texto.isEmpty()) {
             marcarError(textoNombre);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío",
+                    "Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")){
             marcarError(textoNombre);
-            JOptionPane.showMessageDialog(null, "El nombre debe contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El nombre debe contener solo "
+                    + "letras y un máximo de 50 carácteres","Error"
+                    ,JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoNombre);
             textoNombre.addActionListener(e -> textoApellidos.requestFocus());
@@ -727,9 +763,11 @@ public class Clientes extends javax.swing.JFrame {
         if (texto.isEmpty()) {
             marcarError(textoApellidos);
             JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")){
             marcarError(textoApellidos);
-            JOptionPane.showMessageDialog(null, "Los apellidos deben contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Los apellidos deben contener "
+                    + "solo letras y un máximo de 50 carácteres"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoApellidos);
             textoApellidos.addActionListener(e -> textoDomicilio.requestFocus());
@@ -742,7 +780,13 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoDomicilio.getText();
         if (texto.isEmpty()) {
             marcarError(textoDomicilio);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\\s.,\\-ºª#\\/]{1,50}$")){
+            marcarError(textoDomicilio);
+            JOptionPane.showMessageDialog(null, "El domicilio debe contener "
+                    + "solo letras y un máximo de 50 carácteres"
+                    ,"Error",JOptionPane.ERROR_MESSAGE, imagenPerso(false));
         } else{
             marcarCorrecto(textoDomicilio);
             textoDomicilio.addActionListener(e -> textoCp.requestFocus());
@@ -755,7 +799,9 @@ public class Clientes extends javax.swing.JFrame {
         String cp = textoCp.getText();
         if (!cp.matches("[0-9]{5}")) {
             marcarError(textoCp);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de "
+                    + "5 dígitos","Error",JOptionPane.ERROR_MESSAGE
+                    ,imagenPerso(false));
         } else{
             marcarCorrecto(textoCp);
             textoCp.addActionListener(e -> textoLocalidad.requestFocus());
@@ -768,10 +814,14 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoLocalidad.getText();
         if (texto.isEmpty()) {
             marcarError(textoLocalidad);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$")){
+            JOptionPane.showMessageDialog(null, "No puedes dejar este "
+                    + "campo vacío","Error",JOptionPane.ERROR_MESSAGE
+                    ,imagenPerso(false));
+        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")){
             marcarError(textoLocalidad);
-            JOptionPane.showMessageDialog(null, "La localidad debe contener solo letras","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La localidad debe contener "
+                    + "solo letras y un máximo de 50 carácteres"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoLocalidad);
             textoLocalidad.addActionListener(e -> textoTelefono.requestFocus());
@@ -784,7 +834,8 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoTelefono.getText();
         if (!texto.matches("^([0-9]{9})?$")) {
             marcarError(textoTelefono);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoTelefono);
             textoTelefono.addActionListener(e -> textoMovil.requestFocus());
@@ -797,7 +848,8 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoMovil.getText();
         if (!texto.matches("^([0-9]{9})?$")) {
             marcarError(textoMovil);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoMovil);
             textoMovil.addActionListener(e -> textoFax.requestFocus());
@@ -810,7 +862,8 @@ public class Clientes extends javax.swing.JFrame {
         String texto = textoFax.getText();
         if (!texto.matches("^([0-9]{9})?$")) {
             marcarError(textoFax);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoFax);
             textoFax.addActionListener(e -> textoMail.requestFocus());
@@ -821,9 +874,10 @@ public class Clientes extends javax.swing.JFrame {
     private void textoMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMailActionPerformed
         
         String texto = textoMail.getText();
-        if (!texto.matches("^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")) {
+        if (!texto.matches("^(?=.{0,50}$)([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")) {
             marcarError(textoMail);
-            JOptionPane.showMessageDialog(null, "El formato del email es inválido","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El formato del email es inválido"
+                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
         } else{
             marcarCorrecto(textoMail);
             textoMail.addActionListener(e -> botonAceptar.requestFocus());
@@ -832,10 +886,6 @@ public class Clientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textoMailActionPerformed
 
-    private void textoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTotalActionPerformed
-        
-    }//GEN-LAST:event_textoTotalActionPerformed
-
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         resetFormulario();
         desactivarTodo();
@@ -843,10 +893,6 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        //Icono personalizado
-        Path p = Path.of("src", "main", "java", "formulario", "IconoVerde.jpg");
-        ImageIcon imagen = new ImageIcon(p.toString());
-        imagen = new ImageIcon(imagen.getImage().getScaledInstance(70, 70, 0));
         
         //modificar alta, que no saque las ventanas
         switch (modo) {
@@ -883,11 +929,12 @@ public class Clientes extends javax.swing.JFrame {
                             "Todos los campos estan bien, cliente agregado a la base de datos", 
                             "¡Enhorabuena!",
                             JOptionPane.INFORMATION_MESSAGE,
-                            imagen);
+                            imagenPerso(true));
                     
                     resetFormulario();
                     desactivarTodo();
-
+                    modoAbcm();
+                    
                 } else{
                     mostrarErrores(errores);
                 }
@@ -896,7 +943,7 @@ public class Clientes extends javax.swing.JFrame {
             case BAJA:
                 
                 String sql = "DELETE FROM clientes WHERE codigo = ?";
-                
+                    if (codigoComprobado) {
                     try (Connection conexion = conn.connect();
                             PreparedStatement stm = conexion.prepareStatement(sql)) {
                         stm.setString(1, textoCodigo.getText());
@@ -906,16 +953,28 @@ public class Clientes extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null,
                                 "El cliente ha sido borrado con éxito",
                                 "Operación realizada", 
-                                JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.INFORMATION_MESSAGE,imagenPerso(true));
+                        codigoComprobado = false;
+                        resetFormulario();
+                        desactivarTodo();
+                        modoAbcm();
                         
                     } catch (Exception e) {
                         //Error en la conexión
                         e.printStackTrace();
                     }
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "No se puede eliminar al cliente. "
+                                        + "Pulse enter cuando rellene el campo Código",
+                                "ERROR",
+                                JOptionPane.ERROR_MESSAGE,imagenPerso(false));
+                    }
                 break;
                 
             case MODIFICACIONES:
                 if (!comprobarFormulario()) {
+                    mostrarErrores(errores);
                     break;  
                 } 
                 
@@ -954,13 +1013,18 @@ public class Clientes extends javax.swing.JFrame {
                         "Cliente modificado con éxito", 
                         "¡Enhorabuena!",
                         JOptionPane.INFORMATION_MESSAGE,
-                        imagen);
+                        imagenPerso(true));
+                        
+                        resetFormulario();
+                        desactivarTodo();
+                        modoAbcm();
+                        
                     } else {
                         JOptionPane.showMessageDialog(
                             this,
                             "No se ha podido modificar el cliente",
                             "ERROR",
-                            JOptionPane.ERROR_MESSAGE
+                            JOptionPane.ERROR_MESSAGE,imagenPerso(false)
                         );
                     }
                 } catch (Exception e) {
@@ -996,7 +1060,7 @@ public class Clientes extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, 
                                     "No existe ningún usuario con ese código", 
                                     "Error", 
-                                    JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.ERROR_MESSAGE,imagenPerso(false));
                             resetFormulario();
                         }
                         
@@ -1021,6 +1085,9 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void altasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altasActionPerformed
+        
+        desactivarTodo();
+        resetFormulario();
         modoAbcm();
         textoCodigo.setText("");
         modo = Modo.ALTA;
@@ -1034,6 +1101,8 @@ public class Clientes extends javax.swing.JFrame {
 
     private void bajasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajasActionPerformed
         
+        desactivarTodo();
+        resetFormulario();
         modoAbcm();
         textoCodigo.setText("");
         modo = Modo.BAJA;
@@ -1042,6 +1111,8 @@ public class Clientes extends javax.swing.JFrame {
 
     private void modificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificacionesActionPerformed
         
+        desactivarTodo();
+        resetFormulario();
         modoAbcm();
         textoCodigo.setText("");
         modo = Modo.MODIFICACIONES;
@@ -1050,6 +1121,8 @@ public class Clientes extends javax.swing.JFrame {
 
     private void porCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porCodigoActionPerformed
         
+        desactivarTodo();
+        resetFormulario();
         modoAbcm();
         textoCodigo.setText("");
         modo = Modo.CONSULTAPORCODIGO;

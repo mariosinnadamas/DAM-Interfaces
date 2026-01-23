@@ -404,9 +404,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textoTotal">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoTotalActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botonAceptar">
       <Properties>

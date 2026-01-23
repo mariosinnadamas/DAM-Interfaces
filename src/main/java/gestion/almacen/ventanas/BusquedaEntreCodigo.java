@@ -29,6 +29,8 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     private String informeDestino = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.pdf";
     private String codigoMenor = "";
     private String codigoMayor = "";
+    private boolean codigo1Comprobado = false;
+    private boolean codigo2Comprobado = false;
     
     public BusquedaEntreCodigo() {
         initComponents();
@@ -38,6 +40,8 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     private void reset(){
         textoCodigo1.setText("");
         textoCodigo2.setText("");
+        textoCodigo1.setBackground(Color.white);
+        textoCodigo2.setBackground(Color.white);
     }
 
     /**
@@ -144,19 +148,28 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
           
-        int nMenor = Integer.valueOf(codigoMenor);
-        int nMayor = Integer.valueOf(codigoMayor);
-        
-        if (nMenor > nMayor) {
+        if (codigoMenor.isEmpty() || codigoMayor.isEmpty()) {
             JOptionPane.showMessageDialog(null, 
-                    "El número menor no puede ser mayor que el número mayor",
+                    "Los campos no pueden estar vacíos",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (codigo1Comprobado && codigo2Comprobado) {
+            
+            int nMenor = Integer.valueOf(codigoMenor);
+            int nMayor = Integer.valueOf(codigoMayor);
+            
+            if (nMenor > nMayor) {
+            JOptionPane.showMessageDialog(null, 
+                    "Código 1 no puede ser mayor que Código 2",
                     "Error",JOptionPane.ERROR_MESSAGE);
             reset();
             textoCodigo1.requestFocus();
             return;
-        }
-        
-        try {
+            }
+             
+            try {
             HashMap<String,Object> parametros = new HashMap<>();
             
             parametros.put("codigoMenor", codigoMenor);
@@ -165,13 +178,19 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
             JasperPrint print = JasperFillManager.fillReport(informeOrigen, parametros, conn.connect());
             JasperExportManager.exportReportToPdfFile(print, informeDestino);
             
+            JOptionPane.showMessageDialog(null, 
+                    "PDF generado con éxito",
+                    "PDF Generado",JOptionPane.INFORMATION_MESSAGE,null);
             
-        } catch (SQLException ex) {
-            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        } catch (JRException ex) {
-            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            codigo1Comprobado = false;
+            codigo2Comprobado = false;
+            
+            } catch (SQLException ex) {
+                System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            } catch (JRException ex) {
+                System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         }
-        
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
@@ -189,6 +208,7 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
         if (!codigoMenor.matches("[0-9]{5}")){
             textoCodigo1.setBackground(Color.red);
         } else {
+            codigo1Comprobado = true;
             textoCodigo1.setBackground(Color.white);
             textoCodigo1.addActionListener(e -> textoCodigo2.requestFocus());
         }
@@ -201,6 +221,7 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
         if (!codigoMayor.matches("[0-9]{5}")){
             textoCodigo2.setBackground(Color.red);
         } else {
+            codigo2Comprobado = true;
             textoCodigo2.setBackground(Color.white);
             textoCodigo2.addActionListener(e -> botonAceptar.requestFocus());
         }
