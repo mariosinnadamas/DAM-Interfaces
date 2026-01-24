@@ -29,9 +29,9 @@ import net.sf.jasperreports.engine.JasperPrint;
  * @author mario
  */
 
-public class Clientes extends javax.swing.JFrame {
+public class Proveedores extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Clientes.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Proveedores.class.getName());
     
     private enum Modo {ALTA,BAJA,MODIFICACIONES,CONSULTAPORCODIGO};
     private Modo modo;
@@ -40,13 +40,13 @@ public class Clientes extends javax.swing.JFrame {
     private List <String> errores = new ArrayList<>();
     
     //Consulta reutilizada
-    private String consultaClientes = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_ventas FROM clientes WHERE codigo = ?";
+    private String consultaProveedores = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_compras FROM proveedores WHERE codigo = ?";
     
     //Directorios para el jasper
-    private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.jasper";
-    private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.pdf";
-    private String informeOrigenGraficos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/Graficos.jasper";
-    private String informeDestinoGraficos = "src/main/java/gestion/almacen/jasper/clientes/Graficos.pdf";
+    private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/ProveedoresTodos.jasper";
+    private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresTodos.pdf";
+    private String informeOrigenGraficos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/Graficos.jasper";
+    private String informeDestinoGraficos = "src/main/java/gestion/almacen/jasper/proveedores/GraficosProveedores.pdf";
     
     private ConexionDB conn = new ConexionDB();
     
@@ -64,7 +64,7 @@ public class Clientes extends javax.swing.JFrame {
     boolean faxComprobado = false;
     boolean mailComprobado = false;
     
-    public Clientes() {
+    public Proveedores() {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         textoNif2.setEnabled(false);
@@ -287,7 +287,7 @@ public class Clientes extends javax.swing.JFrame {
 
         mail.setText("e-mail");
 
-        total.setText("Total Ventas");
+        total.setText("Total Compras");
 
         textoCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -610,7 +610,7 @@ public class Clientes extends javax.swing.JFrame {
                 case ALTA:
                     
                     try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                            PreparedStatement stm = conexion.prepareStatement(consultaProveedores)) {
                         stm.setString(1, textoCodigo.getText());
                         try (ResultSet rs = stm.executeQuery()){
                             if (!rs.next()) {
@@ -638,7 +638,7 @@ public class Clientes extends javax.swing.JFrame {
                 case BAJA:
                 
                     try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                            PreparedStatement stm = conexion.prepareStatement(consultaProveedores)) {
                         stm.setString(1, textoCodigo.getText());
                         try (ResultSet rs = stm.executeQuery()){
                             if (rs.next()) {
@@ -664,7 +664,7 @@ public class Clientes extends javax.swing.JFrame {
                 
                     //Hace una consulta para comprobar que pueda modificar
                     try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                            PreparedStatement stm = conexion.prepareStatement(consultaProveedores)) {
                         stm.setString(1, textoCodigo.getText());
                         
                         try (ResultSet rs = stm.executeQuery()){
@@ -682,7 +682,7 @@ public class Clientes extends javax.swing.JFrame {
                                 textoMovil.setText(rs.getString("movil"));
                                 textoFax.setText(rs.getString("fax"));
                                 textoMail.setText(rs.getString("email"));
-                                textoTotal.setText(rs.getString("total_ventas"));
+                                textoTotal.setText(rs.getString("total_compras"));
                                 textoNif.addActionListener(e -> textoNif.requestFocus());
                                 textoCodigo.setEnabled(false);
                                 codigoComprobado = true;
@@ -899,9 +899,9 @@ public class Clientes extends javax.swing.JFrame {
             case ALTA:
                 
                 if (comprobarFormulario()) {
-                    String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
+                    String query = "INSERT INTO proveedores (codigo,nif,apellidos,nombre,"
                             + "domicilio,codigo_postal,localidad,telefono,movil,"
-                            + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                            + "fax,email,total_compras) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
                     String dni = textoNif.getText().trim() + textoNif2.getText().trim();
                     try (Connection conexion = conn.connect();
                             PreparedStatement stm = conexion.prepareStatement(query)){
@@ -942,7 +942,7 @@ public class Clientes extends javax.swing.JFrame {
                 break;
             case BAJA:
                 
-                String sql = "DELETE FROM clientes WHERE codigo = ?";
+                String sql = "DELETE FROM proveedores WHERE codigo = ?";
                     if (codigoComprobado) {
                     try (Connection conexion = conn.connect();
                             PreparedStatement stm = conexion.prepareStatement(sql)) {
@@ -951,7 +951,7 @@ public class Clientes extends javax.swing.JFrame {
                         stm.executeUpdate();
                         
                         JOptionPane.showMessageDialog(null,
-                                "El cliente ha sido borrado con éxito",
+                                "El proveedor ha sido borrado con éxito",
                                 "Operación realizada", 
                                 JOptionPane.INFORMATION_MESSAGE,imagenPerso(true));
                         codigoComprobado = false;
@@ -965,7 +965,7 @@ public class Clientes extends javax.swing.JFrame {
                     }
                     } else {
                         JOptionPane.showMessageDialog(null,
-                                "No se puede eliminar al cliente. "
+                                "No se puede eliminar al proveedor. "
                                         + "Pulse enter cuando rellene el campo Código",
                                 "ERROR",
                                 JOptionPane.ERROR_MESSAGE,imagenPerso(false));
@@ -978,7 +978,7 @@ public class Clientes extends javax.swing.JFrame {
                     break;  
                 } 
                 
-                String query = "UPDATE clientes SET nif = ?,"
+                String query = "UPDATE proveedores SET nif = ?,"
                         + "apellidos = ?, "
                         + "nombre = ?, "
                         + "domicilio = ?, "
@@ -1010,7 +1010,7 @@ public class Clientes extends javax.swing.JFrame {
                     
                     if (filas == 1) {
                         JOptionPane.showMessageDialog(null, 
-                        "Cliente modificado con éxito", 
+                        "Proveedor modificado con éxito", 
                         "¡Enhorabuena!",
                         JOptionPane.INFORMATION_MESSAGE,
                         imagenPerso(true));
@@ -1035,7 +1035,7 @@ public class Clientes extends javax.swing.JFrame {
             case CONSULTAPORCODIGO:
                 
                 try (Connection conexion = conn.connect();
-                        PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                        PreparedStatement stm = conexion.prepareStatement(consultaProveedores)) {
                     
                     stm.setString(1, textoCodigo.getText());
                     
@@ -1054,7 +1054,7 @@ public class Clientes extends javax.swing.JFrame {
                             textoMovil.setText(rs.getString("movil"));
                             textoFax.setText(rs.getString("fax"));
                             textoMail.setText(rs.getString("email"));
-                            textoTotal.setText(rs.getString("total_ventas"));
+                            textoTotal.setText(rs.getString("total_compras"));
                             
                         } else{
                             JOptionPane.showMessageDialog(null, 
@@ -1135,16 +1135,16 @@ public class Clientes extends javax.swing.JFrame {
             JasperPrint print = JasperFillManager.fillReport(informeOrigenTodos, null, conn.connect());
             JasperExportManager.exportReportToPdfFile(print, informeDestinoTodos);
         } catch (SQLException ex) {
-            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(Proveedores.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         } catch (JRException ex) {
-            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(Proveedores.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         
     }//GEN-LAST:event_porCodigosActionPerformed
 
     private void entreCodigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entreCodigosActionPerformed
         
-        Navegador.irA(Vista.BUSQUEDAENTRECODIGOS_CLIENTES);
+        Navegador.irA(Vista.BUSQUEDAENTRECODIGOS_PROVEEDORES);
     }//GEN-LAST:event_entreCodigosActionPerformed
 
     private void graficosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graficosActionPerformed
@@ -1153,9 +1153,9 @@ public class Clientes extends javax.swing.JFrame {
             JasperPrint print = JasperFillManager.fillReport(informeOrigenGraficos, null, conn.connect());
             JasperExportManager.exportReportToPdfFile(print, informeDestinoGraficos);
         } catch (SQLException ex) {
-            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(Proveedores.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         } catch (JRException ex) {
-            System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(Proveedores.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_graficosActionPerformed
 
@@ -1181,7 +1181,7 @@ public class Clientes extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Clientes().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Proveedores().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

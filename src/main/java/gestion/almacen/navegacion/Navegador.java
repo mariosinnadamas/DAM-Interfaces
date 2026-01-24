@@ -7,6 +7,7 @@ package gestion.almacen.navegacion;
 import gestion.almacen.Main;
 import gestion.almacen.ventanas.BusquedaEntreCodigo;
 import gestion.almacen.ventanas.Clientes;
+import gestion.almacen.ventanas.Proveedores;
 import javax.swing.JFrame;
 
 /**
@@ -38,13 +39,16 @@ public class Navegador {
                 ventanaActual = new Clientes();
                 break;
             case PROVEEDORES:
-                
+                ventanaActual = new Proveedores();
                 break;
             case PRODUCTOS:
                 break;
-            case BUSQUEDAENTRECODIGOS:
-                ventanaActual= new BusquedaEntreCodigo();
-                break;    
+            case BUSQUEDAENTRECODIGOS_CLIENTES:
+                ventanaActual= new BusquedaEntreCodigo(vista);
+                break;
+            case BUSQUEDAENTRECODIGOS_PROVEEDORES:
+                ventanaActual = new BusquedaEntreCodigo(vista);
+                break;
             default:
                 throw new AssertionError();
         }

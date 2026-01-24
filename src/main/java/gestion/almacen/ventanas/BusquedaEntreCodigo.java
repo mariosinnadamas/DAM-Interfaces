@@ -25,16 +25,26 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BusquedaEntreCodigo.class.getName());
     
     private ConexionDB conn = new ConexionDB();
-    private String informeOrigen = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.jasper";
-    private String informeDestino = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.pdf";
+    
+    private String informeOrigenClientes = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.jasper";
+    private String informeDestinoClientes = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.pdf";
+    private String informeOrigenProveedores = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.jasper";
+    private String informeDestinoProveedores = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.pdf";
     private String codigoMenor = "";
     private String codigoMayor = "";
     private boolean codigo1Comprobado = false;
     private boolean codigo2Comprobado = false;
+    private Vista vista;
     
     public BusquedaEntreCodigo() {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+    }
+    
+    public BusquedaEntreCodigo(Vista vista){
+        initComponents();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.vista = vista;
     }
     
     private void reset(){
@@ -168,28 +178,62 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
             textoCodigo1.requestFocus();
             return;
             }
-             
-            try {
-            HashMap<String,Object> parametros = new HashMap<>();
             
-            parametros.put("codigoMenor", codigoMenor);
-            parametros.put("codigoMayor", codigoMayor);
+            switch (vista) {
+                case BUSQUEDAENTRECODIGOS_CLIENTES:
+                    try {
+                        HashMap<String,Object> parametros = new HashMap<>();
+
+                        parametros.put("codigoMenor", codigoMenor);
+                        parametros.put("codigoMayor", codigoMayor);
+
+                        JasperPrint print = JasperFillManager.fillReport(
+                                informeOrigenClientes, parametros, conn.connect());
+                        JasperExportManager.exportReportToPdfFile(print
+                                ,informeDestinoClientes);
+
+                        JOptionPane.showMessageDialog(null, 
+                                "PDF generado con éxito",
+                                "PDF Generado",JOptionPane.INFORMATION_MESSAGE,null);
+
+                        codigo1Comprobado = false;
+                        codigo2Comprobado = false;
+
+                    } catch (SQLException ex) {
+                        System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    } catch (JRException ex) {
+                        System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                    
+                    break;
+                    
+                case BUSQUEDAENTRECODIGOS_PROVEEDORES:
+                    try {
+                        HashMap<String,Object> parametros = new HashMap<>();
             
-            JasperPrint print = JasperFillManager.fillReport(informeOrigen, parametros, conn.connect());
-            JasperExportManager.exportReportToPdfFile(print, informeDestino);
-            
-            JOptionPane.showMessageDialog(null, 
-                    "PDF generado con éxito",
-                    "PDF Generado",JOptionPane.INFORMATION_MESSAGE,null);
-            
-            codigo1Comprobado = false;
-            codigo2Comprobado = false;
-            
-            } catch (SQLException ex) {
-                System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (JRException ex) {
-                System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                        parametros.put("codigoMenor", codigoMenor);
+                        parametros.put("codigoMayor", codigoMayor);
+
+                        JasperPrint print = JasperFillManager.fillReport(informeOrigenProveedores, parametros, conn.connect());
+                        JasperExportManager.exportReportToPdfFile(print, informeDestinoProveedores);
+
+                        JOptionPane.showMessageDialog(null, 
+                                "PDF generado con éxito",
+                                "PDF Generado",JOptionPane.INFORMATION_MESSAGE,null);
+
+                        codigo1Comprobado = false;
+                        codigo2Comprobado = false;
+
+                    } catch (SQLException ex) {
+                        System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    } catch (JRException ex) {
+                        System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                    break;
+                default:
+                    throw new AssertionError();
             }
+            
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 

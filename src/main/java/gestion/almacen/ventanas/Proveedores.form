@@ -343,7 +343,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="total">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Total Ventas"/>
+        <Property name="text" type="java.lang.String" value="Total Compras"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoCodigo">

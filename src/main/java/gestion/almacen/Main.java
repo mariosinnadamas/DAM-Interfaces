@@ -39,6 +39,11 @@ public class Main extends javax.swing.JFrame {
 
         botonProveedores.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         botonProveedores.setText("Proveedores");
+        botonProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonProveedoresActionPerformed(evt);
+            }
+        });
 
         botonClientes.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         botonClientes.setText("Clientes");
@@ -107,6 +112,11 @@ public class Main extends javax.swing.JFrame {
     private void botonArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonArticulosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonArticulosActionPerformed
+
+    private void botonProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonProveedoresActionPerformed
+        // TODO add your handling code here:
+        Navegador.irA(Vista.PROVEEDORES);
+    }//GEN-LAST:event_botonProveedoresActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
