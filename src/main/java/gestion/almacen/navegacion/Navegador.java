@@ -5,6 +5,7 @@
 package gestion.almacen.navegacion;
 
 import gestion.almacen.Main;
+import gestion.almacen.ventanas.Articulos;
 import gestion.almacen.ventanas.BusquedaEntreCodigo;
 import gestion.almacen.ventanas.Clientes;
 import gestion.almacen.ventanas.Proveedores;
@@ -41,12 +42,16 @@ public class Navegador {
             case PROVEEDORES:
                 ventanaActual = new Proveedores();
                 break;
-            case PRODUCTOS:
+            case ARTICULOS:
+                ventanaActual = new Articulos();
                 break;
             case BUSQUEDAENTRECODIGOS_CLIENTES:
                 ventanaActual= new BusquedaEntreCodigo(vista);
                 break;
             case BUSQUEDAENTRECODIGOS_PROVEEDORES:
+                ventanaActual = new BusquedaEntreCodigo(vista);
+                break;
+            case BUSQUEDAENTRECODIGOS_ARTICULOS:
                 ventanaActual = new BusquedaEntreCodigo(vista);
                 break;
             default:
