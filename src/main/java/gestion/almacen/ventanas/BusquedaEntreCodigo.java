@@ -30,6 +30,8 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     private String informeDestinoClientes = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.pdf";
     private String informeOrigenProveedores = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.jasper";
     private String informeDestinoProveedores = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.pdf";
+    private String informeOrigenArticulos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/articulos/ArticulosEntreCodigos.jasper";
+    private String informeDestinoArticulos = "src/main/java/gestion/almacen/jasper/articulos/ArticulosEntreCodigos.pdf";
     private String codigoMenor = "";
     private String codigoMayor = "";
     private boolean codigo1Comprobado = false;
@@ -230,6 +232,30 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
                         System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
                     break;
+                case BUSQUEDAENTRECODIGOS_ARTICULOS:
+                    try {
+                        HashMap<String,Object> parametros = new HashMap<>();
+            
+                        parametros.put("codigoMenor", codigoMenor);
+                        parametros.put("codigoMayor", codigoMayor);
+
+                        JasperPrint print = JasperFillManager.fillReport(informeOrigenArticulos, parametros, conn.connect());
+                        JasperExportManager.exportReportToPdfFile(print, informeDestinoArticulos);
+
+                        JOptionPane.showMessageDialog(null, 
+                                "PDF generado con éxito",
+                                "PDF Generado",JOptionPane.INFORMATION_MESSAGE,null);
+
+                        codigo1Comprobado = false;
+                        codigo2Comprobado = false;
+
+                    } catch (SQLException ex) {
+                        System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    } catch (JRException ex) {
+                        System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                    
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -242,7 +268,7 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBorrarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-       Navegador.irA(Vista.CLIENTES);
+       Navegador.irA(vista);
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void textoCodigo1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textoCodigo1CaretUpdate

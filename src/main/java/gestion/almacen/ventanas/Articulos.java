@@ -47,18 +47,8 @@ public class Articulos extends javax.swing.JFrame {
     //Directorios para el jasper
     private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/articulos/ArticulosTodos.jasper";
     private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/articulos/ArticulosTodos.pdf";
-    private String informeOrigenGraficos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/articulos/Graficos.jasper";
-    private String informeDestinoGraficos = "src/main/java/gestion/almacen/jasper/articulos/Graficos.pdf";
     
     private ConexionDB conn = new ConexionDB();
-    
-    //Variables booleanas para comprobar todo
-    boolean codigoComprobado = false;
-    boolean stockComprobado = false;
-    boolean StockMinComprobado = false;
-    boolean precioCComprobado = false;
-    boolean precioVComprobado = false;
-    boolean descripcionComprobado = false;
     
     private BigDecimal stock;
     private BigDecimal stockMinimo;
@@ -70,6 +60,7 @@ public class Articulos extends javax.swing.JFrame {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         desactivarTodo();
+        setTitle("Articulos");
     }
     
     //Icono personalizado
@@ -133,12 +124,6 @@ public class Articulos extends javax.swing.JFrame {
         marcarCorrecto(textoPrecioC);
         marcarCorrecto(textoPrecioV);
         marcarCorrecto(textoDescripcion);
-        codigoComprobado = false;
-        stockComprobado = false;
-        StockMinComprobado = false;
-        precioCComprobado = false;
-        precioVComprobado = false;
-        descripcionComprobado = false;    
     }
     
     // Método para validar código (5 dígitos)
@@ -154,17 +139,18 @@ public class Articulos extends javax.swing.JFrame {
         return true;
     }
     
-    // Método para validar cualquier campo numérico (stock, precios)
-    private boolean validarCampoNumerico(JTextField campo, String nombreCampo, 
-                                         boolean puedeSerCero) {
+    private BigDecimal validarNumeric(
+        JTextField campo,
+        String nombreCampo,
+        boolean permitirCero,
+        boolean mostrarError) {
+
         String texto = campo.getText().trim();
 
         if (texto.isEmpty()) {
             marcarError(campo);
-            JOptionPane.showMessageDialog(null, 
-                "El " + nombreCampo + " no puede estar vacío",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-            return false;
+            if (mostrarError) errores.add(nombreCampo + " vacío");
+            return null;
         }
 
         texto = texto.replace(',', '.');
@@ -174,145 +160,94 @@ public class Articulos extends javax.swing.JFrame {
             valor = new BigDecimal(texto);
         } catch (NumberFormatException e) {
             marcarError(campo);
-            JOptionPane.showMessageDialog(null,
-                "El " + nombreCampo + " debe ser un número válido",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-            return false;
+            if (mostrarError) errores.add(nombreCampo + " no es un número válido");
+            return null;
         }
 
-        // Validar si puede ser cero o negativo
-        if (!puedeSerCero && valor.compareTo(BigDecimal.ZERO) <= 0) {
+        if (!permitirCero && valor.compareTo(BigDecimal.ZERO) <= 0) {
             marcarError(campo);
-            JOptionPane.showMessageDialog(null,
-                "El " + nombreCampo + " debe ser mayor que 0",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-            return false;
+            if (mostrarError) errores.add(nombreCampo + " debe ser mayor que 0");
+            return null;
         }
 
         if (valor.compareTo(BigDecimal.ZERO) < 0) {
             marcarError(campo);
-            JOptionPane.showMessageDialog(null,
-                "El " + nombreCampo + " no puede ser negativo",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-            return false;
+            if (mostrarError) errores.add(nombreCampo + " no puede ser negativo");
+            return null;
         }
 
-        // Validar decimales (máximo 2)
         if (valor.scale() > 2) {
             marcarError(campo);
-            JOptionPane.showMessageDialog(null,
-                "El " + nombreCampo + " solo puede tener 2 decimales",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-            return false;
+            if (mostrarError) errores.add(nombreCampo + " tiene más de 2 decimales");
+            return null;
         }
 
-        // Validar máximo (999999.99)
-        BigDecimal maximo = new BigDecimal("999999.99");
-        if (valor.compareTo(maximo) > 0) {
+        if (valor.compareTo(new BigDecimal("999999.99")) > 0) {
             marcarError(campo);
-            JOptionPane.showMessageDialog(null,
-                "El " + nombreCampo + " no puede superar 999999.99",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-            return false;
+            if (mostrarError) errores.add(nombreCampo + " supera el máximo permitido");
+            return null;
         }
 
         marcarCorrecto(campo);
-        return true;
+        return valor.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private boolean validarPrecioCompra(boolean mostrarError) {
+        precioCompra = validarNumeric(textoPrecioC, "Precio de compra", false, mostrarError);
+        return precioCompra != null;
+    }
+    
+    private boolean validarPrecioVenta(boolean mostrarError) {
+        precioVenta = validarNumeric(textoPrecioV, "Precio de venta", false, mostrarError);
+        return precioVenta != null;
     }
     
     // Método específico para validar stock
-    private boolean validarStock() {
-        if (!validarCampoNumerico(textoStock, "stock", true)) {
-            return false;
-        }
-
-        // Conversión y almacenamiento en variable
-        try {
-            stock = new BigDecimal(textoStock.getText().replace(',', '.'));
-            stock = stock.setScale(2, RoundingMode.HALF_UP);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
-        return true;
+    private boolean validarStock(boolean mostrarError) {
+        stock = validarNumeric(textoStock, "Stock", true, mostrarError);
+        return stock != null;
     }
     
     // Método específico para validar stock mínimo
-    private boolean validarStockMinimo() {
-        if (!validarCampoNumerico(textoStockMin, "stock mínimo", true)) {
-            return false;
-        }
-
-        try {
-            stockMinimo = new BigDecimal(textoStockMin.getText().replace(',', '.'));
-            stockMinimo = stockMinimo.setScale(2, RoundingMode.HALF_UP);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-
-        return true;
+    private boolean validarStockMinimo(boolean mostrarError) {
+        stockMinimo = validarNumeric(textoStockMin, "Stock mínimo", true, mostrarError);
+        return stockMinimo != null;
     }
     
     // Método para validar descripción
-    private boolean validarDescripcion() {
+    private boolean validarDescripcion(boolean mostrarError) {
         String texto = textoDescripcion.getText().trim();
 
         if (texto.isEmpty()) {
             marcarError(textoDescripcion);
-            JOptionPane.showMessageDialog(null,
-                "La descripción no puede estar vacía",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
+            if (mostrarError) errores.add("Descripción vacía");
             return false;
         }
 
-        if (!texto.matches("^.{1,25}$")) {
+        if (texto.length() > 25) {
             marcarError(textoDescripcion);
-            JOptionPane.showMessageDialog(null,
-                "La descripción no puede superar 25 caracteres",
-                "Error", JOptionPane.ERROR_MESSAGE, imagenPerso(false));
+            if (mostrarError) errores.add("Descripción supera 25 caracteres");
             return false;
         }
 
         marcarCorrecto(textoDescripcion);
         return true;
     }
-    
-    // Método para verificar si todos los campos están validados
-    private void verificarSiTodoValido() {
-        boolean todoValido = false;
 
-        switch (modo) {
-            case ALTA:
-                todoValido = codigoComprobado && stockComprobado && 
-                            StockMinComprobado && precioCComprobado && 
-                            precioVComprobado && descripcionComprobado;
-                break;
-            case MODIFICACIONES:
-                todoValido = codigoComprobado;
-                break;
-            case BAJA:
-            case CONSULTAPORCODIGO:
-                todoValido = codigoComprobado;
-                break;
-            default:
-                todoValido = false;
-        }
-
-        botonAceptar.setEnabled(todoValido);
-    }
     
     public boolean comprobarFormulario(){
 
         errores.clear();
+        
+        boolean ok = true;
 
-        if (!codigoComprobado) errores.add("Codigo");
-        if (!stockComprobado) errores.add("Stock");
-        if (!StockMinComprobado) errores.add("Stock mínimo");
-        if (!precioCComprobado) errores.add("Precio de compra");
-        if (!precioVComprobado) errores.add("Precio de venta");
-        if (!descripcionComprobado) errores.add("Descripcion");
+        ok &= validarPrecioCompra(true);
+        ok &= validarPrecioVenta(true);
+        ok &= validarStock(true);
+        ok &= validarStockMinimo(true);
+        ok &= validarDescripcion(true);
 
-        return errores.isEmpty();
+        return ok;
     }
     
     //Metodo para mostrar una ventana con los errores
@@ -374,7 +309,6 @@ public class Articulos extends javax.swing.JFrame {
         listados = new javax.swing.JMenu();
         porCodigos = new javax.swing.JMenuItem();
         entreCodigos = new javax.swing.JMenuItem();
-        graficos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -515,14 +449,6 @@ public class Articulos extends javax.swing.JFrame {
         });
         listados.add(entreCodigos);
 
-        graficos.setText("Gráficos");
-        graficos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                graficosActionPerformed(evt);
-            }
-        });
-        listados.add(graficos);
-
         consultas.add(listados);
 
         jMenuBar1.add(consultas);
@@ -628,8 +554,6 @@ public class Articulos extends javax.swing.JFrame {
             return;
         }
         
-        marcarCorrecto(textoCodigo);
-        
         switch (modo) {
             //Realiza una consulta antes de agregar para comprobar que puedas dar de alta
             case ALTA:
@@ -642,7 +566,6 @@ public class Articulos extends javax.swing.JFrame {
                            activarTodo();
                            textoCodigo.setEnabled(false);
                            textoStock.requestFocus();
-                           codigoComprobado = true;
                         } else{
                             JOptionPane.showMessageDialog(null, 
                                     "Ya existe un artículo con ese código, no es posible agregarlo", 
@@ -668,7 +591,6 @@ public class Articulos extends javax.swing.JFrame {
                     try (ResultSet rs = stm.executeQuery()){
                         if (rs.next()) {
                            botonAceptar.requestFocus();
-                           codigoComprobado = true;
                            textoCodigo.setEnabled(false);
                         } else{
                             JOptionPane.showMessageDialog(null, 
@@ -702,7 +624,7 @@ public class Articulos extends javax.swing.JFrame {
                             textoDescripcion.setText(rs.getString("descripcion"));
                             textoStock.requestFocus();
                             textoCodigo.setEnabled(false);
-                            codigoComprobado = true;
+                            
 
                             //Inicializar las variables BigDecimal 
                             try {
@@ -721,14 +643,6 @@ public class Articulos extends javax.swing.JFrame {
                                 e.printStackTrace();
                             }
                             
-                            stockComprobado = false;
-                            StockMinComprobado = false;
-                            precioCComprobado = false;
-                            precioVComprobado = false;
-                            descripcionComprobado = false;
-                            
-                            // Deshabilitar Aceptar hasta que valide algún campo
-                            botonAceptar.setEnabled(false);
                         } else{
                             JOptionPane.showMessageDialog(null, 
                                     "No existe ningún artículo con ese código", 
@@ -758,84 +672,32 @@ public class Articulos extends javax.swing.JFrame {
     
     private void textoStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoStockActionPerformed
                 
-        //Evita que se quede vacío
-        if (validarStock()) {
-        // Actualizar la variable stock con el valor actual
-            try {
-                stock = new BigDecimal(textoStock.getText().replace(',', '.'));
-                stock = stock.setScale(2, RoundingMode.HALF_UP);
-            } catch (NumberFormatException e) {
-                marcarError(textoStock);
-                return;
-            }
-
-            marcarCorrecto(textoStock);
-            stockComprobado = true;
-            textoStockMin.requestFocus();
-            verificarSiTodoValido();
-        }
+        validarStock(false);
+        textoStockMin.requestFocus();
     }//GEN-LAST:event_textoStockActionPerformed
 
     private void textoStockMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoStockMinActionPerformed
         
-        if (validarStockMinimo()) {
-        // Actualizar la variable stockMinimo con el valor actual
-            try {
-                stockMinimo = new BigDecimal(textoStockMin.getText().replace(',', '.'));
-                stockMinimo = stockMinimo.setScale(2, RoundingMode.HALF_UP);
-            } catch (NumberFormatException e) {
-                marcarError(textoStockMin);
-                return;
-            }
-        
-        marcarCorrecto(textoStockMin);
-        StockMinComprobado = true;
-        textoPrecioC.requestFocus();
-        verificarSiTodoValido();
-    }
+        validarStockMinimo(false);
+        textoDescripcion.requestFocus();
     }//GEN-LAST:event_textoStockMinActionPerformed
 
     private void textoPrecioCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoPrecioCActionPerformed
         
-        if (validarCampoNumerico(textoPrecioC, "Precio de compra", false)) {
-            // Actualizar la variable BigDecimal
-            try {
-                precioCompra = new BigDecimal(textoPrecioC.getText().replace(',', '.'));
-                precioCompra = precioCompra.setScale(2, RoundingMode.HALF_UP);
-                precioCComprobado = true;
-                marcarCorrecto(textoPrecioC);
-                textoPrecioV.requestFocus();
-                verificarSiTodoValido();
-            } catch (NumberFormatException e) {
-                marcarError(textoPrecioC);
-            }
-        }
+        validarPrecioCompra(false);
+        textoPrecioV.requestFocus();
     }//GEN-LAST:event_textoPrecioCActionPerformed
 
     private void textoPrecioVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoPrecioVActionPerformed
         
-        if (validarCampoNumerico(textoPrecioV, "Pecio de venta", false)) {
-            try {
-                precioVenta = new BigDecimal(textoPrecioV.getText().replace(',', '.'));
-                precioVenta = precioVenta.setScale(2, RoundingMode.HALF_UP);
-                precioVComprobado = true;
-                marcarCorrecto(textoPrecioV);
-                textoDescripcion.requestFocus();
-                verificarSiTodoValido();
-            } catch (NumberFormatException e) {
-                marcarError(textoPrecioV);
-            }
-        }
+        validarPrecioVenta(false);
+        textoStock.requestFocus();
     }//GEN-LAST:event_textoPrecioVActionPerformed
 
     private void textoDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDescripcionActionPerformed
         
-        if (validarDescripcion()) {
-            marcarCorrecto(textoDescripcion);
-            botonAceptar.requestFocus();
-            descripcionComprobado = true;
-            verificarSiTodoValido();
-        }
+        validarDescripcion(false);
+        botonAceptar.requestFocus();
     }//GEN-LAST:event_textoDescripcionActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
@@ -849,81 +711,15 @@ public class Articulos extends javax.swing.JFrame {
         //modificar alta, que no saque las ventanas
         switch (modo) {
             case ALTA:
-                boolean altaValida = true;
-                List<String> erroresAlta = new ArrayList<>();
-
-                // Validar código
-                if (!validarCodigo(textoCodigo.getText())) {
-                    altaValida = false;
-                    erroresAlta.add("Código");
-                }
-
-                // Validar stock y actualizar variable
-                if (!validarStock()) {
-                    altaValida = false;
-                    erroresAlta.add("Stock");
-                } else {
-                    try {
-                        stock = new BigDecimal(textoStock.getText().replace(',', '.'));
-                        stock = stock.setScale(2, RoundingMode.HALF_UP);
-                    } catch (NumberFormatException e) {
-                        altaValida = false;
-                        erroresAlta.add("Stock (valor inválido)");
-                    }
-                }
-
-                // Validar stock mínimo y actualizar variable
-                if (!validarStockMinimo()) {
-                    altaValida = false;
-                    erroresAlta.add("Stock mínimo");
-                } else {
-                    try {
-                        stockMinimo = new BigDecimal(textoStockMin.getText().replace(',', '.'));
-                        stockMinimo = stockMinimo.setScale(2, RoundingMode.HALF_UP);
-                    } catch (NumberFormatException e) {
-                        altaValida = false;
-                        erroresAlta.add("Stock mínimo (valor inválido)");
-                    }
-                }
-
-                // Validar precio compra y actualizar variable
-                if (!validarCampoNumerico(textoPrecioC, "precio de compra", false)) {
-                    altaValida = false;
-                    erroresAlta.add("Precio de compra");
-                } else {
-                    try {
-                        precioCompra = new BigDecimal(textoPrecioC.getText().replace(',', '.'));
-                        precioCompra = precioCompra.setScale(2, RoundingMode.HALF_UP);
-                    } catch (NumberFormatException e) {
-                        altaValida = false;
-                        erroresAlta.add("Precio de compra (valor inválido)");
-                    }
-                }
-
-                // Validar precio venta y actualizar variable
-                if (!validarCampoNumerico(textoPrecioV, "precio de venta", false)) {
-                    altaValida = false;
-                    erroresAlta.add("Precio de venta");
-                } else {
-                    try {
-                        precioVenta = new BigDecimal(textoPrecioV.getText().replace(',', '.'));
-                        precioVenta = precioVenta.setScale(2, RoundingMode.HALF_UP);
-                    } catch (NumberFormatException e) {
-                        altaValida = false;
-                        erroresAlta.add("Precio de venta (valor inválido)");
-                    }
-                }
-
-                // Validar descripción
-                if (!validarDescripcion()) {
-                    altaValida = false;
-                    erroresAlta.add("Descripción");
-                }
-
-                // Si hay errores, mostrarlos y salir
-                if (!altaValida) {
-                    mostrarErrores(erroresAlta);
-                    break;
+                if (!comprobarFormulario()) {
+                    JOptionPane.showMessageDialog(
+                    null,
+                    String.join("\n", errores),
+                    "Errores en el formulario",
+                    JOptionPane.ERROR_MESSAGE,
+                    imagenPerso(false)
+                    );
+                    return;
                 }
                 
                 String query = "INSERT INTO articulos (codigo,precio_de_compra,"
@@ -956,10 +752,11 @@ public class Articulos extends javax.swing.JFrame {
                     desactivarTodo();
                     modoAbcm();
                     break;
+                    
             case BAJA:
                 
                 String sql = "DELETE FROM articulos WHERE codigo = ?";
-                    if (codigoComprobado) {
+                    if (validarCodigo(textoCodigo.getText())) {
                         try (Connection conexion = conn.connect();
                                 PreparedStatement stm = conexion.prepareStatement(sql)) {
                             stm.setString(1, textoCodigo.getText());
@@ -970,7 +767,6 @@ public class Articulos extends javax.swing.JFrame {
                                     "El articulo ha sido borrado con éxito",
                                     "Operación realizada", 
                                     JOptionPane.INFORMATION_MESSAGE,imagenPerso(true));
-                            codigoComprobado = false;
                             resetFormulario();
                             desactivarTodo();
                             modoAbcm();
@@ -989,69 +785,16 @@ public class Articulos extends javax.swing.JFrame {
                 break;
                 
             case MODIFICACIONES:
-                
-                //Validar todos los campos antes de aceptar
-                boolean formularioValido = true;
-                List<String> erroresModificacion = new ArrayList<>();
 
-                // Validar stock (si se modificó)
-                if (!textoStock.getText().trim().isEmpty()) {
-                    if (!validarStock()) {
-                        formularioValido = false;
-                        erroresModificacion.add("Stock");
-                    }
-                }
-
-                // Validar stock mínimo (si se modificó)
-                if (!textoStockMin.getText().trim().isEmpty()) {
-                    if (!validarStockMinimo()) {
-                        formularioValido = false;
-                        erroresModificacion.add("Stock mínimo");
-                    }
-                }
-
-                // Validar precio compra (si se modificó)
-                if (!textoPrecioC.getText().trim().isEmpty()) {
-                    if (!validarCampoNumerico(textoPrecioC, "precio de compra", false)) {
-                        formularioValido = false;
-                        erroresModificacion.add("Precio de compra");
-                    } else {
-                        try {
-                            precioCompra = new BigDecimal(textoPrecioC.getText().replace(',', '.'));
-                            precioCompra = precioCompra.setScale(2, RoundingMode.HALF_UP);
-                        } catch (NumberFormatException e) {
-                            formularioValido = false;
-                            erroresModificacion.add("Precio de compra (valor inválido)");
-                        }
-                    }
-                }
-
-                // Validar precio venta (si se modificó)
-                if (!textoPrecioV.getText().trim().isEmpty()) {
-                    if (!validarCampoNumerico(textoPrecioV, "precio de venta", false)) {
-                        formularioValido = false;
-                        erroresModificacion.add("Precio de venta");
-                    } else {
-                        try {
-                            precioVenta = new BigDecimal(textoPrecioV.getText().replace(',', '.'));
-                            precioVenta = precioVenta.setScale(2, RoundingMode.HALF_UP);
-                        } catch (NumberFormatException e) {
-                            formularioValido = false;
-                            erroresModificacion.add("Precio de venta (valor inválido)");
-                        }
-                    }
-                }
-
-                // Validar descripción (si se modificó)
-                if (!textoDescripcion.getText().trim().isEmpty()) {
-                    if (!validarDescripcion()) {
-                        formularioValido = false;
-                        erroresModificacion.add("Descripción");
-                    }
-                }
-
-                if (!formularioValido) {
-                    break;
+                if (!comprobarFormulario()) {
+                    JOptionPane.showMessageDialog(
+                    null,
+                    String.join("\n", errores),
+                    "Errores en el formulario",
+                    JOptionPane.ERROR_MESSAGE,
+                    imagenPerso(false)
+                    );
+                    return;
                 } 
                 
                 String update = "UPDATE articulos SET stock = ?,"
@@ -1194,20 +937,8 @@ public class Articulos extends javax.swing.JFrame {
 
     private void entreCodigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entreCodigosActionPerformed
         
-        Navegador.irA(Vista.BUSQUEDAENTRECODIGOS_CLIENTES);
+        Navegador.irA(Vista.BUSQUEDAENTRECODIGOS_ARTICULOS);
     }//GEN-LAST:event_entreCodigosActionPerformed
-
-    private void graficosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graficosActionPerformed
-        
-        try {
-            JasperPrint print = JasperFillManager.fillReport(informeOrigenGraficos, null, conn.connect());
-            JasperExportManager.exportReportToPdfFile(print, informeDestinoGraficos);
-        } catch (SQLException ex) {
-            System.getLogger(Articulos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        } catch (JRException ex) {
-            System.getLogger(Articulos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-    }//GEN-LAST:event_graficosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1247,7 +978,6 @@ public class Articulos extends javax.swing.JFrame {
     private javax.swing.JMenuItem entreCodigos;
     private javax.swing.JLabel etiquetaCodigo;
     private javax.swing.JLabel etiquetaModoModificar;
-    private javax.swing.JMenuItem graficos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu listados;

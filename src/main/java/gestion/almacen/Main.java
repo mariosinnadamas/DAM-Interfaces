@@ -111,6 +111,7 @@ public class Main extends javax.swing.JFrame {
 
     private void botonArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonArticulosActionPerformed
         // TODO add your handling code here:
+        Navegador.irA(Vista.ARTICULOS);
     }//GEN-LAST:event_botonArticulosActionPerformed
 
     private void botonProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonProveedoresActionPerformed

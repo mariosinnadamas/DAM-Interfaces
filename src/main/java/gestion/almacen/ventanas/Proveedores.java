@@ -70,6 +70,7 @@ public class Proveedores extends javax.swing.JFrame {
         textoNif2.setEnabled(false);
         textoTotal.setEnabled(false);
         desactivarTodo();
+        setTitle("Proveedores");
     }
     
     //Icono personalizado

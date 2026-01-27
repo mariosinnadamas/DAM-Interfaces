@@ -70,6 +70,7 @@ public class Clientes extends javax.swing.JFrame {
         textoNif2.setEnabled(false);
         textoTotal.setEnabled(false);
         desactivarTodo();
+        setTitle("Clientes");
     }
     
     //Icono personalizado
