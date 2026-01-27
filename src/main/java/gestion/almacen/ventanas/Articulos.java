@@ -323,7 +323,7 @@ public class Articulos extends javax.swing.JFrame {
         "Corrige los siguientes campos:\n " + String.join("\n- ", errores),
         "ERROR",
         JOptionPane.ERROR_MESSAGE,imagenPerso(false)
-    );
+        );
     }
     
     //Metodo para marcar un campo como erroneo
