@@ -139,28 +139,28 @@
                                       <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="mail" min="-2" max="-2" attributes="0"/>
+                                      <Component id="etiquetaMail" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="total" min="-2" max="-2" attributes="0"/>
+                                  <Component id="etiquetaTotalVentas" min="-2" max="-2" attributes="0"/>
                                   <Component id="textoTotal" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="telefono" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="etiquetaTelefono" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="textoTelefono" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="movil" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="etiquetaMovil" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="textoMovil" alignment="0" min="-2" pref="86" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="fax" min="-2" max="-2" attributes="0"/>
+                                  <Component id="etiquetaFax" min="-2" max="-2" attributes="0"/>
                                   <Component id="textoFax" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -170,7 +170,7 @@
                               <Component id="textoLocalidad" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="domicilio" min="-2" max="-2" attributes="0"/>
+                              <Component id="etiquetaDomicilio" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="56" pref="345" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -178,12 +178,12 @@
                                   <Component id="etiquetaModoModificar" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="codigo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="etiquetaCodigo" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="textoCodigo" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="nif" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="etiquetaNif" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="textoNif" min="-2" pref="82" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -195,17 +195,17 @@
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="textoNombre" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <Component id="nombre" min="-2" max="-2" attributes="0"/>
+                                  <Component id="etiquetaNombre" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="cp" min="-2" max="-2" attributes="0"/>
+                                      <Component id="etiquetaCp" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
-                                      <Component id="localidad" min="-2" max="-2" attributes="0"/>
+                                      <Component id="etiquetaLocalidad" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="apellidos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="etiquetaApellidos" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -223,9 +223,9 @@
               <Component id="etiquetaModoModificar" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="codigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="nif" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="nombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaNif" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaNombre" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -235,17 +235,17 @@
                   <Component id="textoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Component id="apellidos" min="-2" max="-2" attributes="0"/>
+              <Component id="etiquetaApellidos" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="textoApellidos" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Component id="domicilio" min="-2" max="-2" attributes="0"/>
+              <Component id="etiquetaDomicilio" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="textoDomicilio" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cp" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="localidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaCp" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaLocalidad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -254,9 +254,9 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="telefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="movil" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fax" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaMovil" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaFax" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -266,8 +266,8 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="mail" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="total" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaMail" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etiquetaTotalVentas" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -286,64 +286,64 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="codigo">
+    <Component class="javax.swing.JLabel" name="etiquetaCodigo">
       <Properties>
         <Property name="text" type="java.lang.String" value="C&#xf3;digo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="nif">
+    <Component class="javax.swing.JLabel" name="etiquetaNif">
       <Properties>
         <Property name="text" type="java.lang.String" value="N.I.F"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="nombre">
+    <Component class="javax.swing.JLabel" name="etiquetaNombre">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="apellidos">
+    <Component class="javax.swing.JLabel" name="etiquetaApellidos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apellidos"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="domicilio">
+    <Component class="javax.swing.JLabel" name="etiquetaDomicilio">
       <Properties>
         <Property name="text" type="java.lang.String" value="Domicilio"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="cp">
+    <Component class="javax.swing.JLabel" name="etiquetaCp">
       <Properties>
         <Property name="text" type="java.lang.String" value="C.P"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="localidad">
+    <Component class="javax.swing.JLabel" name="etiquetaLocalidad">
       <Properties>
         <Property name="text" type="java.lang.String" value="Localidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="telefono">
+    <Component class="javax.swing.JLabel" name="etiquetaTelefono">
       <Properties>
         <Property name="text" type="java.lang.String" value="Telefono"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="movil">
+    <Component class="javax.swing.JLabel" name="etiquetaMovil">
       <Properties>
         <Property name="text" type="java.lang.String" value="Movil"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="fax">
+    <Component class="javax.swing.JLabel" name="etiquetaFax">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fax"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="mail">
+    <Component class="javax.swing.JLabel" name="etiquetaMail">
       <Properties>
         <Property name="text" type="java.lang.String" value="e-mail"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="total">
+    <Component class="javax.swing.JLabel" name="etiquetaTotalVentas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Total Compras"/>
+        <Property name="text" type="java.lang.String" value="Total Ventas"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textoCodigo">

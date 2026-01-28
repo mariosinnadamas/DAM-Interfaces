@@ -679,7 +679,7 @@ public class Articulos extends javax.swing.JFrame {
     private void textoStockMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoStockMinActionPerformed
         
         validarStockMinimo(false);
-        textoDescripcion.requestFocus();
+        textoPrecioC.requestFocus();
     }//GEN-LAST:event_textoStockMinActionPerformed
 
     private void textoPrecioCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoPrecioCActionPerformed
@@ -691,7 +691,7 @@ public class Articulos extends javax.swing.JFrame {
     private void textoPrecioVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoPrecioVActionPerformed
         
         validarPrecioVenta(false);
-        textoStock.requestFocus();
+        textoDescripcion.requestFocus();
     }//GEN-LAST:event_textoPrecioVActionPerformed
 
     private void textoDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDescripcionActionPerformed

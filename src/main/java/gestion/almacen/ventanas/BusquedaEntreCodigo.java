@@ -47,6 +47,19 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         this.vista = vista;
+        switch (vista) {
+            case BUSQUEDAENTRECODIGOS_CLIENTES:
+                setTitle("Clientes entre códigos");
+                break;
+            case BUSQUEDAENTRECODIGOS_PROVEEDORES:
+                setTitle("Proveedores entre códigos");
+                break;
+            case BUSQUEDAENTRECODIGOS_ARTICULOS:
+                setTitle("Articulos entre códigos");
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
     
     private void reset(){
@@ -183,6 +196,7 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
             
             switch (vista) {
                 case BUSQUEDAENTRECODIGOS_CLIENTES:
+                    
                     try {
                         HashMap<String,Object> parametros = new HashMap<>();
 
@@ -232,6 +246,7 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
                         System.getLogger(Clientes.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                     }
                     break;
+                    
                 case BUSQUEDAENTRECODIGOS_ARTICULOS:
                     try {
                         HashMap<String,Object> parametros = new HashMap<>();
@@ -268,7 +283,7 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBorrarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-       Navegador.irA(vista);
+       Navegador.irA(Vista.MENU);
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void textoCodigo1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textoCodigo1CaretUpdate

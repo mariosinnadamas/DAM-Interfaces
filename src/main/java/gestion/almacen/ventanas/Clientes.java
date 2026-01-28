@@ -50,19 +50,18 @@ public class Clientes extends javax.swing.JFrame {
     
     private ConexionDB conn = new ConexionDB();
     
-    //Variables booleanas para comprobar todo
-    boolean codigoComprobado = false;
-    boolean nifComprobado = false;
-    boolean nif2Comprobado = false;
-    boolean nombreComprobado = false;
-    boolean apellidosComprobado = false;
-    boolean domicilioComprobado = false;
-    boolean cpComprobado = false;
-    boolean localidadComprobado = false;
-    boolean telefonoComprobado = false;
-    boolean movilComprobado = false;
-    boolean faxComprobado = false;
-    boolean mailComprobado = false;
+    //Variables
+    private String codigo;
+    private String nif;
+    private String nombre;
+    private String apellidos;
+    private String domicilio;
+    private String cp;
+    private String localidad;
+    private String telefono;
+    private String movil;
+    private String fax;
+    private String mail;
     
     public Clientes() {
         initComponents();
@@ -157,37 +156,208 @@ public class Clientes extends javax.swing.JFrame {
         marcarCorrecto(textoFax);
         marcarCorrecto(textoMail);
         marcarCorrecto(textoTotal);
-        codigoComprobado = false;
-        nifComprobado = false;
-        nif2Comprobado = false;
-        nombreComprobado = false;
-        apellidosComprobado = false;
-        domicilioComprobado = false;
-        cpComprobado = false;
-        localidadComprobado = false;
-        telefonoComprobado = false;
-        movilComprobado = false;
-        faxComprobado = false;
-        mailComprobado = false;
+    }
+    
+    private boolean validarCodigo(boolean mostrarError){
+        codigo = textoCodigo.getText().trim();
+        
+        if (!codigo.matches("[0-9]{5}")) {
+            marcarError(textoCodigo);
+            if (mostrarError) errores.add("Código vacío");
+            return false;
+        }
+
+        marcarCorrecto(textoCodigo);
+        return true;
+    }
+    
+    private boolean validarDNI(boolean mostrarError){
+        
+        nif = textoNif.getText().trim().toUpperCase();
+
+        final char[] DNI_LETTERS = {
+            'T','R','W','A','G','M','Y','F','P','D',
+            'X','B','N','J','Z','S','Q','V','H','L',
+            'C','K','E'
+        };
+
+        if (!nif.matches("[0-9]{8}")) {
+            marcarError(textoNif);
+            if (mostrarError) errores.add("NIF debe tener 8 dígitos");
+            return false;
+        }
+
+        int dniNumber = Integer.parseInt(nif);
+        char letra = DNI_LETTERS[dniNumber % 23];
+
+        textoNif2.setText(String.valueOf(letra));
+        marcarCorrecto(textoNif);
+
+        return true;
+    }
+    
+    private boolean validarNombre(boolean mostrarError) {
+        
+        nombre = textoNombre.getText().trim();
+
+        if (nombre.isEmpty()) {
+            marcarError(textoNombre);
+            if (mostrarError) errores.add("Nombre vacío");
+            return false;
+        }
+
+        if (!nombre.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")) {
+            marcarError(textoNombre);
+            if (mostrarError) errores.add("Nombre con formato erróneo o supera los 50 caracteres");
+            return false;
+        }
+
+        marcarCorrecto(textoNombre);
+        return true;
+    }
+    
+    private boolean validarApellidos(boolean mostrarError) {
+        
+        apellidos = textoApellidos.getText().trim();
+
+        if (apellidos.isEmpty()) {
+            marcarError(textoApellidos);
+            if (mostrarError) errores.add("Apellidos vacío");
+            return false;
+        }
+
+        if (!apellidos.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")) {
+            marcarError(textoApellidos);
+            if (mostrarError) errores.add("Apellidos debe contener "
+                    + "solo letras y un máximo de 50 carácteres");
+            return false;
+        }
+
+        marcarCorrecto(textoApellidos);
+        return true;
+    }
+    
+    private boolean validarDomicilio(boolean mostrarError) {
+        
+        domicilio = textoDomicilio.getText().trim();
+        if (domicilio.isEmpty()) {
+            marcarError(textoDomicilio);
+            if (mostrarError) errores.add("Dirección no puede estar vacío");
+            return false;
+        }
+        
+        if (!domicilio.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\\s.,\\-ºª#\\/]{1,50}$")) {
+            marcarError(textoDomicilio);
+            if (mostrarError) errores.add("Dirección tiene un formato érroneo o es demasiado larga");
+            return false;
+        }
+
+        marcarCorrecto(textoDomicilio);
+        return true;
+    }
+    
+    private boolean validarCP(boolean mostrarError) {
+        
+        cp = textoCp.getText().trim();
+        if (!cp.matches("[0-9]{5}")) {
+            marcarError(textoCp);
+            if (mostrarError) errores.add("Codigo postal deben ser un máximo de 5 dígitos");
+            return false;
+        }
+
+        marcarCorrecto(textoCp);
+        return true;
+    }
+
+    private boolean validarLocalidad(boolean mostrarError) {
+        
+        localidad = textoLocalidad.getText().trim();
+        if (localidad.isEmpty()) {
+            marcarError(textoLocalidad);
+            if (mostrarError) errores.add("Localidad no puede estar vacío");
+            return false;
+        }
+        
+        if (!localidad.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")) {
+            marcarError(textoLocalidad);
+            if (mostrarError) errores.add("Localidad solo puede contener letras y un máximo 50 carácteres");
+            return false;
+        }
+
+        marcarCorrecto(textoLocalidad);
+        return true;
+    }
+    
+    private boolean validarTelefono(boolean mostrarError){
+        
+        telefono = textoTelefono.getText().trim();
+        if (!telefono.matches("^([0-9]{9})?$")) {
+            marcarError(textoTelefono);
+            if (mostrarError) errores.add("Telefono es un máximo de 9 dígitos");
+            return false;
+        }
+
+        marcarCorrecto(textoTelefono);
+        return true;
+    }
+    
+    private boolean validarMovil(boolean mostrarError){
+        
+        movil = textoMovil.getText().trim();
+        if (!movil.matches("^([0-9]{9})?$")) {
+            marcarError(textoMovil);
+            if (mostrarError) errores.add("Movil es un máximo de 9 dígitos");
+            return false;
+        }
+
+        marcarCorrecto(textoMovil);
+        return true;
+    }
+    
+    private boolean validarFax(boolean mostrarError){
+        
+        fax = textoFax.getText().trim();
+        if (!fax.matches("^([0-9]{9})?$")) {
+            marcarError(textoFax);
+            if (mostrarError) errores.add("Fax es un máximo de 9 dígitos");
+            return false;
+        }
+
+        marcarCorrecto(textoFax);
+        return true;
+    }
+    
+    private boolean validarEmail(boolean mostrarError){
+        
+        mail = textoMail.getText().trim();
+        if (!mail.matches("^(?=.{0,50}$)([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")) {
+            marcarError(textoMail);
+            if (mostrarError) errores.add("Mail no cumple con los requisitos necesarios");
+            return false;
+        }
+
+        marcarCorrecto(textoMail);
+        return true;
     }
     
     public boolean comprobarFormulario(){
-        // Hay que hacer que este metodo saque la ventana de errores llamando a otro metodo
-        errores.clear();
         
-        if (!codigoComprobado) errores.add("Codigo");
-        if (!nifComprobado) errores.add("Nif");
-        if (!nif2Comprobado) errores.add("Letra Nif");
-        if (!nombreComprobado) errores.add("Nombre");
-        if (!apellidosComprobado) errores.add("Apellidos");
-        if (!domicilioComprobado) errores.add("Domicilio");
-        if (!cpComprobado) errores.add("Código postal");
-        if (!localidadComprobado) errores.add("Localidad");
-        if (!telefonoComprobado) errores.add("Telefono");
-        if (!movilComprobado) errores.add("Movil");
-        if (!faxComprobado) errores.add("Fax");
-        if (!mailComprobado) errores.add("eMail");
-        return errores.isEmpty();
+        errores.clear();
+        boolean ok = true;
+
+        ok &= validarCodigo(true);
+        ok &= validarDNI(true);
+        ok &= validarNombre(true);
+        ok &= validarApellidos(true);
+        ok &= validarDomicilio(true);
+        ok &= validarCP(true);
+        ok &= validarLocalidad(true);
+        ok &= validarTelefono(true);
+        ok &= validarMovil(true);
+        ok &= validarFax(true);
+        ok &= validarEmail(true);
+        
+        return ok;
     }
     
     //Metodo para mostrar una ventana con los errores
@@ -221,18 +391,18 @@ public class Clientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        codigo = new javax.swing.JLabel();
-        nif = new javax.swing.JLabel();
-        nombre = new javax.swing.JLabel();
-        apellidos = new javax.swing.JLabel();
-        domicilio = new javax.swing.JLabel();
-        cp = new javax.swing.JLabel();
-        localidad = new javax.swing.JLabel();
-        telefono = new javax.swing.JLabel();
-        movil = new javax.swing.JLabel();
-        fax = new javax.swing.JLabel();
-        mail = new javax.swing.JLabel();
-        total = new javax.swing.JLabel();
+        etiquetaCodigo = new javax.swing.JLabel();
+        etiquetaNif = new javax.swing.JLabel();
+        etiquetaNombre = new javax.swing.JLabel();
+        etiquetaApellidos = new javax.swing.JLabel();
+        etiquetaDomicilio = new javax.swing.JLabel();
+        etiquetaCp = new javax.swing.JLabel();
+        etiquetaLocalidad = new javax.swing.JLabel();
+        etiquetaTelefono = new javax.swing.JLabel();
+        etiquetaMovil = new javax.swing.JLabel();
+        etiquetaFax = new javax.swing.JLabel();
+        etiquetaMail = new javax.swing.JLabel();
+        etiquetaTotalVentas = new javax.swing.JLabel();
         textoCodigo = new javax.swing.JTextField();
         textoNif = new javax.swing.JTextField();
         textoNif2 = new javax.swing.JTextField();
@@ -266,29 +436,29 @@ public class Clientes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        codigo.setText("Código");
+        etiquetaCodigo.setText("Código");
 
-        nif.setText("N.I.F");
+        etiquetaNif.setText("N.I.F");
 
-        nombre.setText("Nombre");
+        etiquetaNombre.setText("Nombre");
 
-        apellidos.setText("Apellidos");
+        etiquetaApellidos.setText("Apellidos");
 
-        domicilio.setText("Domicilio");
+        etiquetaDomicilio.setText("Domicilio");
 
-        cp.setText("C.P");
+        etiquetaCp.setText("C.P");
 
-        localidad.setText("Localidad");
+        etiquetaLocalidad.setText("Localidad");
 
-        telefono.setText("Telefono");
+        etiquetaTelefono.setText("Telefono");
 
-        movil.setText("Movil");
+        etiquetaMovil.setText("Movil");
 
-        fax.setText("Fax");
+        etiquetaFax.setText("Fax");
 
-        mail.setText("e-mail");
+        etiquetaMail.setText("e-mail");
 
-        total.setText("Total Ventas");
+        etiquetaTotalVentas.setText("Total Ventas");
 
         textoCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -483,40 +653,40 @@ public class Clientes extends javax.swing.JFrame {
                                         .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(61, 61, 61))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(mail)
+                                        .addComponent(etiquetaMail)
                                         .addGap(271, 271, 271)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(total)
+                                    .addComponent(etiquetaTotalVentas)
                                     .addComponent(textoTotal)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(telefono)
+                                    .addComponent(etiquetaTelefono)
                                     .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(movil)
+                                    .addComponent(etiquetaMovil)
                                     .addComponent(textoMovil, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fax)
+                                    .addComponent(etiquetaFax)
                                     .addComponent(textoFax)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(textoCp, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(54, 54, 54)
                                 .addComponent(textoLocalidad))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(domicilio)
+                                .addComponent(etiquetaDomicilio)
                                 .addGap(56, 345, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(etiquetaModoModificar)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(codigo)
+                                            .addComponent(etiquetaCodigo)
                                             .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(nif)
+                                            .addComponent(etiquetaNif)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(textoNif, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -524,14 +694,14 @@ public class Clientes extends javax.swing.JFrame {
                                 .addGap(39, 39, 39)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nombre)))
+                                    .addComponent(etiquetaNombre)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cp)
+                                        .addComponent(etiquetaCp)
                                         .addGap(119, 119, 119)
-                                        .addComponent(localidad))
-                                    .addComponent(apellidos))
+                                        .addComponent(etiquetaLocalidad))
+                                    .addComponent(etiquetaApellidos))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(20, 20, 20))
         );
@@ -542,9 +712,9 @@ public class Clientes extends javax.swing.JFrame {
                 .addComponent(etiquetaModoModificar)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codigo)
-                    .addComponent(nif)
-                    .addComponent(nombre))
+                    .addComponent(etiquetaCodigo)
+                    .addComponent(etiquetaNif)
+                    .addComponent(etiquetaNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -552,26 +722,26 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(textoNif2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
-                .addComponent(apellidos)
+                .addComponent(etiquetaApellidos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(domicilio)
+                .addComponent(etiquetaDomicilio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cp)
-                    .addComponent(localidad))
+                    .addComponent(etiquetaCp)
+                    .addComponent(etiquetaLocalidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoCp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(telefono)
-                    .addComponent(movil)
-                    .addComponent(fax))
+                    .addComponent(etiquetaTelefono)
+                    .addComponent(etiquetaMovil)
+                    .addComponent(etiquetaFax))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -579,8 +749,8 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mail)
-                    .addComponent(total))
+                    .addComponent(etiquetaMail)
+                    .addComponent(etiquetaTotalVentas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -599,292 +769,167 @@ public class Clientes extends javax.swing.JFrame {
 
     private void textoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCodigoActionPerformed
         
-        String texto = textoCodigo.getText();
-        if (!texto.matches("[0-9]{5}")){
-            marcarError(textoCodigo);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 5 dígitos"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else {
-            marcarCorrecto(textoCodigo);
-            switch (modo) {
-                //Realiza una consulta antes de agregar para comprobar que puedas dar de alta
-                case ALTA:
-                    
-                    try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
-                        stm.setString(1, textoCodigo.getText());
-                        try (ResultSet rs = stm.executeQuery()){
-                            if (!rs.next()) {
-                               activarTodo();
-                               textoCodigo.setEnabled(false);
-                               textoCodigo.addActionListener(e -> textoNif.requestFocus());
-                               codigoComprobado = true;
-                            } else{
-                                JOptionPane.showMessageDialog(null, 
-                                        "Ya existe un usuario con ese código, no es posible agregarlo", 
-                                        "Error", 
-                                        JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-                                textoCodigo.requestFocus();
-                            }
-                        } catch (SQLException e) {
-                            //No se ha encontrado nadie?
-                            e.printStackTrace();
+        if (!validarCodigo(false)) {
+            return;
+        }
+        
+        switch (modo) {
+            //Realiza una consulta antes de agregar para comprobar que puedas dar de alta
+            case ALTA:
+
+                try (Connection conexion = conn.connect();
+                        PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                    stm.setString(1, textoCodigo.getText());
+                    try (ResultSet rs = stm.executeQuery()){
+                        if (!rs.next()) {
+                           activarTodo();
+                           textoCodigo.setEnabled(false);
+                           textoNif.requestFocus();
+                        } else{
+                            JOptionPane.showMessageDialog(null, 
+                                    "Ya existe un usuario con ese código, no es posible agregarlo", 
+                                    "Error", 
+                                    JOptionPane.ERROR_MESSAGE, imagenPerso(false));
+                            textoCodigo.requestFocus();
                         }
-                    } catch (Exception e) {
-                        //Error en la conexión
+                    } catch (SQLException e) {
+                        //No se ha encontrado nadie?
                         e.printStackTrace();
                     }
-                    break;
-                    //Hace una consulta para comprobar que exista, de no ser así no pasa el focus a aceptar
-                case BAJA:
-                
-                    try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
-                        stm.setString(1, textoCodigo.getText());
-                        try (ResultSet rs = stm.executeQuery()){
-                            if (rs.next()) {
-                               botonAceptar.requestFocus();
-                               codigoComprobado = true;
-                               textoCodigo.setEnabled(false);
-                            } else{
-                                JOptionPane.showMessageDialog(null, 
-                                        "No se ha encontrado ningun cliente asociado a ese código", 
-                                        "Error", 
-                                        JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-                                textoCodigo.requestFocus();
-                            }
-                            
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                } catch (Exception e) {
+                    //Error en la conexión
+                    e.printStackTrace();
+                }
+                break;
+                //Hace una consulta para comprobar que exista, de no ser así no pasa el focus a aceptar
+            case BAJA:
+
+                try (Connection conexion = conn.connect();
+                        PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                    stm.setString(1, textoCodigo.getText());
+                    try (ResultSet rs = stm.executeQuery()){
+                        if (rs.next()) {
+                           botonAceptar.requestFocus();
+                           textoCodigo.setEnabled(false);
+                        } else{
+                            JOptionPane.showMessageDialog(null, 
+                                    "No se ha encontrado ningun cliente asociado a ese código", 
+                                    "Error", 
+                                    JOptionPane.ERROR_MESSAGE, imagenPerso(false));
+                            textoCodigo.requestFocus();
                         }
-                    } catch (Exception e) {
+
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    break;
-                case MODIFICACIONES:
-                
-                    //Hace una consulta para comprobar que pueda modificar
-                    try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
-                        stm.setString(1, textoCodigo.getText());
-                        
-                        try (ResultSet rs = stm.executeQuery()){
-                            if (rs.next()) {
-                                activarTodo();
-                                String dni = rs.getString("nif");
-                                textoNif.setText(dni.substring(0,8));
-                                textoNif2.setText(dni.substring(8));
-                                textoNombre.setText(rs.getString("nombre"));
-                                textoApellidos.setText(rs.getString("apellidos"));
-                                textoDomicilio.setText(rs.getString("domicilio"));
-                                textoCp.setText(rs.getString("codigo_postal"));
-                                textoLocalidad.setText(rs.getString("localidad"));
-                                textoTelefono.setText(rs.getString("telefono"));
-                                textoMovil.setText(rs.getString("movil"));
-                                textoFax.setText(rs.getString("fax"));
-                                textoMail.setText(rs.getString("email"));
-                                textoTotal.setText(rs.getString("total_ventas"));
-                                textoNif.addActionListener(e -> textoNif.requestFocus());
-                                textoCodigo.setEnabled(false);
-                                codigoComprobado = true;
-                            } else{
-                                JOptionPane.showMessageDialog(null, 
-                                        "No existe ningún usuario con ese código", 
-                                        "Error", 
-                                        JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-                                textoCodigo.requestFocus();
-                            }
-                            
-                        } catch (SQLException e) {
-                            //No se ha encontrado nadie?
-                            e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MODIFICACIONES:
+
+                //Hace una consulta para comprobar que pueda modificar
+                try (Connection conexion = conn.connect();
+                        PreparedStatement stm = conexion.prepareStatement(consultaClientes)) {
+                    stm.setString(1, textoCodigo.getText());
+
+                    try (ResultSet rs = stm.executeQuery()){
+                        if (rs.next()) {
+                            activarTodo();
+                            String dni = rs.getString("nif");
+                            textoNif.setText(dni.substring(0,8));
+                            textoNif2.setText(dni.substring(8));
+                            textoNombre.setText(rs.getString("nombre"));
+                            textoApellidos.setText(rs.getString("apellidos"));
+                            textoDomicilio.setText(rs.getString("domicilio"));
+                            textoCp.setText(rs.getString("codigo_postal"));
+                            textoLocalidad.setText(rs.getString("localidad"));
+                            textoTelefono.setText(rs.getString("telefono"));
+                            textoMovil.setText(rs.getString("movil"));
+                            textoFax.setText(rs.getString("fax"));
+                            textoMail.setText(rs.getString("email"));
+                            textoTotal.setText(rs.getString("total_ventas"));
+                            textoNif.requestFocus();
+                            textoCodigo.setEnabled(false);
+                        } else{
+                            JOptionPane.showMessageDialog(null, 
+                                    "No existe ningún usuario con ese código", 
+                                    "Error", 
+                                    JOptionPane.ERROR_MESSAGE, imagenPerso(false));
+                            textoCodigo.requestFocus();
                         }
-                        
-                    } catch (Exception e) {
-                        //Error en la conexión
+
+                    } catch (SQLException e) {
+                        //No se ha encontrado nadie?
                         e.printStackTrace();
                     }
-                    
-                    break;
-                    
-                case CONSULTAPORCODIGO:
-                    botonAceptar.requestFocus();
-                default:
-                    break;
-            }
+
+                } catch (Exception e) {
+                    //Error en la conexión
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case CONSULTAPORCODIGO:
+                botonAceptar.requestFocus();
+            default:
+                break;
         } 
     }//GEN-LAST:event_textoCodigoActionPerformed
     
     private void textoNifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNifActionPerformed
         
-        String texto = textoNif.getText();
-        final char[] DNI_LETTERS = {
-        'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 
-        'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 
-        'C', 'K', 'E'};
-        
-        if (!texto.matches("[0-9]{8}")) {
-            marcarError(textoNif);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 8 dígitos",
-                    "Error",JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-        } else {
-            marcarCorrecto(textoNif);
-            int dniNumber = Integer.parseInt(textoNif.getText());
-            int remainder = dniNumber % 23;
-            char letra = DNI_LETTERS[remainder];
-            textoNif2.setText(String.valueOf(letra));
-            textoNif.addActionListener(e -> textoNombre.requestFocus());
-            nifComprobado = true;
-            nif2Comprobado = true;
-        }
+        validarDNI(false);
+        textoNombre.requestFocus();
     }//GEN-LAST:event_textoNifActionPerformed
 
     private void textoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNombreActionPerformed
         
-        String texto = textoNombre.getText();
-        if (texto.isEmpty()) {
-            marcarError(textoNombre);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío",
-                    "Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")){
-            marcarError(textoNombre);
-            JOptionPane.showMessageDialog(null, "El nombre debe contener solo "
-                    + "letras y un máximo de 50 carácteres","Error"
-                    ,JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoNombre);
-            textoNombre.addActionListener(e -> textoApellidos.requestFocus());
-            nombreComprobado = true;
-        }
+        validarNombre(false);
+        textoApellidos.requestFocus();
     }//GEN-LAST:event_textoNombreActionPerformed
 
     private void textoApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoApellidosActionPerformed
         
-        String texto = textoApellidos.getText();
-        if (texto.isEmpty()) {
-            marcarError(textoApellidos);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío","Error",JOptionPane.ERROR_MESSAGE);
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")){
-            marcarError(textoApellidos);
-            JOptionPane.showMessageDialog(null, "Los apellidos deben contener "
-                    + "solo letras y un máximo de 50 carácteres"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoApellidos);
-            textoApellidos.addActionListener(e -> textoDomicilio.requestFocus());
-            apellidosComprobado = true;
-        }
+        validarApellidos(false);
+        textoDomicilio.requestFocus();
     }//GEN-LAST:event_textoApellidosActionPerformed
 
     private void textoDomicilioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDomicilioActionPerformed
-        
-        String texto = textoDomicilio.getText();
-        if (texto.isEmpty()) {
-            marcarError(textoDomicilio);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este campo vacío"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\\s.,\\-ºª#\\/]{1,50}$")){
-            marcarError(textoDomicilio);
-            JOptionPane.showMessageDialog(null, "El domicilio debe contener "
-                    + "solo letras y un máximo de 50 carácteres"
-                    ,"Error",JOptionPane.ERROR_MESSAGE, imagenPerso(false));
-        } else{
-            marcarCorrecto(textoDomicilio);
-            textoDomicilio.addActionListener(e -> textoCp.requestFocus());
-            domicilioComprobado = true;
-        }
+        validarDomicilio(false);
+        textoCp.requestFocus();
     }//GEN-LAST:event_textoDomicilioActionPerformed
 
     private void textoCpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCpActionPerformed
-        
-        String cp = textoCp.getText();
-        if (!cp.matches("[0-9]{5}")) {
-            marcarError(textoCp);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de "
-                    + "5 dígitos","Error",JOptionPane.ERROR_MESSAGE
-                    ,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoCp);
-            textoCp.addActionListener(e -> textoLocalidad.requestFocus());
-            cpComprobado = true;
-        }
+        validarCP(false);
+        textoLocalidad.requestFocus();
     }//GEN-LAST:event_textoCpActionPerformed
 
     private void textoLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoLocalidadActionPerformed
-        
-        String texto = textoLocalidad.getText();
-        if (texto.isEmpty()) {
-            marcarError(textoLocalidad);
-            JOptionPane.showMessageDialog(null, "No puedes dejar este "
-                    + "campo vacío","Error",JOptionPane.ERROR_MESSAGE
-                    ,imagenPerso(false));
-        } else if (!texto.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]{1,50}$")){
-            marcarError(textoLocalidad);
-            JOptionPane.showMessageDialog(null, "La localidad debe contener "
-                    + "solo letras y un máximo de 50 carácteres"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoLocalidad);
-            textoLocalidad.addActionListener(e -> textoTelefono.requestFocus());
-            localidadComprobado = true;
-        }
+        validarLocalidad(false);
+        textoTelefono.requestFocus();
     }//GEN-LAST:event_textoLocalidadActionPerformed
 
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
-        
-        String texto = textoTelefono.getText();
-        if (!texto.matches("^([0-9]{9})?$")) {
-            marcarError(textoTelefono);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoTelefono);
-            textoTelefono.addActionListener(e -> textoMovil.requestFocus());
-            telefonoComprobado = true;
-        }
+        validarTelefono(false);
+        textoMovil.requestFocus();
     }//GEN-LAST:event_textoTelefonoActionPerformed
 
     private void textoMovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMovilActionPerformed
-        
-        String texto = textoMovil.getText();
-        if (!texto.matches("^([0-9]{9})?$")) {
-            marcarError(textoMovil);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoMovil);
-            textoMovil.addActionListener(e -> textoFax.requestFocus());
-            movilComprobado = true;
-        }
+        validarMovil(false);
+        textoFax.requestFocus();
     }//GEN-LAST:event_textoMovilActionPerformed
 
     private void textoFaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFaxActionPerformed
-        
-        String texto = textoFax.getText();
-        if (!texto.matches("^([0-9]{9})?$")) {
-            marcarError(textoFax);
-            JOptionPane.showMessageDialog(null, "Debe ser una cadena de 9 dígitos"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoFax);
-            textoFax.addActionListener(e -> textoMail.requestFocus());
-            faxComprobado = true;
-        }
+        validarFax(false);
+        textoMail.requestFocus();
     }//GEN-LAST:event_textoFaxActionPerformed
 
     private void textoMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMailActionPerformed
-        
-        String texto = textoMail.getText();
-        if (!texto.matches("^(?=.{0,50}$)([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")) {
-            marcarError(textoMail);
-            JOptionPane.showMessageDialog(null, "El formato del email es inválido"
-                    ,"Error",JOptionPane.ERROR_MESSAGE,imagenPerso(false));
-        } else{
-            marcarCorrecto(textoMail);
-            textoMail.addActionListener(e -> botonAceptar.requestFocus());
-            textoTotal.setText("0");
-            mailComprobado = true;
-        }
+        validarEmail(false);
+        textoTotal.setText("0");
+        botonAceptar.requestFocus();
     }//GEN-LAST:event_textoMailActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
@@ -898,72 +943,87 @@ public class Clientes extends javax.swing.JFrame {
         //modificar alta, que no saque las ventanas
         switch (modo) {
             case ALTA:
-                
-                if (comprobarFormulario()) {
-                    String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
-                            + "domicilio,codigo_postal,localidad,telefono,movil,"
-                            + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-                    String dni = textoNif.getText().trim() + textoNif2.getText().trim();
-                    try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(query)){
-
-                            stm.setString(1, textoCodigo.getText().trim());
-                            stm.setString(2, dni);
-                            stm.setString(3, textoApellidos.getText().trim());
-                            stm.setString(4, textoNombre.getText().trim());
-                            stm.setString(5, textoDomicilio.getText().trim());
-                            stm.setString(6, textoCp.getText().trim());
-                            stm.setString(7, textoLocalidad.getText().trim());
-                            stm.setString(8, textoTelefono.getText().trim());
-                            stm.setString(9, textoMovil.getText().trim());
-                            stm.setString(10, textoFax.getText().trim());
-                            stm.setString(11, textoMail.getText().trim());
-                            stm.setString(12, textoTotal.getText().trim());
-
-                            stm.executeUpdate();
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    JOptionPane.showMessageDialog(null, 
-                            "Todos los campos estan bien, cliente agregado a la base de datos", 
-                            "¡Enhorabuena!",
-                            JOptionPane.INFORMATION_MESSAGE,
-                            imagenPerso(true));
-                    
-                    resetFormulario();
-                    desactivarTodo();
-                    modoAbcm();
-                    
-                } else{
-                    mostrarErrores(errores);
+                if (textoCodigo.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Introduce un código",
+                        "Errores en el formulario",
+                        JOptionPane.ERROR_MESSAGE,
+                        imagenPerso(false)
+                    );
+                    return;
                 }
+                
+                if (!comprobarFormulario()) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        String.join("\n", errores),
+                        "Errores en el formulario",
+                        JOptionPane.ERROR_MESSAGE,
+                        imagenPerso(false)
+                    );
+                    return;
+                }
+                
+                String query = "INSERT INTO clientes (codigo,nif,apellidos,nombre,"
+                        + "domicilio,codigo_postal,localidad,telefono,movil,"
+                        + "fax,email,total_ventas) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                String dni = textoNif.getText().trim() + textoNif2.getText().trim();
+                try (Connection conexion = conn.connect();
+                        PreparedStatement stm = conexion.prepareStatement(query)){
+
+                        stm.setString(1, codigo);
+                        stm.setString(2, dni);
+                        stm.setString(3, apellidos);
+                        stm.setString(4, nombre);
+                        stm.setString(5, domicilio);
+                        stm.setString(6, cp);
+                        stm.setString(7, localidad);
+                        stm.setString(8, telefono);
+                        stm.setString(9, movil);
+                        stm.setString(10, fax);
+                        stm.setString(11, mail);
+                        stm.setString(12, textoTotal.getText().trim());
+
+                        stm.executeUpdate();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                JOptionPane.showMessageDialog(null, 
+                        "Todos los campos estan bien, cliente agregado a la base de datos", 
+                        "¡Enhorabuena!",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        imagenPerso(true));
+
+                resetFormulario();
+                desactivarTodo();
+                modoAbcm();
                 
                 break;
             case BAJA:
                 
                 String sql = "DELETE FROM clientes WHERE codigo = ?";
-                    if (codigoComprobado) {
-                    try (Connection conexion = conn.connect();
-                            PreparedStatement stm = conexion.prepareStatement(sql)) {
-                        stm.setString(1, textoCodigo.getText());
+                    if (validarCodigo(false)) {
+                        try (Connection conexion = conn.connect();
+                                PreparedStatement stm = conexion.prepareStatement(sql)) {
+                            stm.setString(1, textoCodigo.getText());
+
+                            stm.executeUpdate();
+
+                            JOptionPane.showMessageDialog(null,
+                                    "El cliente ha sido borrado con éxito",
+                                    "Operación realizada", 
+                                    JOptionPane.INFORMATION_MESSAGE,imagenPerso(true));
+                            resetFormulario();
+                            desactivarTodo();
+                            modoAbcm();
                         
-                        stm.executeUpdate();
-                        
-                        JOptionPane.showMessageDialog(null,
-                                "El cliente ha sido borrado con éxito",
-                                "Operación realizada", 
-                                JOptionPane.INFORMATION_MESSAGE,imagenPerso(true));
-                        codigoComprobado = false;
-                        resetFormulario();
-                        desactivarTodo();
-                        modoAbcm();
-                        
-                    } catch (Exception e) {
-                        //Error en la conexión
-                        e.printStackTrace();
-                    }
+                        } catch (Exception e) {
+                            //Error en la conexión
+                            e.printStackTrace();
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null,
                                 "No se puede eliminar al cliente. "
@@ -974,12 +1034,19 @@ public class Clientes extends javax.swing.JFrame {
                 break;
                 
             case MODIFICACIONES:
-                if (!comprobarFormulario()) {
-                    mostrarErrores(errores);
-                    break;  
-                } 
                 
-                String query = "UPDATE clientes SET nif = ?,"
+                if (!comprobarFormulario()) {
+                    JOptionPane.showMessageDialog(
+                    null,
+                    String.join("\n", errores),
+                    "Errores en el formulario",
+                    JOptionPane.ERROR_MESSAGE,
+                    imagenPerso(false)
+                    );
+                    return;
+                }
+                
+                String update = "UPDATE clientes SET nif = ?,"
                         + "apellidos = ?, "
                         + "nombre = ?, "
                         + "domicilio = ?, "
@@ -992,20 +1059,20 @@ public class Clientes extends javax.swing.JFrame {
                         + "WHERE codigo = ?";
                     
                 try (Connection conexion = conn.connect();
-                        PreparedStatement stm = conexion.prepareStatement(query)){
+                        PreparedStatement stm = conexion.prepareStatement(update)){
 
-                    String dni = textoNif.getText().trim() + textoNif2.getText().trim();
+                    dni = textoNif.getText().trim() + textoNif2.getText().trim();
                     stm.setString(1, dni);
-                    stm.setString(2, textoApellidos.getText().trim());
-                    stm.setString(3, textoNombre.getText().trim());
-                    stm.setString(4, textoDomicilio.getText().trim());
-                    stm.setString(5, textoCp.getText().trim());
-                    stm.setString(6, textoLocalidad.getText().trim());
-                    stm.setString(7, textoTelefono.getText().trim());
-                    stm.setString(8, textoMovil.getText().trim());
-                    stm.setString(9, textoFax.getText().trim());
-                    stm.setString(10, textoMail.getText().trim());
-                    stm.setString(11, textoCodigo.getText().trim());
+                    stm.setString(2, apellidos);
+                    stm.setString(3, nombre);
+                    stm.setString(4, domicilio);
+                    stm.setString(5, cp);
+                    stm.setString(6, localidad);
+                    stm.setString(7, telefono);
+                    stm.setString(8, movil);
+                    stm.setString(9, fax);
+                    stm.setString(10, mail);
+                    stm.setString(11, codigo);
 
                     int filas = stm.executeUpdate();
                     
@@ -1032,6 +1099,7 @@ public class Clientes extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
                 break;
+
                 
             case CONSULTAPORCODIGO:
                 
@@ -1043,7 +1111,7 @@ public class Clientes extends javax.swing.JFrame {
                     try (ResultSet rs = stm.executeQuery()){
                         if (rs.next()) {
                             textoCodigo.setEnabled(false);
-                            String dni = rs.getString("nif");
+                            dni = rs.getString("nif");
                             textoNif.setText(dni.substring(0,8));
                             textoNif2.setText(dni.substring(8));
                             textoNombre.setText(rs.getString("nombre"));
@@ -1187,32 +1255,33 @@ public class Clientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem altas;
-    private javax.swing.JLabel apellidos;
     private javax.swing.JMenuItem bajas;
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonSalir;
-    private javax.swing.JLabel codigo;
     private javax.swing.JMenu consultas;
-    private javax.swing.JLabel cp;
-    private javax.swing.JLabel domicilio;
     private javax.swing.JMenuItem entreCodigos;
+    private javax.swing.JLabel etiquetaApellidos;
+    private javax.swing.JLabel etiquetaCodigo;
+    private javax.swing.JLabel etiquetaCp;
+    private javax.swing.JLabel etiquetaDomicilio;
+    private javax.swing.JLabel etiquetaFax;
+    private javax.swing.JLabel etiquetaLocalidad;
+    private javax.swing.JLabel etiquetaMail;
     private javax.swing.JLabel etiquetaModoModificar;
-    private javax.swing.JLabel fax;
+    private javax.swing.JLabel etiquetaMovil;
+    private javax.swing.JLabel etiquetaNif;
+    private javax.swing.JLabel etiquetaNombre;
+    private javax.swing.JLabel etiquetaTelefono;
+    private javax.swing.JLabel etiquetaTotalVentas;
     private javax.swing.JMenuItem graficos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu listados;
-    private javax.swing.JLabel localidad;
-    private javax.swing.JLabel mail;
     private javax.swing.JMenu mantenimiento;
     private javax.swing.JMenuItem modificaciones;
-    private javax.swing.JLabel movil;
-    private javax.swing.JLabel nif;
-    private javax.swing.JLabel nombre;
     private javax.swing.JMenuItem porCodigo;
     private javax.swing.JMenuItem porCodigos;
-    private javax.swing.JLabel telefono;
     private javax.swing.JTextField textoApellidos;
     private javax.swing.JTextField textoCodigo;
     private javax.swing.JTextField textoCp;
@@ -1226,7 +1295,6 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JTextField textoNombre;
     private javax.swing.JTextField textoTelefono;
     private javax.swing.JTextField textoTotal;
-    private javax.swing.JLabel total;
     private javax.swing.JMenuItem volver;
     // End of variables declaration//GEN-END:variables
 }
