@@ -23,6 +23,13 @@
 					</textElement>
 					<text><![CDATA[Gráfico codigo postal]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="463" y="26" width="112" height="37" forecolor="#FFFFFF" uuid="7ec2af59-32b7-4ec5-8b49-0adbf3c1b81f"/>
+					<textElement>
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Proveedores]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</title>

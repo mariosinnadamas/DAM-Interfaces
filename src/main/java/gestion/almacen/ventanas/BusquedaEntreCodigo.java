@@ -26,11 +26,11 @@ public class BusquedaEntreCodigo extends javax.swing.JFrame {
     
     private ConexionDB conn = new ConexionDB();
     
-    private String informeOrigenClientes = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.jasper";
+    private String informeOrigenClientes = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.jasper";
     private String informeDestinoClientes = "src/main/java/gestion/almacen/jasper/clientes/ClientesEntreCodigos.pdf";
-    private String informeOrigenProveedores = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.jasper";
+    private String informeOrigenProveedores = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.jasper";
     private String informeDestinoProveedores = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresEntreCodigos.pdf";
-    private String informeOrigenArticulos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/articulos/ArticulosEntreCodigos.jasper";
+    private String informeOrigenArticulos = "src/main/java/gestion/almacen/jasper/articulos/ArticulosEntreCodigos.jasper";
     private String informeDestinoArticulos = "src/main/java/gestion/almacen/jasper/articulos/ArticulosEntreCodigos.pdf";
     private String codigoMenor = "";
     private String codigoMayor = "";

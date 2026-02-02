@@ -43,9 +43,9 @@ public class Clientes extends javax.swing.JFrame {
     private String consultaClientes = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_ventas FROM clientes WHERE codigo = ?";
     
     //Directorios para el jasper
-    private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.jasper";
+    private String informeOrigenTodos = "src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.jasper";
     private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/clientes/ClientesTodos.pdf";
-    private String informeOrigenGraficos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/clientes/Graficos.jasper";
+    private String informeOrigenGraficos = "src/main/java/gestion/almacen/jasper/clientes/Graficos.jasper";
     private String informeDestinoGraficos = "src/main/java/gestion/almacen/jasper/clientes/Graficos.pdf";
     
     private ConexionDB conn = new ConexionDB();

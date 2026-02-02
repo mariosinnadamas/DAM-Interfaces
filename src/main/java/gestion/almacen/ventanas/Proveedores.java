@@ -43,9 +43,9 @@ public class Proveedores extends javax.swing.JFrame {
     private String consultaProveedores = "SELECT codigo, nif,nombre,apellidos,domicilio,codigo_postal,localidad,telefono,movil,fax,email,total_compras FROM proveedores WHERE codigo = ?";
     
     //Directorios para el jasper
-    private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/ProveedoresTodos.jasper";
+    private String informeOrigenTodos = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresTodos.jasper";
     private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/proveedores/ProveedoresTodos.pdf";
-    private String informeOrigenGraficos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/proveedores/Graficos.jasper";
+    private String informeOrigenGraficos = "src/main/java/gestion/almacen/jasper/proveedores/Graficos.jasper";
     private String informeDestinoGraficos = "src/main/java/gestion/almacen/jasper/proveedores/GraficosProveedores.pdf";
     
     private ConexionDB conn = new ConexionDB();

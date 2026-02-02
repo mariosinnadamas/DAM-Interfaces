@@ -45,7 +45,7 @@ public class Articulos extends javax.swing.JFrame {
     private String consultaArticulos = "SELECT codigo, stock, stock_minimo, precio_de_compra, precio_de_venta,descripcion FROM articulos WHERE codigo = ?";
     
     //Directorios para el jasper
-    private String informeOrigenTodos = "/Users/mario/Documents/DAM/2/Interfaces/interfaces/src/main/java/gestion/almacen/jasper/articulos/ArticulosTodos.jasper";
+    private String informeOrigenTodos = "src/main/java/gestion/almacen/jasper/articulos/ArticulosTodos.jasper";
     private String informeDestinoTodos = "src/main/java/gestion/almacen/jasper/articulos/ArticulosTodos.pdf";
     
     private ConexionDB conn = new ConexionDB();

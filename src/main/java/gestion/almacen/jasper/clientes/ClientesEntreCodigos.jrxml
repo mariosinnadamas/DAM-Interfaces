@@ -38,13 +38,6 @@
 					</textElement>
 					<text><![CDATA[Clientes entre códigos]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="463" y="43" width="112" height="20" forecolor="#FFFFFF" uuid="0075b685-5a30-440f-879e-adae1f15cf7f"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Add a description here]]></text>
-				</staticText>
 			</frame>
 		</band>
 	</title>
