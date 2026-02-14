@@ -34,6 +34,7 @@ public class Main extends javax.swing.JFrame {
         botonClientes = new javax.swing.JButton();
         botonArticulos = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
+        botonPedidos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +70,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        botonPedidos.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        botonPedidos.setText("Pedidos");
+        botonPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonPedidosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,7 +88,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(botonProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                     .addComponent(botonClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botonArticulos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonPedidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -92,8 +102,10 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(botonArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(botonPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -118,6 +130,11 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         Navegador.irA(Vista.PROVEEDORES);
     }//GEN-LAST:event_botonProveedoresActionPerformed
+
+    private void botonPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPedidosActionPerformed
+        // TODO add your handling code here:
+        Navegador.irA(Vista.PEDIDOS);
+    }//GEN-LAST:event_botonPedidosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -144,6 +161,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonArticulos;
     private javax.swing.JButton botonClientes;
+    private javax.swing.JButton botonPedidos;
     private javax.swing.JButton botonProveedores;
     private javax.swing.JButton botonSalir;
     // End of variables declaration//GEN-END:variables

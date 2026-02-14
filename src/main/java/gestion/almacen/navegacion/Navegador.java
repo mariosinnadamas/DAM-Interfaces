@@ -8,6 +8,7 @@ import gestion.almacen.Main;
 import gestion.almacen.ventanas.Articulos;
 import gestion.almacen.ventanas.BusquedaEntreCodigo;
 import gestion.almacen.ventanas.Clientes;
+import gestion.almacen.ventanas.Pedidos;
 import gestion.almacen.ventanas.Proveedores;
 import javax.swing.JFrame;
 
@@ -44,6 +45,9 @@ public class Navegador {
                 break;
             case ARTICULOS:
                 ventanaActual = new Articulos();
+                break;
+            case PEDIDOS:
+                ventanaActual = new Pedidos();
                 break;
             case BUSQUEDAENTRECODIGOS_CLIENTES:
                 ventanaActual= new BusquedaEntreCodigo(vista);
